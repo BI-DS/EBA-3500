@@ -1,4 +1,4 @@
-# EBA3500 Course material
+# EBA-3500 Course material
 Repository for the lecture notes, exercises, and solution sets for EBA-3500 Data analysis with Programming.
 
 ## Structure
