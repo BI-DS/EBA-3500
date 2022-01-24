@@ -22,6 +22,12 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v1
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache-version: 2
+          extra-packages: |
+            any::bookdown
+
       - name: Cache bookdown results
         uses: actions/cache@v2
         with:
