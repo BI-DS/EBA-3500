@@ -22,9 +22,8 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v1
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          extra-packages: bookdown
+      - name: Install rmarkdown
+        run: Rscript -e 'install.packages(c("rmarkdown","bookdown"))'
 
       - name: Cache bookdown results
         uses: actions/cache@v2
