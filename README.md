@@ -1,12 +1,10 @@
 # EBA-3500 Course material
-Repository for the lecture notes, exercises, and solution sets for EBA-3500 Data analysis with Programming.
+Repository for the lecture slides for EBA-3500 Data analysis with Programming.
 
 ## Structure
-Each folder contains predominantly Jupyter Notebook files. 
-
-| Folder        | Content |
-| ---           | ---     |
-| lectures      | Jupyter notebooks for the lectures. |
-| exercise      | The exercises associated with each lecture. |
-| solutions     | Solutions to said exercises. |
-| misc          | Miscellanea such as data sets, previous exams, and additional resources. |
+| Folder             | Content |
+| ---                | ---     |
+| lectures           | Lecture slides |
+| 2021/exercise      | The exercises associated with each lecture, 2021 fall semester. |
+| 2021/solutions     | Solutions to said exercises, 2021 fall semester. |
+| 2021/misc          | Miscellanea such as data sets, previous exams, and additional resources, 2021 fall semester. |
