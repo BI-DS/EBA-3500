@@ -189,19 +189,19 @@ plt.show()
 ## Maximum likelihood estimation
 
 -   Assume $Y_1,Y_2,\ldots,Y_n$ are sampled iid from the density $f_\theta(y)$.
--   Then the *maximum likelihood estimator* is $\hat{\theta}_{ML}=\text{argmin}_{\theta}\prod_{i=1}^{n}f(x_{i};\theta)$
--   The *likelihood* is $$L(\theta)=\boldsymbol{\prod_{i=1}^{n}f(x_{i};\theta)}$$
--   The *log-likelihood* is $$l(\theta)=\boldsymbol{\prod_{i=1}^{n}\log f(x_{i};\theta)}$$
+-   Then the *maximum likelihood estimator* is $\hat{\theta}_{ML}=\text{argmax}_{\theta}\prod_{i=1}^{n}f(x_{i};\theta)$
+-   The *likelihood* is $$L(\theta)={\prod_{i=1}^{n}f(x_{i};\theta)}$$
+-   The *log-likelihood* is $$l(\theta)={\sum_{i=1}^{n}\log f(x_{i};\theta)}$$
 -   And we have \begin{eqnarray*}
-    \hat{\theta}_{ML} & = & \text{argmin}_{\theta}L(\theta),\\
-     & = & \text{argmin}_{\theta}l(\theta).
+    \hat{\theta}_{ML} & = & \text{argmax}_{\theta}L(\theta),\\
+     & = & \text{argmax}_{\theta}l(\theta).
     \end{eqnarray*}
 
 ## Example: Normal model
 
--   **Recall the normal density function.** $$f(x;\mu,\sigma)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2}(x-\mu)^{2}}$$
--   **Log-likelihood of** $n$ observations: $$\sum_{i=1}^{n}\log f(x_{i};\mu,\sigma)=-\sum_{i=1}^{n}\frac{1}{2}(x_{i}-\mu)^{2}-n\log(\sqrt{2\pi}\sigma)$$
--   Differentiate: $\frac{d}{d\mu}\sum_{i=1}^{n}\log f(x_{i};\mu,\sigma)=\sum_{i=1}^{n}2(x_{i}-\mu)$
+-   **Recall the normal density function.** $$f(x;\mu,\sigma)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{1}{2\sigma^2}(x-\mu)^{2}}$$
+-   **Log-likelihood of** $n$ observations: $$\sum_{i=1}^{n}\log f(x_{i};\mu,\sigma)=-\sum_{i=1}^{n}\frac{1}{2\sigma^2}(x_{i}-\mu)^{2}-n\log(\sqrt{2\pi}\sigma)$$
+-   Differentiate: $\frac{d}{d\mu}\sum_{i=1}^{n}\log f(x_{i};\mu,\sigma)=\sum_{i=1}^{n}\frac{(x_{i}-\mu)}{\sigma^2}$
 -   Set equal to $0$ and obtain $$ \sum_{i=1}^{n}x_{i}=n\mu$$
 -   Hence $\hat{\mu}_{ML}=\frac{1}{n}\sum_{i=1}^{n}x_{i}$, i.e., the maximum likelihood estimator of $\mu$ is the mean.
 
@@ -213,7 +213,6 @@ plt.show()
 ### Not always possible to solve these equations by hand! {.fragment}
 
 ## Maximum likelihood: Properties
-
 -   Recall that a consistent estimator is a random variable $\hat{\theta_n}\stackrel{p}{\to}\theta$ as $n\to\infty$. Maximum likelihood estimators are consistent.
 -   Maximum likelihood estimators are *efficient*: An estimator $\hat{\theta_n^1}$ is efficient for $\theta$ if $\theta_n^1$ is consistent for $\theta$ and $\lim_{n\to\infty}\operatorname{Var}\hat{\theta}_n^1\leq \lim_{n\to\infty}\operatorname{Var}\hat{\theta}_n^2$ for every other estimator $\theta_n^2$ consistent for $\theta$. ***Thus the maximum likelihood estimator is the best estimator in the limit!***
 -   **The invariance principle**: If $\hat{\theta}$ is the maximum likelihood estimator of $\theta$ and $g$ is any function, then maximum likelihood estimator of $g(\theta)$ is $g(\hat{\theta})$.
