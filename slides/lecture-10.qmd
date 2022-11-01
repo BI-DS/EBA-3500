@@ -317,7 +317,7 @@ rng = np.random.default_rng(seed = 313)
 x = rng.uniform(size=100)
 y = 1 + x + rng.normal(size=100) * (x + 0.5) ** 2
 mod = smf.ols("y ~ x", data = {}).fit()
-plt.scatter(mod.resid, mod.predict())
+plt.scatter(mod.predict(), mod.resid)
 
 ```
 
@@ -544,105 +544,6 @@ ax.plot_surface(xx, yy, z, alpha=0.5)
 plt.show()
 ```
 
-# Collinear covariate matrices
-
-## Perfect collinearity
-
--   A set of covariates is perfectly collinear if you can write one of them as linear combination of the others.
--   If you have covariates $x_1, x_2, x_3, \ldots, x_p$, they are perfectly collinear if $x_1 = \sum_2^p \alpha_i x_i$ for some vector $\alpha$.
--   The design matrix is defined as $$X=\left[\begin{array}{cccc}
-    1 & x_{11} & \cdots & x_{p1}\\
-    1 & x_{12} & \cdots & x_{p2}\\
-    1 & x_{13} & \cdots & x_{p3}\\
-    \vdots & \vdots &  & \vdots\\
-    1 & x_{1n} & \cdots & x_{pn}
-    \end{array}\right]$$
-
-## Perfect collinearity: Example
-
-$$X=\left[\begin{array}{cccc}1 & 1 & 1 & 4\\1 & 2 & 4 & 6\\1 & 3 & 9 & 8\\1 & 4 & 16 & 14\\1 & 5 & 25 & 22\end{array}\right]$$
-
--   Observe that the final column is a linear combination of the other columns.
--   **Question:** How can you define $x_4$ in terms of the other column vectors?
-    -   **Answer:** $x_4 = 2x_1 + x_3 - x_2$.
-
-## Numerically singular
-
--   We can check perfect collinearity by checking if $X^TX$ is invertible!
--   Recall that a matrix is invertible if and only if all its eigenvalues are non-zero.
--   But what happens if an eigenvalues is *almost* 0?
-
-## "Almost" collinear
-
-$$X=\left[\begin{array}{cccc} 1 & 1 & 1 & 4\\ 1 & 2 & 4 & 6\\ 1 & 3 & 9 & 8\\ 1 & 4 & 16 & 14\\ 1 & 5 & 25 & 22 + 0.000001\\ \end{array}\right]$$
-
--   This matrix *is* invertible!
--   But can the computer "see" that it's invertible when we add a tiny tiny number to the final element of the matrix?
-
-## What happens in Python?
-
-```{python}
-#| error: true
-x = lambda eps: np.array(
-[[1,1,1,0],
-[1,2,4,2],
-[1,3,9,6],
-[1,4,16,12],
-[1,5,25,20 + eps]]
-)
-
-y = x(0)
-np.linalg.inv(y @ y.transpose())
-```
-
-That's expected, since we know the matrix is singular. But how about small $\epsilon$s?
-
-## Trying different $\epsilon$
-
-```{python}
-#| error: true
-y = x(0.000001)
-np.linalg.inv(y @ y.transpose())
-```
-
-That worked!
-
-```{python}
-#| error: true
-y = x(0.000000000000001)
-np.linalg.inv(y @ y.transpose())
-```
-
-But that didn't.
-
-## In practice
-
-```{python}
-#| error: true
-#| output-location: fragment
-import statsmodels.api as sm
-y = x(0.000000000000001)
-z = y @ np.array([1, 2, 3, 4])
-mod = sm.OLS(endog = z, exog = y).fit()
-print(mod.summary())
-```
-
-## Bouncing betas!
-
-```{python}
-#| error: true
-#| output-location: fragment
-import statsmodels.api as sm
-y = x(0.00000001)
-z = y @ np.array([1, 2, 3, 4])
-mod = sm.OLS(endog = z, exog = y).fit()
-print(mod.summary())
-```
-
--   A modification of `0.00000001` changed three coefficient estimates dramatically!
--   This phenomenon is called *bouncing betas*.
--   Most common when using many categorical covariates.
-
 # Summary (i)
 
 1.  The ROC displays the relationsship between the true positive rate and the false negative rate.
@@ -654,5 +555,4 @@ print(mod.summary())
 1.  You can handle outliers and clerical errors using robust regression models.
 2.  Residual plots can be used to find out if the residuals are heteroskedastic. If the residuals are heteroskedastic, you may use White (1980) corrected standard errors.
 3.  Quantile-quantile plots are used to check if residuals are normal. Be on the lookout for heavy tails.
-4.  Almost collinear covariate matrices make inference hard and can produce bouncing betas.
-5.  The adjusted $R^2$ can be used for model selection.
+4.  The adjusted $R^2$ can be used for model selection.
