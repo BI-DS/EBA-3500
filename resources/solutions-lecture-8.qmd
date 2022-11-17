@@ -16,6 +16,8 @@ jupyter: python3
 number-sections: true
 ---
 
+**Updated 17/11/2022: Fixed error in the exercise about the exponential distribution; clarified two points about the uniform distribution.**
+
 ## Maximum likelihood
 
 Recall the definition of the maximum likelihood estimator. If $X_1,X_2,\ldots, X_n\sim(\theta)$ are iid for some unknown $\theta$, the maximum likelihood estimator is $$\hat{\theta} =\operatorname{argmax}_\theta \sum_{i=1}^n \log f(X_i;\theta),$$ where $\theta$ can be either a scalar or a vector.
@@ -38,7 +40,7 @@ See e.g. [this site](https://online.stat.psu.edu/stat415/lesson/1/1.2).
 
 > Let $X_1,X_2,\ldots,X_n$ be iid from an exponential distribution with density $f(x; \lambda) = \lambda\exp(-\lambda x)$. Calculate the maximum likelihood estimator of $\lambda$. What is the maximum likelihood estimator of $\sin(\lambda)$?
 
-The maximum likelihood estimator is $\overline{x}$. The maximum likelihood estimator of $\sin(\lambda)$ is $\sin(\overline{x})$ by the invariance principle.
+The maximum likelihood estimator is $1/\overline{x}$. The maximum likelihood estimator of $\sin(\lambda)$ is $\sin(1/\overline{x})$ by the invariance principle.
 
 #### Asymptotics of $\hat{\lambda}$
 
@@ -48,7 +50,7 @@ The maximum likelihood estimator is $\overline{x}$. The maximum likelihood estim
 import numpy as np
 import seaborn as sns
 rng = np.random.default_rng(seed = 313)
-samples = rng.exponential(size = (10000, 100), scale = 2).mean(axis = 1)
+samples = 1/rng.exponential(size = (10000, 100), scale = 2).mean(axis = 1)
 sns.histplot(samples, bins = 100, stat = "density")
 ```
 
@@ -60,7 +62,7 @@ This histogram looks normal.
 
 ```{python}
 def sample(n):
-  theta_hats = rng.exponential(size = (10000, n), scale = 2).mean(axis = 1)
+  theta_hats = 1/rng.exponential(size = (10000, n), scale = 1/2).mean(axis = 1)
   return np.sqrt(n) * (theta_hats - 2)
 sns.histplot(sample(100), bins = 100, stat = "density")
 sns.histplot(sample(1000), bins = 100, stat = "density")
@@ -81,13 +83,13 @@ The variances stabilizes at $4$!
 
 #### The asymptotic variance (ii)
 
-> 1.  Calculate $\frac{\partial^2}{\partial\lambda^2}\log f(X;\lambda)$, i.e., the second derivative of the log-density of $X$ with respect to $\lambda$. (*Hint*: Take the logarith first, then differentiate with respect to $\lambda$ twice!)
+> 1.  Calculate $\frac{\partial^2}{\partial\lambda^2}\log f(X;\lambda)$, i.e., the second derivative of the log-density of $X$ with respect to $\lambda$. (*Hint*: Take the logarithm first, then differentiate with respect to $\lambda$ twice!)
 
-$\log (\lambda\exp[-\lambda x]) = \log(\lambda) - \lambda x$, so its derivative is $1/\lambda-x$ and second derivative $-1/\lambda$.
+$\log (\lambda\exp[-\lambda x]) = \log(\lambda) - \lambda x$, so its derivative is $1/\lambda-x$ and second derivative $-1/\lambda^2$.
 
 > 2.  Calculate the expectation of the expression you just found, $I(\lambda)=-E\left[\frac{\partial^{2}}{\partial\lambda^{2}}\log f(X;\lambda)\right]$
 
-Its expectation is $-1/\lambda^2$
+Its expectation is $1/\lambda^2$
 
 > 3.  What is $1/I(\lambda)$ when evaluated in $\lambda = 2$? Do you recognize it?
 
@@ -104,15 +106,15 @@ Let $X_1,X_2,\ldots X_n\sim f(x;b)$.
 
 > 1.  Verify that $f(x;b)$ is a density.
 
-The indefinite integral is $\int_ 1/b dx = x/b$. Now plug in the limits.
+The indefinite integral is $\int_1^b 1/b dx = x/b$. Now plug in the limits.
 
 > 2.  Calculate the expectation of $X \sim f(x, b)$. Can you imagine a reasonable estimator of $b$?
 
-The expectation is $b/2$ as $\int x dx = x^2/2$. When you plug in the limits. A reasonable estimator for $b$ is $2*E(X)$.
+The expectation is $b/2$ as $E(X)=\int_0^b x dx /b= b^2/(2b) = b/2$. When you plug in the limits. A reasonable estimator for $b$ is $2E(X)$.
 
 > 3.  Try to show that the maximum likelihood estimator of $b$ is $\max_{i=1}^n x_i$. (*Hint:* Don't use differentiation!)
 
-The smaller the upper limit $b$ is, the higher the likelihood, as long as every observation is smaller than or equal to $b$. (If $x>b$ the likelihood is $0$!) It follows that $\hat{b} = \max_{i=1}^n x_i$.
+The smaller the upper limit $b$ is, the higher the likelihood, as long as every observation is smaller than or equal to $b$. (If $x>b$ the likelihood is $0$!) It follows that $\hat{b} = \max_{i=1}^n x_i$. See e.g. [this link](https://ocw.mit.edu/courses/mathematics/18-443-statistics-for-applications-fall-2006/lecture-notes/lecture2.pdf), p. 13, for more details and explanation.
 
 > 4.  Compare the estimator you derived in (2) to the maximum likelihood estimator using the same techniques as in the exercise on the exponential distribution. But you might have to multiply with $n$ instead of $\sqrt{n}$ for the histograms to stabilize! Which estimator do you prefer, and why?
 

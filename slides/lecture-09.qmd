@@ -131,7 +131,7 @@ Let $\boldsymbol{X}\in\mathbb{R}^k$ be multivariate random variable with mean $\
 
 -   The *Fisher information* is $$I(\theta)=E\left[\left(\frac{\partial}{\partial\theta}\log f(X;\theta\right)^{2}\mid\theta\right]$$
 -   Almost always equal to $$I(\theta)=-E\left[\frac{\partial^{2}}{\partial\theta^{2}}\log f(X;\theta)\mid\theta\right]$$
--   Summarizes the information about the parameter contaied in one observation.
+-   Summarizes the information about the parameter contained in one observation.
 
 ## Example Fisher information
 
@@ -149,7 +149,7 @@ Let $\boldsymbol{X}\in\mathbb{R}^k$ be multivariate random variable with mean $\
 ::: {#thm-line2}
 ## Multivariate central limit theorem
 
-Let $\hat{\theta}$ be a maximum likelihood estimator and $\theta$ be the true parameter value. Then $\hat{\theta}$ is asymptoticall normal with limiting variance equal to the inverse Fisher information, i.e., $$\sqrt{n}(\hat{\theta}-\theta) \to N(0, I(\theta)^{-1})$$
+Let $\hat{\theta}$ be a maximum likelihood estimator and $\theta$ be the true parameter value. Then $\hat{\theta}$ is asymptotically normal with limiting variance equal to the inverse Fisher information, i.e., $$\sqrt{n}(\hat{\theta}-\theta) \to N(0, I(\theta)^{-1})$$
 :::
 :::
 

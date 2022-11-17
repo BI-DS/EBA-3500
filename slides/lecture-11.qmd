@@ -231,6 +231,7 @@ plt.show()
 ## Using binary regression
 
 We have already modelled this:
+
 ```{python}
 rng = np.random.default_rng(seed = 313)
 x = np.linspace(0, 3, 100)
@@ -238,28 +239,32 @@ trues = np.sin(2 * np.pi * x) * x * np.exp(x)
 y = trues + rng.normal(0, 3, 100)
 ```
 
-::: {.fragment}
+::: fragment
 But how about this?
+
 ```{python}
 z = 1 * (trues > 0)
 ```
 :::
 
 ## Plotting splines
+
 Define a fitter function for the desired degrees of freedom:
+
 ```{python}
 def fit_model(df):
   formula = "z ~ bs(x, degree = 3, " + "df = " + str(df) + ")"
   return smf.logit(formula, data = pd.DataFrame({"x" :x, "z":z})).fit()
 ```
 
-::: {.fragment}
+::: fragment
 ```{python}
 print(fit_model(5).summary())
 ```
 :::
 
 ## On the regression data
+
 ```{python}
 def fit_model(df):
   formula = "y ~ bs(x, degree = 3, " + "df = " + str(df) + ")"
@@ -268,6 +273,7 @@ def fit_model(df):
 ```
 
 ## 
+
 ```{python}
 #| echo: false
 #| fig-align: center
@@ -440,7 +446,7 @@ plt.rcParams["figure.figsize"] = (12, 5)
 ```
 
 -   **Question:** Why would you care about this?
-  -   **Answers:** It tells you how uncertain your prediction is! The prediction isn't worth much when the uncertainty is huge!
+-   **Answers:** It tells you how uncertain your prediction is! The prediction isn't worth much when the uncertainty is huge!
 -   But how do we do this thing for multiple linear regression models and logistic regression models?
 
 ## Pointwise confidence bands
@@ -460,6 +466,7 @@ Usually $\alpha = 0.1$ or $\alpha = 0.05$.
 ## Construction for logistic regression models
 
 This is an implementation of confidence bands for logistic regression models with on covariate $x$.
+
 ```{python}
 def logistic_conf_bands(formula, x, data):
   """ Plot logistic 95% confidence bands for `formula` with x-axis variable
@@ -483,6 +490,7 @@ def logistic_conf_bands(formula, x, data):
   ax.set_ylim(bottom=0, top=1)
   ax.get_legend().remove()  
 ```
+
 ## Example
 
 ```{python}
@@ -497,6 +505,7 @@ predictions.head()
 ```
 
 ## Simple model
+
 ```{python}
 formula = "outcome ~ prediction"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -505,6 +514,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## Is it U-shaped? ;)
+
 ```{python}
 formula = "outcome ~ prediction + I(prediction**2)"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -513,6 +523,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## Simple model (2)
+
 ```{python}
 from scipy.special import logit
 formula = "outcome ~ logit(prediction)"
@@ -522,6 +533,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## More complex model
+
 ```{python}
 formula = "outcome ~ prediction + logit(prediction)"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -530,6 +542,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## B-spline model
+
 ```{python}
 formula = "outcome ~ bs(prediction, degree = 3, df = 5)"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -538,6 +551,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## Polynomial model
+
 ```{python}
 formula = "outcome ~ np.vander(prediction, 7, increasing=True) - 1"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -546,6 +560,7 @@ smf.logit(formula, data = predictions).fit().aic
 ```
 
 ## B-spline with logit transform
+
 ```{python}
 formula = "outcome ~ bs(logit(prediction), degree = 3, df = 5)"
 logistic_conf_bands(formula, "prediction", predictions)
@@ -574,7 +589,7 @@ $$X=\left[\begin{array}{cccc}1 & 1 & 1 & 0\\1 & 2 & 4 & 2\\1 & 3 & 9 & 6\\1 & 4 
 -   Observe that the final column is a linear combination of the other columns.
 -   **Question:** How can you define $x_4$ in terms of the other column vectors?
     -   **Answer:** $x_4 = 2x_1 - x_2 + x_3$.
--   ***This always happens if there are more predictors than observations, $n < p$!*** The easiest way to accidentally get into this situation is by adding loads of categorical variables to your model.
+-   ***This always happens if there are more predictors than observations,*** $n < p$! The easiest way to accidentally get into this situation is by adding loads of categorical variables to your model.
 
 ## Numerically singular
 
