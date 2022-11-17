@@ -30,5 +30,16 @@ url = "https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive
 bank = pd.read_csv(url)
 bank.head()
 
-mod = smf.logit("y ~ job + marital", data = bank).fit().summary()
+mod = smf.logit("y ~ job + marital", data = bank).fit()
 aov = sm.stats.anova_lm(mod, typ =1)
+
+
+
+import numpy as np
+import pandas as pd
+liver = pd.read_csv("indian_liver_patient.csv")
+
+
+import pyreadr
+endometrial = pyreadr.read_r("endometrial.Rda")["endometrial"]
+
