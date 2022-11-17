@@ -28,10 +28,9 @@ You can find the solution [here](https://stats.stackexchange.com/questions/27538
 
 ### Normal distribution
 
-> I showed in class that $\hat{\mu}_{ML} = \overline{x}$, the empirical mean, when the observations $x$ are sampled from a normal distribution $N(\mu,\sigma)$. Try to show this yourself! [...] Show that the maximum likelihood estimator of $\sigma$ is $\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_{i}-\overline{x})^{2}}$. (*Hint:* You must use the expression for the maximum likelihood of $\mu$ that you have already derived to derive the maximum likelihood estimator of $\sigma^2$. Then use the [invariance principle](https://stats.stackexchange.com/a/77661/179305).)
+> I showed in class that $\hat{\mu}_{ML} = \overline{x}$, the empirical mean, when the observations $x$ are sampled from a normal distribution $N(\mu,\sigma)$. Try to show this yourself! \[...\] Show that the maximum likelihood estimator of $\sigma$ is $\sqrt{\frac{1}{n}\sum_{i=1}^{n}(x_{i}-\overline{x})^{2}}$. (*Hint:* You must use the expression for the maximum likelihood of $\mu$ that you have already derived to derive the maximum likelihood estimator of $\sigma^2$. Then use the [invariance principle](https://stats.stackexchange.com/a/77661/179305).)
 
 See e.g. [this site](https://online.stat.psu.edu/stat415/lesson/1/1.2).
-
 
 ### The exponential distribution
 
@@ -73,6 +72,7 @@ The distributions are more or less the same, and they look normal.
 #### The asymptotic variance (i)
 
 Use the function in (b) to estimate the *asymptotic variance* $n\operatorname{Var}(\hat{\theta}_{ML})$ as $n$ varies. What do you see?
+
 ```{python}
 [sample(n).var() for n in [100, 200, 1000, 5000, 10000]]
 ```
@@ -81,16 +81,15 @@ The variances stabilizes at $4$!
 
 #### The asymptotic variance (ii)
 
->1.  Calculate $\frac{\partial^2}{\partial\lambda^2}\log f(X;\lambda)$, i.e., the second derivative of the log-density of $X$ with respect to $\lambda$. (*Hint*: Take the logarith first, then differentiate with respect to $\lambda$ twice!)
+> 1.  Calculate $\frac{\partial^2}{\partial\lambda^2}\log f(X;\lambda)$, i.e., the second derivative of the log-density of $X$ with respect to $\lambda$. (*Hint*: Take the logarith first, then differentiate with respect to $\lambda$ twice!)
 
-$\log (\lambda\exp[-\lambda x]) = \log(\lambda) - \lambda x$, so its derivative is
-$1/\lambda-x$ and second derivative $-1/\lambda$.
+$\log (\lambda\exp[-\lambda x]) = \log(\lambda) - \lambda x$, so its derivative is $1/\lambda-x$ and second derivative $-1/\lambda$.
 
 > 2.  Calculate the expectation of the expression you just found, $I(\lambda)=-E\left[\frac{\partial^{2}}{\partial\lambda^{2}}\log f(X;\lambda)\right]$
 
 Its expectation is $-1/\lambda^2$
 
->3.  What is $1/I(\lambda)$ when evaluated in $\lambda = 2$? Do you recognize it?
+> 3.  What is $1/I(\lambda)$ when evaluated in $\lambda = 2$? Do you recognize it?
 
 It's $\lambda^2=4$, which equals the asymptotic variance we found above.
 
@@ -118,6 +117,7 @@ The smaller the upper limit $b$ is, the higher the likelihood, as long as every 
 > 4.  Compare the estimator you derived in (2) to the maximum likelihood estimator using the same techniques as in the exercise on the exponential distribution. But you might have to multiply with $n$ instead of $\sqrt{n}$ for the histograms to stabilize! Which estimator do you prefer, and why?
 
 Let's look at the mean times 2:
+
 ```{python}
 def means(n):
   theta_hats = rng.uniform(size = (10000, n), low = 0, high = 2).mean(axis = 1)
@@ -128,6 +128,7 @@ sns.histplot(means(10000), bins = 100, stat = "density")
 ```
 
 And the maximum, rescaled by $n$.
+
 ```{python}
 def maxs(n):
   theta_hats = rng.uniform(size = (10000, n), low = 0, high = 2).max(axis = 1)
@@ -141,12 +142,12 @@ sns.histplot(maxs(10000), bins = 100, stat = "density")
 
 Observe that the distribution is exponential, not normal!
 
-The asymptotic variance of the second estimator is much, much smaller, as it converges to $0$ with the rate $n^{-1}$ instead of $1/\sqrt{n}$! 
+The asymptotic variance of the second estimator is much, much smaller, as it converges to $0$ with the rate $n^{-1}$ instead of $1/\sqrt{n}$!
 
 For instance,
+
 ```{python}
 obs = rng.uniform(size = (10000, 100), low = 0, high = 2)
 obs.mean(axis=1).var()
 obs.max(axis=1).var()
 ```
-

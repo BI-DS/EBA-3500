@@ -26,6 +26,7 @@ number-sections: true
 ## Model selection
 
 ### Using the AIC
+
 We'll take a look the [Indian Liver Data](https://www.kaggle.com/datasets/uciml/indian-liver-patient-records), available at the Github page. The aptly named `Dataset` column is `1` if the row corresponds to a liver patient and `2` otherwise. This exercise is inspired by [this page](https://rpubs.com/arashmsda/Logistic_Regression_Stepwise_AIC).
 
 ```{python}
@@ -34,11 +35,11 @@ import pandas as pd
 liver = pd.read_csv("indian_liver_patient.csv")
 ```
 
-1. Fix the name of the `Dataset` column to something more informative and change its values from `1` and `2` to something better. (**Hint:** These are binary variables and we want to predict the value of `Dataset`!)
-2. Try out at least five different logistic models predicting `Dataset` from the other variables. 
-3. Interpret the regression coefficients. 
-4. Do the same exercise, but this time only for male patients. Do you conclude the same?
-5. Run the same models as in (2) and (4), but this time with the Probit and Cauchit link functions. Do they work better?
+1.  Fix the name of the `Dataset` column to something more informative and change its values from `1` and `2` to something better. (**Hint:** These are binary variables and we want to predict the value of `Dataset`!)
+2.  Try out at least five different logistic models predicting `Dataset` from the other variables.
+3.  Interpret the regression coefficients.
+4.  Do the same exercise, but this time only for male patients. Do you conclude the same?
+5.  Run the same models as in (2) and (4), but this time with the Probit and Cauchit link functions. Do they work better?
 
 ## Model fit
 

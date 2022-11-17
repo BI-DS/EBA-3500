@@ -133,7 +133,7 @@ plt.show()
 ## Three important $F$s
 
 | Name             | Link function $g$                         | $g^{-1} = F$              | Where?                       |
-|----------------|------------------------|----------------|----------------|
+|------------------|-------------------------------------------|---------------------------|------------------------------|
 | Logistic / logit | $\log\left(\frac{x}{1-x}\right)$          | $\frac{1}{1+e^{-x}}$      | Machine learning, statistics |
 | Probit           | $\Phi^{-1}$, the normal quantile function | $\Phi$, the normal CDF    | Economics, statistics        |
 | Cauchit          | $\tan(\pi(x-0.5))$                        | $\frac{1}{\pi}\arctan(x)$ | Used for heavy-tailed data   |
@@ -213,6 +213,7 @@ plt.show()
 ### Not always possible to solve these equations by hand! {.fragment}
 
 ## Maximum likelihood: Properties
+
 -   Recall that a consistent estimator is a random variable $\hat{\theta_n}\stackrel{p}{\to}\theta$ as $n\to\infty$. Maximum likelihood estimators are consistent.
 -   Maximum likelihood estimators are *efficient*: An estimator $\hat{\theta_n^1}$ is efficient for $\theta$ if $\theta_n^1$ is consistent for $\theta$ and $\lim_{n\to\infty}\operatorname{Var}\hat{\theta}_n^1\leq \lim_{n\to\infty}\operatorname{Var}\hat{\theta}_n^2$ for every other estimator $\theta_n^2$ consistent for $\theta$. ***Thus the maximum likelihood estimator is the best estimator in the limit!***
 -   **The invariance principle**: If $\hat{\theta}$ is the maximum likelihood estimator of $\theta$ and $g$ is any function, then maximum likelihood estimator of $g(\theta)$ is $g(\hat{\theta})$.
@@ -236,31 +237,29 @@ plt.show()
     $$
 -   It follows that he likelihood equals $$L(\beta) = \prod_{i=1}^{n}P(Y_{i}\mid X_{i})=\prod_{i=1}^{n}[p_{i}Y_{i}+(1-p_{i})(1-Y_{i})].$$
 -   Taing logarithms, we find the log-likelihood: $$l(\beta)=\sum_{i=1}^{n}\left[Y_{i}\log p_{i}+(1-Y_{i})\log(1-p_{i})\right].$$
--   This is the equation that is maximized when using logistic regression. Everyone
-    uses this equation or variants of it. 
+-   This is the equation that is maximized when using logistic regression. Everyone uses this equation or variants of it.
 
 ## Probit and logit using `statsmodels`
 
-* Probit and logit can be estimated directly.
+-   Probit and logit can be estimated directly.
 
-::: {.fragment}
+::: fragment
 ```{python .fragment}
 import statsmodels.formula.api as smf
 import statsmodels.api as sm
 probit = smf.probit("admit ~ gre", data=admission).fit()
 logit = smf.logit("admit ~ gre", data=admission).fit()
 ```
-::: 
+:::
 
-* Harder way, which is needed for link functions other than probit and logit. 
-The family argument says you want binary regressions.
+-   Harder way, which is needed for link functions other than probit and logit. The family argument says you want binary regressions.
 
-::: {.fragment}
+::: fragment
 ```{python .fragment}
 mod_logistic = smf.glm(formula="admit ~ gre", data=admission, family=sm.families.Binomial()).fit() 
 print(mod_logistic.summary())
 ```
-::: 
+:::
 
 # The latent variable model
 
@@ -304,7 +303,7 @@ smf.probit("y ~ x", data = {"x": x, "y": y}).fit().params
 ## Three models
 
 | Error ($\epsilon$)                   | Link function        | Model name     |
-|-----------------------------------|--------------------|------------------|
+|--------------------------------------|----------------------|----------------|
 | $N(0, \sigma)$                       | $\Phi^{-1}(x)$       | Probit model   |
 | $\operatorname{Logistic}(0, \sigma)$ | $\log\frac{x}{1-x}$  | Logistic model |
 | $\operatorname{Cauchy}(0, \sigma)$   | $\tan{[\pi(x-0.5)]}$ | Cauchit        |
@@ -379,8 +378,8 @@ Such questions have high *cognitive load*! They are hard to answer.
 
 Easy to answer! Just say yes or no.
 
-* The latent variable interpretation of binary regression justifies going from scales to binary variables!
-* It's also possible to combine both data sources; but that's beyond the scope of this course.
+-   The latent variable interpretation of binary regression justifies going from scales to binary variables!
+-   It's also possible to combine both data sources; but that's beyond the scope of this course.
 
 # Interpreting the coefficients
 
@@ -407,21 +406,25 @@ Easy to answer! Just say yes or no.
 -   So when the probabilities are small, $\exp{[\beta_j]\approx \text{RR}}$ of increasing the value of $x_j$ by $1$.
 
 ## Example
+
 ```{python}
 mod = smf.probit("admit ~ gre + gpa + rank", data=admission).fit()
 ```
+
 To intepret the coefficients we must exponentiate them.
+
 ```{python}
 np.exp(mod.params)
 ```
-Hence increasing `gpa` with 1 increases the probability of being 
-admitted by $60\%$, everything else held equal. Increasing the rank of the university by one decreases the probability by $30\%$ though.
+
+Hence increasing `gpa` with 1 increases the probability of being admitted by $60\%$, everything else held equal. Increasing the rank of the university by one decreases the probability by $30\%$ though.
 
 # Summary
-1. We need binary regression models since linear models do not make sense for binary data. In particular, they can predict probabilities outside $[0,1]$.
-2. Instead, we use link functions $G$ satisfying the property that $G^{-1}$ is a cumulative distribution function. Then we can model $P(Y_i = 1) = F(X^T \beta)$.
-3. The most popular link functions are the probit link and the logit link, used in logistic regression.
-4. Binary regression models can have a latent variable interpretation connecting them to linear regression.
-5. Maximum likelihood estimation is the most popular method to generate estimators. Binary regression models are almost always estimated using maximum likelihood, not least squares.
-6. The parameters of a logistic regression model can be interpreted as the log-odds-ratio and approximate the relative risk.
-7. Both probit and logit models can be fitted using `statsmodels`, but other link functions require more work.
+
+1.  We need binary regression models since linear models do not make sense for binary data. In particular, they can predict probabilities outside $[0,1]$.
+2.  Instead, we use link functions $G$ satisfying the property that $G^{-1}$ is a cumulative distribution function. Then we can model $P(Y_i = 1) = G^{-1}(X^T \beta)$.
+3.  The most popular link functions are the probit link and the logit link, used in logistic regression.
+4.  Binary regression models can have a latent variable interpretation connecting them to linear regression.
+5.  Maximum likelihood estimation is the most popular method to generate estimators. Binary regression models are almost always estimated using maximum likelihood, not least squares.
+6.  The parameters of a logistic regression model can be interpreted as the log-odds-ratio and approximate the relative risk.
+7.  Both probit and logit models can be fitted using `statsmodels`, but other link functions require more work.
