@@ -18,7 +18,7 @@ number-sections: true
 
 ## Maximum likelihood and univariate distributions
 
-Recall that $\sqrt{n}(\hat{\theta} - \theta) \to N(0, I(\theta)^{-1})$, where $I(\theta)$ is the Fisher information. When $\theta$ is a scalar, you can use this information to construct confidence intervals for $\theta$ using the $Z$-interval construction. A $(1-\alpha)\%$ confidence interval for $\theta$ is $$CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)I(\theta)^{-1}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)I(\theta)^{-1}/\sqrt{n}],$$where $\Phi^{-1}$ is the quantile function of the normal distribution, called `ppf` in Scipy. Recall that $$\Phi^{-1}(1-\alpha/2)\approx 1.96$$ when $\alpha = 0.95$ and $$\Phi^{-1}(1-\alpha/2)\approx 1.64$$ when $\alpha = 0.90$.
+Recall that $\sqrt{n}(\hat{\theta} - \theta) \to N(0, I(\theta)^{-1})$, where $I(\theta)$ is the Fisher information. When $\theta$ is a scalar, you can use this information to construct confidence intervals for $\theta$ using the $Z$-interval construction. A $(1-\alpha)\%$ confidence interval for $\theta$ is $$CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)\sqrt{I(\theta)^{-1}}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)\sqrt{I(\theta)^{-1}}/\sqrt{n}],$$where $\Phi^{-1}$ is the quantile function of the normal distribution, called `ppf` in Scipy. Recall that $$\Phi^{-1}(1-\alpha/2)\approx 1.96$$ when $\alpha = 0.95$ and $$\Phi^{-1}(1-\alpha/2)\approx 1.64$$ when $\alpha = 0.90$.
 
 ### Poisson distribution
 

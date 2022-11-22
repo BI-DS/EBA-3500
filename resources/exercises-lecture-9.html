@@ -2636,7 +2636,7 @@ vertical-align: -.125em;
 
 <section id="maximum-likelihood-and-univariate-distributions" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="maximum-likelihood-and-univariate-distributions"><span class="header-section-number">1</span> Maximum likelihood and univariate distributions</h2>
-<p>Recall that <span class="math inline">\(\sqrt{n}(\hat{\theta} - \theta) \to N(0, I(\theta)^{-1})\)</span>, where <span class="math inline">\(I(\theta)\)</span> is the Fisher information. When <span class="math inline">\(\theta\)</span> is a scalar, you can use this information to construct confidence intervals for <span class="math inline">\(\theta\)</span> using the <span class="math inline">\(Z\)</span>-interval construction. A <span class="math inline">\((1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\theta\)</span> is <span class="math display">\[CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)I(\theta)^{-1}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)I(\theta)^{-1}/\sqrt{n}],\]</span>where <span class="math inline">\(\Phi^{-1}\)</span> is the quantile function of the normal distribution, called <code>ppf</code> in Scipy. Recall that <span class="math display">\[\Phi^{-1}(1-\alpha/2)\approx 1.96\]</span> when <span class="math inline">\(\alpha = 0.95\)</span> and <span class="math display">\[\Phi^{-1}(1-\alpha/2)\approx 1.64\]</span> when <span class="math inline">\(\alpha = 0.90\)</span>.</p>
+<p>Recall that <span class="math inline">\(\sqrt{n}(\hat{\theta} - \theta) \to N(0, I(\theta)^{-1})\)</span>, where <span class="math inline">\(I(\theta)\)</span> is the Fisher information. When <span class="math inline">\(\theta\)</span> is a scalar, you can use this information to construct confidence intervals for <span class="math inline">\(\theta\)</span> using the <span class="math inline">\(Z\)</span>-interval construction. A <span class="math inline">\((1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\theta\)</span> is <span class="math display">\[CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)\sqrt{I(\theta)^{-1}}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)\sqrt{I(\theta)^{-1}}/\sqrt{n}],\]</span>where <span class="math inline">\(\Phi^{-1}\)</span> is the quantile function of the normal distribution, called <code>ppf</code> in Scipy. Recall that <span class="math display">\[\Phi^{-1}(1-\alpha/2)\approx 1.96\]</span> when <span class="math inline">\(\alpha = 0.95\)</span> and <span class="math display">\[\Phi^{-1}(1-\alpha/2)\approx 1.64\]</span> when <span class="math inline">\(\alpha = 0.90\)</span>.</p>
 <section id="poisson-distribution" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">1.1</span> Poisson distribution</h3>
 <p>Let <span class="math inline">\(f(k;\lambda)=\frac{\lambda^{k}e^{-\lambda}}{k!}\)</span> be the pmf of a Poisson distribution with parameter <span class="math inline">\(\lambda\)</span>. The Poisson distribution is used to event counts when the probability of an event happening is very small but there are many occasions where an event can happen. It is used, e.g., for modeling the number of insurance claims.</p>
@@ -2648,7 +2648,7 @@ vertical-align: -.125em;
 <li>Use the asymptotic theory of maximum likelihood estimation to derive a confidence interval for <span class="math inline">\(\lambda\)</span>.</li>
 <li>Using the <a href="https://www.statista.com/statistics/437961/number-of-road-deaths-in-norway/">annual fatal car crash data</a>, estimate <span class="math inline">\(\lambda\)</span> and calculate a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\lambda\)</span>.</li>
 </ol>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>crashes <span class="op">=</span> [<span class="dv">242</span>, <span class="dv">233</span>, <span class="dv">255</span>, <span class="dv">212</span>, <span class="dv">208</span>, <span class="dv">168</span>, <span class="dv">145</span>, <span class="dv">187</span>, <span class="dv">147</span>, <span class="dv">117</span>, <span class="dv">135</span>, <span class="dv">106</span>, <span class="dv">108</span>, <span class="dv">108</span>, <span class="dv">93</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="7" type="1">
@@ -2668,7 +2668,7 @@ vertical-align: -.125em;
 <li>Use the asymptotic theory of maximum likelihood estimation to derive a confidence interval for <span class="math inline">\(\sigma\)</span>.</li>
 <li>Use the following data of “blood plasma beta concentration (in pmol/L) for <span class="math inline">\(n=10\)</span> men” (Devore &amp; Berk 2011, p. 349) to estimate <span class="math inline">\(\sigma\)</span> and calculate a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\sigma\)</span>.</li>
 </ol>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plasma <span class="op">=</span> [<span class="fl">16.88</span>, <span class="fl">10.23</span>, <span class="fl">4.59</span>, <span class="fl">6.66</span>, <span class="fl">13.68</span>, <span class="fl">14.23</span>, <span class="fl">19.87</span>, <span class="fl">9.40</span>, <span class="fl">6.51</span>, <span class="fl">10.95</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -2677,12 +2677,12 @@ vertical-align: -.125em;
 <h2 data-number="2" class="anchored" data-anchor-id="logistic-regression-modelling"><span class="header-section-number">2</span> Logistic regression modelling</h2>
 <section id="marketing-data" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="marketing-data"><span class="header-section-number">2.1</span> Marketing data</h3>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">&quot;https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv&quot;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>bank <span class="op">=</span> pd.read_csv(url)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>bank.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
 <div>
 
@@ -2854,7 +2854,7 @@ vertical-align: -.125em;
 <section id="endometrial-data" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="endometrial-data"><span class="header-section-number">2.2</span> Endometrial data</h3>
 <p>Load the endometrial data, available at the Github rep under the “resources folder.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadr</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>endometrial <span class="op">=</span> pyreadr.read_r(<span class="st">&quot;endometrial.Rda&quot;</span>)[<span class="st">&quot;endometrial&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
