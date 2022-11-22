@@ -12,7 +12,7 @@ All subexercises are equally weighted.
 
 ## 1 Mathematical questions
 
-In this exercise $X_i$ are $n$ iid observations from a normal distribution with unknown mean $\mu$ and unknown standard deviation $\sigma^2$ .
+In this exercise $X_i$ are $n$ iid observations from a normal distribution with unknown mean $\mu$ and unknown standard deviation $\sigma$.
 
 ### 1.a.
 
@@ -104,6 +104,3 @@ Alice shows Bob some limited output for four models she fitted:
 | 4           | 0.161     |  0.035 |
 
 Which of these models would you prefer, and why?
-
-### 2.h
-Tjodleif is a social scientist studying the happiness. He has surveyed 200 Bergensere about their happiness level and age. Now he claims that happiness and age is inverse U-shaped, i.e., happiness tends to decrease with age up to a certain point (e.g. 40) and then increase! He based his conclusion on 
