@@ -2566,7 +2566,7 @@ vertical-align: -.125em;
 
 </header>
 
-<p><strong><em>Note:</em></strong> This is an almost-mock exam! I’ve only included the mathematical questions. The real exam is very similar to the actual mock exam, with a couple of non-mathematical questions too. Press on the “solution” to display the solution to the exercise. (But make sure you try to solve the exercise first! 😉)</p>
+<p><strong><em>Note:</em></strong> This is an almost-mock exam! I’ve only included the mathematical questions. The real exam is very similar to the actual mock exam, with a couple of non-mathematical questions too. Press on the “solution” to display the solution to the exercise. (But make sure you try to solve the exercise first!)</p>
 <section id="mathematical-questions" class="level2">
 <h2 class="anchored" data-anchor-id="mathematical-questions">1 Mathematical questions</h2>
 <p>In this exercise <span class="math inline">\(X_i\)</span> are <span class="math inline">\(n\)</span> iid observations from a Pareto distribution with shape parameter <span class="math inline">\(\alpha\)</span> and scale parameter <span class="math inline">\(x_m\)</span>. Its density is <span class="math display">\[f(x; \alpha, x_m) = \frac {\alpha x_m^\alpha}{x^{\alpha+1}},\quad[x_m, \infty).\]</span></p>
@@ -2720,7 +2720,7 @@ Solution
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>By the invariance principle, <span class="math inline">\(\hat{\beta_{ML}} = \log(\hat{\alpha}_{ML})\)</span>.</li>
-<li>The derivative of <span class="math inline">\(\log(x)\)</span> is <span class="math inline">\(1/x\)</span>, hence <span class="math inline">\((\frac{d}{d\alpha} \log(\alpha))^2 = 1/\alpha^2\)</span>. It follows from the delta method that <span class="math inline">\(\sqrt{n}(\hat{\beta_{ML}} - \beta) \to N(0,\alpha^{-4})\)</span>.</li>
+<li>The derivative of <span class="math inline">\(\log(x)\)</span> is <span class="math inline">\(1/x\)</span>, hence <span class="math inline">\((\frac{d}{d\alpha} \log(\alpha))^2 = 1/\alpha^2\)</span>. It follows from the delta method that <span class="math inline">\(\sqrt{n}(\hat{\beta_{ML}} - \beta) \to N(0,1)\)</span>, as the asymptotic variance of <span class="math inline">\(\hat{\alpha}\)</span> is the inverse Fisher information.</li>
 </ol>
 </div>
 </div>
@@ -2743,9 +2743,9 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Suppose that <span class="math inline">\(\sqrt{n}(\hat{\theta} - \theta) \to N(0, \tau)\)</span>. Using the <span class="math inline">\(Z\)</span>-interval construction (see exercises for 9), a <span class="math inline">\((1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\theta\)</span> is <span class="math display">\[CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)\sqrt{\hat{\tau}}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)\sqrt{\hat{\tau}}/\sqrt{n}],\]</span> where <span class="math inline">\(\Phi^{-1}\)</span> is the quantile function of the normal distribution, called ppf in Scipy, and <span class="math inline">\(\hat{\tau}\)</span> is an estimator of <span class="math inline">\(\tau\)</span>. Recall that <span class="math display">\[\Phi^{-1}(1-\alpha/2)\approx 1.96\]</span> when <span class="math inline">\(\alpha = 0.95.\)</span></p>
 <p><strong>Important!</strong> You want to remember that at <span class="math inline">\(95\%\)</span> confidence interval (with <span class="math inline">\(\alpha=0.95\)</span>) has <span class="math inline">\(\Phi^{-1}(1-\alpha/2)\approx 1.96\)</span>! You can then remember the confidence interval construction as <span class="math inline">\(\hat{\theta} \pm 1.96\sqrt{\hat{\tau}}/\sqrt{n}\)</span>!</p>
-<p>Anyway. In our case <span class="math inline">\(\theta = \log\alpha\)</span>, and its estimator is <span class="math inline">\(\theta = \log{\hat{\alpha}}\)</span>. Moreover, the estimator of <span class="math inline">\(\tau\)</span> is <span class="math inline">\(1/\hat{\alpha}^4\)</span>, hence the confidence interval is</p>
+<p>Anyway. In our case <span class="math inline">\(\theta = \log\alpha\)</span>, and its estimator is <span class="math inline">\(\theta = \log{\hat{\alpha}}\)</span>. We know that the estimator of <span class="math inline">\(\tau\)</span> is <span class="math inline">\(1\)</span>, hence the confidence interval is</p>
 <p><span class="math display">\[
-\log{\hat{\alpha}} \pm 1.96/\sqrt{n}\cdot 1/\hat{\alpha}^4.
+\log{\hat{\alpha}} \pm 1.96/\sqrt{n}.
 \]</span></p>
 </div>
 </div>
@@ -2848,10 +2848,10 @@ Solution
 1
 \end{array}\right)=2
 \]</span> Using the confidence interval construction above, with <span class="math inline">\(\hat{\theta}=\hat{\beta}_{0}+2\hat{\beta}_{1}=3\)</span>,</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \hat{\theta}\pm\frac{1.96}{\sqrt{n}}\cdot\sqrt{\tau} &amp; = &amp; \hat{\beta}_{0}+2\hat{\beta}_{1}\pm\frac{1.96}{\sqrt{n}}\cdot\sqrt{2}\\
 &amp; = &amp; 3\pm\frac{1.96}{\sqrt{n}}\sqrt{2}
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 </div>
 </div>
 </div>

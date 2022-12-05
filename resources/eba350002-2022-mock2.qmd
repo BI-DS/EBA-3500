@@ -1,0 +1,199 @@
+---
+title: "EBA35002 Fall 2022 Almost-mock"
+subtitle: Written exam
+author: Jonas Moss
+format:
+  html:
+    self-contained: true
+editor: visual
+---
+
+***Note:*** This is an almost-mock exam! I've only included the mathematical questions. The real exam is very similar to the actual mock exam, with a couple of non-mathematical questions too. Press on the "solution" to display the solution to the exercise. (But make sure you try to solve the exercise first!)
+
+## 1 Mathematical questions
+
+In this exercise $X_i$ are $n$ iid observations from a Pareto distribution with shape parameter $\alpha$ and scale parameter $x_m$. Its density is $$f(x; \alpha, x_m) = \frac {\alpha x_m^\alpha}{x^{\alpha+1}},\quad[x_m, \infty).$$
+
+The expectation is $$E(X)=\begin{cases}
+\infty, & \text{when }\alpha\leq1,\\
+\frac{\alpha x_{m}}{\alpha-1}, & \text{when }\alpha>1.
+\end{cases}
+$$
+
+The variance equals $$\text{Var}(X)=\begin{cases}
+\infty, & \text{when }\alpha\leq2,\\
+\frac{x_{m}^{2}\alpha}{(\alpha-1)^{2}(a-1)}, & \text{when }\alpha>2.
+\end{cases}$$
+
+![Density of the Pareto distribution (wikipedia).](images/Probability_density_function_of_Pareto_distribution.svg.png)
+
+### 1.a.
+
+Suppose that that $\alpha > 1$. Show that the expectation of $X$ is $\frac{\alpha x_{m}}{\alpha-1}$. (***Hint:*** Use that $x^{-\alpha} = 1/x^{\alpha}$ and the integration rule $\int x^p = \frac{1}{p+1}x^{p+1}$ when $p\neq -1$.)
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+First assume that $\alpha>1$. We solve the integral $$\int_{x_{m}}^{\infty}xf(x)dx=\int_{x_{m}}^{\infty}x\frac{\alpha x_{m}^{\alpha}}{x^{\alpha+1}}dx = \alpha x_{m}^{\alpha}\int_{x_{m}}^{\infty}\frac{1}{x^{\alpha}}dx.$$ We know that $\int x^{p}=\frac{1}{p+1}x^{p+1}$ when $p\neq-1$. Thus \begin{eqnarray*}
+\int_{x_{m}}^{\infty}\frac{1}{x^{\alpha}}dx & = & \int_{x_{m}}^{\infty}\frac{1}{x^{\alpha}}dx,\\
+ & = & \left[-\frac{1}{\alpha-1}x^{-\alpha+1}\right]_{x_{m}}^{\infty},\\
+ & = & \frac{1}{\alpha-1}\left(x_{m}^{-\alpha+1}-0\right),\\
+ & = & \frac{x_{m}^{-\alpha+1}}{\alpha-1}.
+\end{eqnarray*} Thus the expectation is $$\alpha x_{m}^{\alpha}\int_{x_{m}}^{\infty}\frac{1}{x^{\alpha}}dx=\frac{\alpha x_{m}^{\alpha}x_{m}^{-\alpha+1}}{\alpha-1}=\frac{\alpha x_{m}}{\alpha-1}.$$
+:::
+
+### 1.b.
+
+Suppose that $\alpha>2$.
+
+1.  What is the asymptotic distribution of $\sqrt{n}(\overline{X}-\mu)$, where $\overline{x}$ denotes the mean of $x_1,x_2,\ldots,x_n$ and $\mu = EX$ is the expectation of $X$?
+2.  What is the name of this result?
+3.  Why do we need $\alpha>2$?
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+1.  By the central limit theorem, the asymptotic distribution of $\sqrt{n}(\overline{X}-\mu)$ is normal with standard deviation $\sigma = \sqrt{\operatorname{Var}(X)}$.
+2.  This is the central limit theorem (CLT).
+3.  We need $\alpha>2$ since the CLT works on when the variance of the iid components are finite.
+:::
+
+### 1.c.
+
+Show that the maximum likelihood estimator of $\alpha$ is $\hat{\alpha}=\frac{n}{\sum_{i=1}^{n}\log x_{i}}$.
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+$$\prod_{i=1}^{n}f(x_{i};\alpha)=\prod_{i=1}^{n}\frac{\alpha}{x_{i}^{\alpha+1}}$$ Now take logs and find $$n\log\alpha-(\alpha+1)\sum_{i=1}^{n}\log x_{i}$$ Differentiate wrt to $\alpha$ and set equal to $0$: $$\frac{n}{\alpha}-\sum_{i=1}^{n}\log x_{i}=0$$ Which implies $$1/\alpha=\sum_{i=1}^{n}\log x_{i}/n$$ Thus $\hat{\alpha}=\frac{n}{\sum_{i=1}^{n}\log x_{i}}$.
+:::
+
+### 1.d.
+
+What is the Fisher information of $\alpha$?
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+Differentiate $\frac{n}{\alpha}-\sum_{i=1}^{n}\log x_{i}$ once more to get $$-\frac{n}{\alpha^{2}}.$$ We don't care about $n$ when calculating the Fisher information, and by definition it equals $$E[-\frac{d^{2}}{d\theta^{2}}\log f(X;\theta)]=\frac{1}{\alpha^{2}}.$$
+:::
+
+### 1.e.
+
+Let $\theta$ be a $k$-dimensional vector parameter and $g: \mathbb{R}^k \to \mathbb{R}$ be a continuously differentiable function. Moreover, suppose $\sqrt{n}(\hat{\theta} -\theta)\stackrel{d}{\to} N(0,\Sigma)$. What is the asymptotic distribution of $\sqrt{n}(g(\hat{\theta})-g(\theta))$?
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+The *delta method (rule)* states that $\sqrt{n}(g(\hat{\theta})-g(\theta))$ converges to a normal with variance $\nabla g(\theta)^T \Sigma \nabla g(\theta)$, where $\nabla g(\theta)$ is the gradient of $g$ at $\theta$.
+:::
+
+### 1.f.
+
+Johnny C. Bad wants wants to estimate $\beta = \log{\alpha}$ instead of $\alpha$.
+
+1.  What is the maximum likelihood estimator of $\beta$?
+2.  What is the asymptotic distribution of $\sqrt{n}(\hat{\beta_{ML}} - \beta)$ where $\hat{\beta_{ML}}$ is the maximum likelihood estimator of $\beta$?
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+1.  By the invariance principle, $\hat{\beta_{ML}} = \log(\hat{\alpha}_{ML})$.
+2.  The derivative of $\log(x)$ is $1/x$, hence $(\frac{d}{d\alpha} \log(\alpha))^2 = 1/\alpha^2$. It follows from the delta method that $\sqrt{n}(\hat{\beta_{ML}} - \beta) \to N(0,1)$, as the asymptotic variance of $\hat{\alpha}$ is the inverse Fisher information.
+:::
+
+### 1.g
+
+Use the information in the previous exercise to construct an approximate $95\%$ confidence interval for $\log(\alpha)$. If you weren't able to solve the previous exercise, explain how you would do it.
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+Suppose that $\sqrt{n}(\hat{\theta} - \theta) \to N(0, \tau)$. Using the $Z$-interval construction (see exercises for 9), a $(1-\alpha)\%$ confidence interval for $\theta$ is $$CI(\theta; 1-\alpha) = [\hat{\theta} - \Phi^{-1}(1-\alpha/2)\sqrt{\hat{\tau}}/\sqrt{n}, \hat{\theta} + \Phi^{-1}(1-\alpha/2)\sqrt{\hat{\tau}}/\sqrt{n}],$$ where $\Phi^{-1}$ is the quantile function of the normal distribution, called ppf in Scipy, and $\hat{\tau}$ is an estimator of $\tau$. Recall that $$\Phi^{-1}(1-\alpha/2)\approx 1.96$$ when $\alpha = 0.95.$
+
+**Important!** You want to remember that at $95\%$ confidence interval (with $\alpha=0.95$) has $\Phi^{-1}(1-\alpha/2)\approx 1.96$! You can then remember the confidence interval construction as $\hat{\theta} \pm 1.96\sqrt{\hat{\tau}}/\sqrt{n}$!
+
+Anyway. In our case $\theta = \log\alpha$, and its estimator is $\theta = \log{\hat{\alpha}}$. We know that the estimator of $\tau$ is $1$, hence the confidence interval is
+
+$$
+\log{\hat{\alpha}} \pm 1.96/\sqrt{n}.
+$$
+:::
+
+### 1.h
+
+Using the results in the previous exercise, construct a confidence interval for $\beta$ when $\hat{\alpha} = e^1$. You may assume that $\alpha = 0.95$.
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+Plugging in the values of $\alpha$, we find that the confidence interval equals (approximately): $$
+1\pm\frac{1.96}{\sqrt{n}}\cdot e^{-4}
+$$
+:::
+
+------------------------------------------------------------------------
+
+Consider the regression model $y=\beta_{0}+\beta_{1}x+\sigma\epsilon$, where $\epsilon$ is normal with mean $0$ and standard deviation $1$. Let $\hat{\beta}$ the least squares estimator of $\beta=(\beta_{0},\beta_{1})$, which equals the maximum likelihood estimator, and assume that $$
+\sqrt{n}(\hat{\beta}-\beta)=N(0,\Sigma),
+$$ with $$
+\Sigma=\left[\begin{array}{cc}
+2 & -1\\
+-1 & 1
+\end{array}\right].
+$$
+
+### 1.i
+
+1.  What is the general formula for predicting $y$ from $x$?
+
+2.  Predict $y$ when $x=2$, $\beta_{0}=3$ and $\beta_{1}=2$.
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+1.  That's $\beta_0 + \beta_1 x$ in this case.
+2.  It's $3 + 2\cdot 2 = 7$!
+:::
+
+### 1.j
+
+Suppose that $\hat{\beta}_{0}=1$ and $\hat{\beta}_{1}=1$, with $\Sigma$ as above. Construct a confidence interval for $\beta_{0}+2\beta_{1}$.
+
+::: {.callout-note collapse="true"}
+#### Solution
+
+We use the delta method with $g(x,y)=x+2y$; its gradient is $(1,2)^{T}$, so we need to solve
+
+$$
+\tau = \left(\begin{array}{c}
+1\\
+2
+\end{array}\right)^{T}\Sigma\left(\begin{array}{c}
+1\\
+2
+\end{array}\right)=\left(\begin{array}{c}
+1\\
+2
+\end{array}\right)^{T}\left[\begin{array}{cc}
+2 & -1\\
+-1 & 1
+\end{array}\right]\left(\begin{array}{c}
+1\\
+2
+\end{array}\right)=\left(\begin{array}{c}
+1\\
+2
+\end{array}\right)^{T}\left(\begin{array}{c}
+0\\
+1
+\end{array}\right)=2
+$$ Using the confidence interval construction above, with $\hat{\theta}=\hat{\beta}_{0}+2\hat{\beta}_{1}=3$,
+
+```{=tex}
+\begin{eqnarray*}
+\hat{\theta}\pm\frac{1.96}{\sqrt{n}}\cdot\sqrt{\tau} & = & \hat{\beta}_{0}+2\hat{\beta}_{1}\pm\frac{1.96}{\sqrt{n}}\cdot\sqrt{2}\\
+ & = & 3\pm\frac{1.96}{\sqrt{n}}\sqrt{2}
+\end{eqnarray*}
+```
+:::
