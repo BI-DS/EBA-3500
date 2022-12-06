@@ -127,8 +127,8 @@ Using the results in the previous exercise, construct a confidence interval for 
 ::: {.callout-note collapse="true"}
 #### Solution
 
-Plugging in the values of $\alpha$, we find that the confidence interval equals (approximately): $$
-1\pm\frac{1.96}{\sqrt{n}}\cdot e^{-4}
+Plugging in the values of $\alpha$, we find that the confidence interval equals (approximately). $$
+1\pm\frac{1.96}{\sqrt{n}}
 $$
 :::
 
