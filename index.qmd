@@ -1,7 +1,7 @@
 # Introduction {.unnumbered}
 
 ::: callout-warning
-This webpage is not finished yet. The pages for lecture 2 and lecture 3 are finished, but the rest are still not done. I will attempt to fill in the rest of the pages with the needed lecture notes and exercises within 27/8. (20/8) 
+This webpage is not finished yet. The pages for lecture 2 and lecture 3 are finished, but the rest are still not done. I will attempt to fill in the rest of the pages with the needed lecture notes and exercises within 27/8. (20/8)
 :::
 
 Welcome to the course [Data Analysis with Programming](https://programmeinfo.bi.no/nb/course/EBA-3500). This page contains the curriculum, exercises, and additional information for the course. If you need to get in contact with me, please send an e-mail to `jonas.moss@bi.no`. I do **not** check It's learning often.
@@ -14,7 +14,7 @@ You should know this book from your previous course in probability. We will foll
 
 **James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An Introduction to Statistical Learning. Springer US. https://doi.org/10.1007/978-1-0716-1418-1** 
 
-This on is available online for free; its webpage is [here](https://trevorhastie.github.io/ISLR/). It is a classic, and you can expect other data scientists to know it well. It is a simplified version Elements of Statistical Learning by Hastie, Tibshirani and Friedman, the best known and most widely referenced book of machine learning. The ambitious student will read Elements of Statistical Learning in addition to Introduction to Statistical Learning, but it is a significantly more difficult book.
+This one is available online for free; its webpage is [here](https://trevorhastie.github.io/ISLR/). It is a classic, and you can expect other data scientists to know it well. It is a simplified version Elements of Statistical Learning by Hastie, Tibshirani and Friedman, the best known and most widely referenced book of machine learning. The ambitious student will read Elements of Statistical Learning in addition to Introduction to Statistical Learning, but it is a significantly more difficult book.
 
 Be warned that Dekking et. al covers no programming at all, and James et al. uses `R` instead of `Python`. This will not cause us much difficulty, as `R` and `Python` are very similar languages. Supplementary material about `Python` can be found in the sidebar.
 
