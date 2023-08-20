@@ -38,7 +38,7 @@ You should search the internet for answers early on. Understanding what to searc
 
 -   [CrossValidated](https://stats.stackexchange.com) The most widely used statistics Q&A site. Most answers are trustworthy, but the answers are often of lower quality than the other pages, and sometimes wrong. Ignore answers that look iffy.
 
--   [Mathematics Stack Exhcange](https://math.stackexchange.com) You use this for math questions. Probably not that useful in this course, but it might come up.
+-   [Mathematics Stack Exchange](https://math.stackexchange.com) You use this for math questions. Probably not that useful in this course, but it might come up.
 
 There is no definite 1st course in Python curriculum, which is a big and somewhat unwieldy language. You might not have learned about classes (object-oriented Python) or list comprehensions, or maybe not dictionaries either. I will use these concepts without additional explanation. Hence I would *strongly recommend* you spend 4 hours or so getting reasonably familiar with object-oriented programming in Python. It is not strictly speaking necessary for this course, as you won't be asked to write your own classes. But some understanding of classes, methods, and attributes will help you understand what's going on, perhaps even to a great degree! A reasonable place to start would be the videos of [freeCodeCamp](https://www.youtube.com/watch?v=Ej_02ICOIgs&ab_channel=freeCodeCamp.org).
 
