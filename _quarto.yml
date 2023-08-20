@@ -26,7 +26,6 @@ book:
     - site/11-statistical-learning.qmd
     - site/12-basics-of-linear-regression.qmd
     - site/13-inference-for-linear-regression.qmd
-    - site/14-binary-regression.qmd
 
 format:
   html:
