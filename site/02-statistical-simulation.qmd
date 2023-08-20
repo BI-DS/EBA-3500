@@ -1,0 +1,231 @@
+# Statistical simulation
+
+> For us, there are two reasons to learn about stochastic simulation. The first is that for complex systems, simulation can be an alternative to mathematical analysis, sometimes the only one. The second reason is that through simulation, we can get more feeling for random variables, and this is why we study stochastic simulation at this point in the book. (Dekking et al., p. 72)
+
+## Curriculum
+
+### Core readings
+
+1. The notes below.
+
+2. (*Optional*) Dekking et al., Chapter 6: Simulations. Except Chapter 6.4 The single-server queue.
+
+### Random number generators
+
+We start by defining an random number generator (*rng*). Computers do not usually generate truly random numbers. Instead they generate so-called [pseudo-random numbers](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) using methods such as the [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator). (It is possible to generate truly random numbers using the [`RDRAND` instruction](https://en.wikipedia.org/wiki/RDRAND) on x64 processors, but this feature is almost never used for various reasons.)
+
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed = 313)
+rng
+```
+As you can see, the object `rng` is a `Generator(PCG64)`, i.e., a random number generator.
+
+Generator objects have methods, such as `uniform` and `normal`, that may be used to generate random values.
+
+```{python}
+rng.uniform(0, 1, size = 10)
+```
+This code generates a column vector of ten elements randomly sampled from the uniform distribution on $[0,1]$. The `size` argument is a Numpy dimension, hence you can write:
+
+```{python}
+rng.uniform(0, 1, size = (2, 10))
+```
+This is an array with $2$ rows and $10$ columns.
+
+Our generator `rng` was defined using the argument `seed = 313`. This is used for *reproducibility*. If you run the same code twice with the same seed, the result is going to be the same.
+
+```{python}
+rng1 = np.random.default_rng(seed = 313)
+rng2 = np.random.default_rng(seed = 313)
+(rng1.uniform(0, 1, size = (2, 2)), rng2.uniform(0, 1, size = (2, 2)))
+```
+But the results will not be the same if we do not provide the seed!
+```{python}
+rng1 = np.random.default_rng()
+rng2 = np.random.default_rng()
+(rng1.uniform(0, 1, size = (2, 2)), rng2.uniform(0, 1, size = (2, 2)))
+```
+
+Reproducibility is important in scientific applications, as the reader of your work can exactly reproduce your simulations on his own computer. It's also relevant for our coursework, as it allows your teacher to automatically grade your submissions.
+
+The first two arguments of `rng.uniform` specify the start point and end point of the interval we sample from.
+
+```{python}
+rng1 = np.random.default_rng(seed = 313)
+rng2 = np.random.default_rng(seed = 313)
+x = rng1.uniform(2, 5, size = (2, 2)) # starting at 2 and ending at 5,
+y = rng2.uniform(0, 1, size = (2, 2)) # starting at 0 and ending at 1.
+
+(x, 3*y + 2)
+```
+
+Now $x$ and $y$ are the same. This will always be the case.
+
+#### Quick exercise
+
+Generate an array of uniformly distributed numbers on $[1,5]$ with $3$ rows and $4$ columns.
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{python}
+x = rng1.uniform(2, 5, size = (3, 4))
+x
+```
+:::
+
+
+### Using distributions
+
+You can generate normally distributed random values with mean `mu` and standard deviation `sigma` using `rng.normal(mu, sigma, size)`. Again, the `size` argument tells `numpy` how many rows, columns and potentially more dimensions you want your array to have.
+
+```{python}
+x = rng1.normal(0, 1, 10000)
+```
+Let's verify that `x` is normally distributed by plotting its histogram.
+
+```{python}
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.histplot(x)
+plt.show()
+plt.clf()
+```
+Recall the formula for the density of the normal distribution,
+$$f(x;\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma}\exp{\lbrack-\frac{1}{2}(x-\mu)^2}\rbrack.$$
+To verify that the histogram is normal, we can overlay the density of a normal on top of it. 
+```{python}
+y = np.linspace(-5, 5, 1000)
+def normpdf(x, mu = 0, sigma = 1):
+  return np.exp(-(x - mu) ** 2 * 0.5) * 1/(np.sqrt(2 * np.pi) * sigma)
+
+sns.histplot(x, stat = "density")
+plt.plot(y, normpdf(y), color = "red")
+plt.show()
+```
+
+The `Generator` object supports random sampling from many other distributions too. See [the documenation](https://numpy.org/doc/stable/reference/random/generator.html#distributions) for a complete list. The examples below are especially important.
+
+| Function   | Distribution | 
+| --------   | ------------ |
+| `integers` | Random integers from low (inclusive) to high (exclusive).
+| `choice`   | Sample from an array with or without replacement.
+| `uniform`  | Uniformly distributed numbers.
+| `random`   | Uniformly distributed numbers on `[0,1]`.
+| `normal`   | Normally distributed numbers.
+| `standard_normal` | Normally distributed numbers with mean 0 and standard deviation 1.
+| `exponential` | Exponentially distributed numbers with scale parameter.
+| `standard_exponential` | Exponentially distributed numbers with scale parameter 1.
+
+#### Quick exercise
+
+Simulate $10,000$ random variables from a standard exponential. Verify that the random variables were simulated from an exponential by overlaying the standard exponential density.
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{python}
+x = rng1.standard_exponential(10000)
+y = np.linspace(0, 6, 1000)
+sns.histplot(x, stat = "density")
+plt.plot(y, np.exp(-y), color = "red")
+plt.show()
+```
+:::
+
+### Simulating dice throws
+
+Random number generators are often used to calculate probabilities that are hard to calculate by hand. You might be able to calculate, say, what he probability of getting a sum equal to $7$ is when throwing $2$ dice. But what about the probability that the maximal value $6$ or that the sum is $7$? This is also doable by hand, but it's easier to do it by machine.
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+throws = rng.integers(1, 7, size = (10000, 2))
+# throws contaisn 10000 rows of two dice throws.
+totals = throws.sum(axis = 1)
+maxs = throws.max(axis = 1)
+(totals, maxs)
+```
+To calculate our probability, we need either `totals == 7` or `maxs == 6`. We can use vectorized "OR" using the Numpy function `logical_or` to calculate this.
+```{python}
+x = np.logical_or(totals == 7, maxs == 6)
+x
+```
+Then we can take their mean to figure out the probability.
+```{python}
+x.mean()
+```
+Thus the probability is approximately $0.41$. (Observe that Numpy automatically interprets `True` as `1` and `False` as `0` when forced to interpret boolean values as integers.)
+
+In practice, we would write all of this in one go, probably using a function.
+
+```{python}
+def prob(rng, n_reps = 10000):
+  throws = rng.integers(1, 7, size = (10000, 2))
+  return np.logical_or(throws.sum(axis = 1) == 7, throws.max(axis = 1) == 6).mean()
+  
+prob(rng)
+```
+The result of this simulation is slightly different from the last one. This is due to randomnes, pure and simple. As we have already generated values from our `rng`, we would have to reset it to get the same value as before.
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+prob(rng)
+```
+
+### More complex simulations
+Suppose that $$X_1,X_2,\ldots,X_k$$ are $k$ iid exponential variables with density $\frac{1}{\beta} e^{-\frac{1}{\beta} x}, \beta > 0$, where $\beta$ is the scale parameter. It has been claimed that the minimum of $k$ such variables are exponentially distributed with parameter $\beta / k$, i.e., $\min(X_1,X_2,\ldots,X_k)$ has density $\frac{k}{\beta} e^{-\frac{k}{\beta} x}$. Let's try to verify this using simulations.
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+x = rng.exponential(scale = 2, size = (10000, 10))
+minimas = x.min(axis = 1)
+```
+Let's plot and verify
+
+```{python}
+sns.histplot(minimas, stat = "density")
+y = np.linspace(0, 2, 100)
+plt.plot(y, 10/2 * np.exp(-10/2 * y), color = "red")
+plt.show()
+minimas
+```
+#### Quick exercise
+
+Turn the code above into a function of $k$ and $\beta$. Verify the formula visually for $k = 7, 99$ and $\beta = 1, 100$. 
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{python}
+rng = np.random.default_rng(seed = 313)
+def plotter(rng, beta, k):
+  x = rng.exponential(scale = 2, size = (10000, 10))
+  minimas = x.min(axis = 1)
+  sns.histplot(minimas, stat = "density")
+  y = np.linspace(0, 2, 100)
+  plt.plot(y, k/beta * np.exp(-k/beta * y), color = "red")
+  plt.show()
+
+plotter(rng, 1, 7)
+plotter(rng, 10, 7)
+plotter(rng, 100, 7)
+plotter(rng, 1, 99)
+plotter(rng, 10, 99)
+plotter(rng, 100, 99)
+  
+```
+:::
+
+## Exercises
+
+### Exercise 1
+Write a function `maximum_throw` that approximates the probability of the maximal throw. It should take the same arguments as 'minimum_throw'. Plot a bargraph of maximum_throw alongside a bar graph for minimum_throw when `throw = 5` in both cases. What do you see?
+
+### Exercise 2
+Write a function `sum_throw` that finds the probability of obtaining every possible sums of `throw` dice. Make a bar plot of the distribution when `throw` equals 7.
+
+### Exercise 3
+Write a function that calculates the expected value of the sums in (2), i.e, `sum(probs * value)`.
+
+### Exercise 4
+Write a function that finds the probability of obtaining every possible product of `throw` dice. Rember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.
+
+*Hints:* Look up np.max, np.sum.
