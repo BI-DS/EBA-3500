@@ -226,6 +226,9 @@ Write a function `sum_throw` that finds the probability of obtaining every possi
 Write a function that calculates the expected value of the sums in (2), i.e, `sum(probs * value)`.
 
 ### Exercise 4
-Write a function that finds the probability of obtaining every possible product of `throw` dice. Rember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.
+Write a function that finds the probability of obtaining every possible product of `throw` dice. Remember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.
 
-*Hints:* Look up np.max, np.sum.
+*Hints:* Look up `np.max`, `np.sum`.
+
+### Exercise 5
+Make a Python function that displays a histogram and density for the beta distribution, found in `np.random`. It takes the arguments `n`, `a`, and `b`, then simulates `n` observations from a beta distribution with parameters `a` and `b`. It displays a histogram of the observations on `[0,1]` with the true Beta density superimposed.
