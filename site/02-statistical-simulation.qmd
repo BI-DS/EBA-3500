@@ -1,5 +1,10 @@
 # Statistical simulation
 
+::: {.callout-note}
+**Updated 31/8:** Added solutions to exercises 1-4 and fixed a bug in the
+solution to the quick exercise at the bottom.
+:::
+
 > For us, there are two reasons to learn about stochastic simulation. The first is that for complex systems, simulation can be an alternative to mathematical analysis, sometimes the only one. The second reason is that through simulation, we can get more feeling for random variables, and this is why we study stochastic simulation at this point in the book. (Dekking et al., p. 72)
 
 ## Curriculum
@@ -87,9 +92,9 @@ Let's verify that `x` is normally distributed by plotting its histogram.
 ```{python}
 import seaborn as sns
 import matplotlib.pyplot as plt
-sns.histplot(x)
-plt.show()
 plt.clf()
+sns.histplot(x, stat = "density")
+plt.show()
 ```
 Recall the formula for the density of the normal distribution,
 $$f(x;\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma}\exp{\lbrack-\frac{1}{2}(x-\mu)^2}\rbrack.$$
@@ -99,6 +104,7 @@ y = np.linspace(-5, 5, 1000)
 def normpdf(x, mu = 0, sigma = 1):
   return np.exp(-(x - mu) ** 2 * 0.5) * 1/(np.sqrt(2 * np.pi) * sigma)
 
+plt.clf()
 sns.histplot(x, stat = "density")
 plt.plot(y, normpdf(y), color = "red")
 plt.show()
@@ -126,6 +132,7 @@ Simulate $10,000$ random variables from a standard exponential. Verify that the 
 ```{python}
 x = rng1.standard_exponential(10000)
 y = np.linspace(0, 6, 1000)
+plt.clf()
 sns.histplot(x, stat = "density")
 plt.plot(y, np.exp(-y), color = "red")
 plt.show()
@@ -182,6 +189,7 @@ minimas = x.min(axis = 1)
 Let's plot and verify
 
 ```{python}
+plt.clf()
 sns.histplot(minimas, stat = "density")
 y = np.linspace(0, 2, 100)
 plt.plot(y, 10/2 * np.exp(-10/2 * y), color = "red")
@@ -197,18 +205,24 @@ Turn the code above into a function of $k$ and $\beta$. Verify the formula visua
 ```{python}
 rng = np.random.default_rng(seed = 313)
 def plotter(rng, beta, k):
-  x = rng.exponential(scale = 2, size = (10000, 10))
+  x = rng.exponential(scale = beta, size = (10000, k))
   minimas = x.min(axis = 1)
   sns.histplot(minimas, stat = "density")
-  y = np.linspace(0, 2, 100)
+  y = np.linspace(0, minimas.max(), 100)
   plt.plot(y, k/beta * np.exp(-k/beta * y), color = "red")
   plt.show()
 
+plt.clf()
 plotter(rng, 1, 7)
+plt.clf()
 plotter(rng, 10, 7)
+plt.clf()
 plotter(rng, 100, 7)
+plt.clf()
 plotter(rng, 1, 99)
+plt.clf()
 plotter(rng, 10, 99)
+plt.clf()
 plotter(rng, 100, 99)
   
 ```
@@ -217,18 +231,151 @@ plotter(rng, 100, 99)
 ## Exercises
 
 ### Exercise 1
-Write a function `maximum_throw` that approximates the probability of the maximal throw. It should take the same arguments as 'minimum_throw'. Plot a bargraph of maximum_throw alongside a bar graph for minimum_throw when `throw = 5` in both cases. What do you see?
+Write a function `maximum_throw` that approximates the probability of the maximal throw among `throw` throw. In other words, you throw `throw` dice, and calculate the maximum of them. To to approximate the probability, do this many times and use the `np.unique` function. (This is done in video 3!). Plot a bargraph of `maximum_throw` alongside a bar graph for minimum_throw when `throw = 5` in both cases. What do you see?
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{python}
+def maximum_throw(throws, rng, n_reps = 10 ** 5):
+    """ 
+    Returns a dictionary where "face" is the face of the die and "probability"
+    is the approximate probability that said face is the maximal die after
+    "throws" throws of the dice.
+
+    n_reps is the number of repetitions used in the simulation.
+    """
+    results = rng.integers(low = 1, high = 6 + 1, size = (n_reps, throws))
+    maximums = np.apply_along_axis(func1d = np.max, axis = 1, arr = results)
+    uniques, counts = np.unique(maximums, return_counts = True)
+    return {"face" : uniques, "probability" : counts / n_reps}
+
+def minimum_throw(throws, rng, n_reps = 10 ** 5):
+    """ 
+    Returns a dictionary where "face" is the face of the die and "probability"
+    is the approximate probability that said face is the minimal die after
+    "throws" throws of the dice.
+
+    n_reps is the number of repetitions used in the simulation; rng is a 
+    random number generator.
+    """
+    sims = rng.integers(low = 1, high = 6 + 1, size = (n_reps, throws))
+    results = np.apply_along_axis(func1d = np.min, axis = 1, arr = sims)
+    uniques, counts = np.unique(results, return_counts = True)
+    return {"face" : uniques, "probability" : counts / n_reps}
+
+# Let's simulate and plot!
+minimal_throws = minimum_throw(5, rng = rng)
+maximal_throws = maximum_throw(5, rng = rng)
+
+fig, ax = plt.subplots(1,2)
+sns.barplot(x = "face", y = "probability", data = maximal_throws, ax = ax[0])
+sns.barplot(x = "face", y = "probability", data = minimal_throws, ax = ax[1])
+plt.show()
+```
+:::
+
 
 ### Exercise 2
 Write a function `sum_throw` that finds the probability of obtaining every possible sums of `throw` dice. Make a bar plot of the distribution when `throw` equals 7.
 
+::: {.callout-tip collapse="true"}
+## Solution
+```{python}
+def sum_throw(throws, rng, n_reps = 10 ** 5):
+    """ 
+    Returns a dictionary where "sum" is the sum of the dice and "probability"
+    is the approximate probability that said sum occured.
+
+    n_reps is the number of repetitions used in the simulation.
+    """
+    results = rng.integers(low = 1, high = 6 + 1, size = (n_reps, throws))
+    maximums = np.apply_along_axis(func1d = np.sum, axis = 1, arr = results)
+    uniques, counts = np.unique(maximums, return_counts = True)
+    return {"sum" : uniques, "probability" : counts / n_reps}
+
+# Let's simulate and plot!
+simulated_throws = sum_throw(7, rng = rng)
+sns.barplot(
+    x = "sum", 
+    y = "probability", 
+    data = simulated_throws)
+plt.show()
+```
+:::
+
 ### Exercise 3
 Write a function that calculates the expected value of the sums in (2), i.e, `sum(probs * value)`.
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{python}
+def sum_expected(throws, rng, n_reps = 10 ** 5):
+    """ 
+    Approximates the expected value of sum of "throws" dice throws.
+
+    n_reps is the number of repetitions used in the simulation; rng is a 
+    random number generator.
+    """
+    simulated_throws = sum_throw(throws, rng)
+    sums = simulated_throws["sum"]
+    probabilities = simulated_throws["probability"]
+    return np.sum(sums * probabilities)
+
+```
+Let's plot the expected values, checking the linearity of expectation, i.e, $E(\sum X_i)  = \sum E(X_i)$. When every $X_i$ have the same expectation, we'll have $E(\sum X_i ) = n E(X_1$) when we sum over $n$ iterations. 
+```{python}
+xs = range(1, 17)
+ys = [sum_expected(throws, rng) for throws in xs]
+sns.scatterplot(x = xs, y = ys) # Expects the function y = a*x for some a!
+plt.show()
+```
+:::
 
 ### Exercise 4
 Write a function that finds the probability of obtaining every possible product of `throw` dice. Remember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.
 
 *Hints:* Look up `np.max`, `np.sum`.
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{python}
+def product_throw(throws, rng, n_reps = 10 ** 5):
+    """ 
+    Returns a dictionary where "product" is the product of "throws" throws and 
+    "probability" is the approximate probability that the product equals 
+    "product".
+
+    n_reps is the number of repetitions used in the simulation; rng is a 
+    random number generator.
+    """
+    sims = rng.integers(low = 1, high = 6 + 1, size = (n_reps, throws))
+    results = np.apply_along_axis(func1d = np.product, axis = 1, arr = sims)    
+    uniques, counts = np.unique(results, return_counts = True)
+    return {"product" : uniques, "probability" : counts / n_reps}
+
+simulated_throws = product_throw(5, rng)
+# The probability that the product exceeds 3888:
+products = simulated_throws["product"]
+probabilities = simulated_throws["probability"]
+sum([probabilities[i] for i, _ in enumerate(products) if products[i] > 3888])
+
+### Coda: Always a good idea to generalize your functions!
+
+def throw_dice(throws, func, rng, n_reps = 10 ** 5):
+    """ 
+    Returns a dictionary where "result" is the result of applying func to 
+    "throws" throws and "probability" is the approximate probability that the 
+    result equals "result".
+
+    n_reps is the number of repetitions used in the simulation.
+    """
+    
+    simulation = rng.integers(low = 1, high = 7, size = (n_reps, throws))
+    result = np.apply_along_axis(func1d = func, axis = 1, arr = simulation)    
+    uniques, counts = np.unique(products, return_counts = True)
+    return {"result" : uniques, "probability" : counts / n_reps}
+```
+:::
 
 ### Exercise 5
 Make a Python function that displays a histogram and density for the beta distribution, found in `np.random`. It takes the arguments `n`, `a`, and `b`, then simulates `n` observations from a beta distribution with parameters `a` and `b`. It displays a histogram of the observations on `[0,1]` with the true Beta density superimposed.

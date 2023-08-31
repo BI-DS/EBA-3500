@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -243,6 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="toc-section-number">2.2.2</span>  Exercise 2</a></li>
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="toc-section-number">2.2.3</span>  Exercise 3</a></li>
   <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="toc-section-number">2.2.4</span>  Exercise 4</a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="toc-section-number">2.2.5</span>  Exercise 5</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -267,6 +268,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Updated 31/8:</strong> Added solutions to exercises 1-4 and fixed a bug in the solution to the quick exercise at the bottom.</p>
+</div>
+</div>
 <blockquote class="blockquote">
 <p>For us, there are two reasons to learn about stochastic simulation. The first is that for complex systems, simulation can be an alternative to mathematical analysis, sometimes the only one. The second reason is that through simulation, we can get more feeling for random variables, and this is why we study stochastic simulation at this point in the book. (Dekking et al., p.&nbsp;72)</p>
 </blockquote>
@@ -287,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>rng</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>Generator(PCG64) at 0x21F44DC7E60</code></pre>
+<pre><code>Generator(PCG64) at 0x247B8D7FBC0</code></pre>
 </div>
 </div>
 <p>As you can see, the object <code>rng</code> is a <code>Generator(PCG64)</code>, i.e., a random number generator.</p>
@@ -328,10 +342,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rng2 <span class="op">=</span> np.random.default_rng()</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>(rng1.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">2</span>)), rng2.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size <span class="op">=</span> (<span class="dv">2</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(array([[0.04649784, 0.89755254],
-        [0.76589999, 0.42767559]]),
- array([[0.5266541 , 0.47603995],
-        [0.32270386, 0.58758539]]))</code></pre>
+<pre><code>(array([[0.29638707, 0.19384254],
+        [0.45017782, 0.98514409]]),
+ array([[0.21254057, 0.8582812 ],
+        [0.40646138, 0.00169709]]))</code></pre>
 </div>
 </div>
 <p>Reproducibility is important in scientific applications, as the reader of your work can exactly reproduce your simulations on his own computer. It’s also relevant for our coursework, as it allows your teacher to automatically grade your submissions.</p>
@@ -355,7 +369,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 data-number="2.1.2.1" class="anchored" data-anchor-id="quick-exercise"><span class="header-section-number">2.1.2.1</span> Quick exercise</h4>
 <p>Generate an array of uniformly distributed numbers on <span class="math inline">\([1,5]\)</span> with <span class="math inline">\(3\)</span> rows and <span class="math inline">\(4\)</span> columns.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -364,7 +378,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng1.uniform(<span class="dv">2</span>, <span class="dv">5</span>, size <span class="op">=</span> (<span class="dv">3</span>, <span class="dv">4</span>))</span>
@@ -390,25 +404,23 @@ Solution
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(x)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>plt.clf()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(x, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="02-statistical-simulation_files/figure-html/cell-10-output-1.png" width="593" height="411"></p>
-</div>
-<div class="cell-output cell-output-display">
-<pre><code>&lt;Figure size 672x480 with 0 Axes&gt;</code></pre>
+<p><img src="02-statistical-simulation_files/figure-html/cell-10-output-1.png" width="597" height="411"></p>
 </div>
 </div>
 <p>Recall the formula for the density of the normal distribution, <span class="math display">\[f(x;\mu,\sigma) = \frac{1}{\sqrt{2\pi}\sigma}\exp{\lbrack-\frac{1}{2}(x-\mu)^2}\rbrack.\]</span> To verify that the histogram is normal, we can overlay the density of a normal on top of it.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normpdf(x, mu <span class="op">=</span> <span class="dv">0</span>, sigma <span class="op">=</span> <span class="dv">1</span>):</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.exp(<span class="op">-</span>(x <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="dv">1</span><span class="op">/</span>(np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi) <span class="op">*</span> sigma)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>sns.histplot(x, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.plot(y, normpdf(y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normpdf(x, mu <span class="op">=</span> <span class="dv">0</span>, sigma <span class="op">=</span> <span class="dv">1</span>):</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.exp(<span class="op">-</span>(x <span class="op">-</span> mu) <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> <span class="fl">0.5</span>) <span class="op">*</span> <span class="dv">1</span><span class="op">/</span>(np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi) <span class="op">*</span> sigma)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>sns.histplot(x, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.plot(y, normpdf(y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="02-statistical-simulation_files/figure-html/cell-11-output-1.png" width="597" height="411"></p>
 </div>
@@ -464,7 +476,7 @@ Solution
 <h4 data-number="2.1.3.1" class="anchored" data-anchor-id="quick-exercise-1"><span class="header-section-number">2.1.3.1</span> Quick exercise</h4>
 <p>Simulate <span class="math inline">\(10,000\)</span> random variables from a standard exponential. Verify that the random variables were simulated from an exponential by overlaying the standard exponential density.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -473,14 +485,15 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng1.standard_exponential(<span class="dv">10000</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1000</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(x, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>plt.plot(y, np.exp(<span class="op">-</span>y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng1.standard_exponential(<span class="dv">10000</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1000</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(x, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plt.plot(y, np.exp(<span class="op">-</span>y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="02-statistical-simulation_files/figure-html/cell-12-output-1.png" width="589" height="411"></p>
 </div>
@@ -494,12 +507,12 @@ Solution
 <h3 data-number="2.1.4" class="anchored" data-anchor-id="simulating-dice-throws"><span class="header-section-number">2.1.4</span> Simulating dice throws</h3>
 <p>Random number generators are often used to calculate probabilities that are hard to calculate by hand. You might be able to calculate, say, what he probability of getting a sum equal to <span class="math inline">\(7\)</span> is when throwing <span class="math inline">\(2\)</span> dice. But what about the probability that the maximal value <span class="math inline">\(6\)</span> or that the sum is <span class="math inline">\(7\)</span>? This is also doable by hand, but it’s easier to do it by machine.</p>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>throws <span class="op">=</span> rng.integers(<span class="dv">1</span>, <span class="dv">7</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">2</span>))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># throws contaisn 10000 rows of two dice throws.</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> throws.<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>maxs <span class="op">=</span> throws.<span class="bu">max</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>(totals, maxs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>throws <span class="op">=</span> rng.integers(<span class="dv">1</span>, <span class="dv">7</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">2</span>))</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># throws contaisn 10000 rows of two dice throws.</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>totals <span class="op">=</span> throws.<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>maxs <span class="op">=</span> throws.<span class="bu">max</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>(totals, maxs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>(array([6, 5, 6, ..., 9, 8, 9], dtype=int64),
  array([4, 3, 5, ..., 6, 5, 6], dtype=int64))</code></pre>
@@ -507,15 +520,15 @@ Solution
 </div>
 <p>To calculate our probability, we need either <code>totals == 7</code> or <code>maxs == 6</code>. We can use vectorized “OR” using the Numpy function <code>logical_or</code> to calculate this.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.logical_or(totals <span class="op">==</span> <span class="dv">7</span>, maxs <span class="op">==</span> <span class="dv">6</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.logical_or(totals <span class="op">==</span> <span class="dv">7</span>, maxs <span class="op">==</span> <span class="dv">6</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([False, False, False, ...,  True, False,  True])</code></pre>
 </div>
 </div>
 <p>Then we can take their mean to figure out the probability.</p>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>0.4134</code></pre>
 </div>
@@ -523,19 +536,19 @@ Solution
 <p>Thus the probability is approximately <span class="math inline">\(0.41\)</span>. (Observe that Numpy automatically interprets <code>True</code> as <code>1</code> and <code>False</code> as <code>0</code> when forced to interpret boolean values as integers.)</p>
 <p>In practice, we would write all of this in one go, probably using a function.</p>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prob(rng, n_reps <span class="op">=</span> <span class="dv">10000</span>):</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  throws <span class="op">=</span> rng.integers(<span class="dv">1</span>, <span class="dv">7</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">2</span>))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.logical_or(throws.<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">==</span> <span class="dv">7</span>, throws.<span class="bu">max</span>(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">==</span> <span class="dv">6</span>).mean()</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>prob(rng)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prob(rng, n_reps <span class="op">=</span> <span class="dv">10000</span>):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  throws <span class="op">=</span> rng.integers(<span class="dv">1</span>, <span class="dv">7</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">2</span>))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> np.logical_or(throws.<span class="bu">sum</span>(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">==</span> <span class="dv">7</span>, throws.<span class="bu">max</span>(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">==</span> <span class="dv">6</span>).mean()</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>prob(rng)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>0.422</code></pre>
 </div>
 </div>
 <p>The result of this simulation is slightly different from the last one. This is due to randomnes, pure and simple. As we have already generated values from our <code>rng</code>, we would have to reset it to get the same value as before.</p>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>prob(rng)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>prob(rng)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>0.4134</code></pre>
 </div>
@@ -545,17 +558,18 @@ Solution
 <h3 data-number="2.1.5" class="anchored" data-anchor-id="more-complex-simulations"><span class="header-section-number">2.1.5</span> More complex simulations</h3>
 <p>Suppose that <span class="math display">\[X_1,X_2,\ldots,X_k\]</span> are <span class="math inline">\(k\)</span> iid exponential variables with density <span class="math inline">\(\frac{1}{\beta} e^{-\frac{1}{\beta} x}, \beta &gt; 0\)</span>, where <span class="math inline">\(\beta\)</span> is the scale parameter. It has been claimed that the minimum of <span class="math inline">\(k\)</span> such variables are exponentially distributed with parameter <span class="math inline">\(\beta / k\)</span>, i.e., <span class="math inline">\(\min(X_1,X_2,\ldots,X_k)\)</span> has density <span class="math inline">\(\frac{k}{\beta} e^{-\frac{k}{\beta} x}\)</span>. Let’s try to verify this using simulations.</p>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng.exponential(scale <span class="op">=</span> <span class="dv">2</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">10</span>))</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>minimas <span class="op">=</span> x.<span class="bu">min</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng.exponential(scale <span class="op">=</span> <span class="dv">2</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">10</span>))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>minimas <span class="op">=</span> x.<span class="bu">min</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s plot and verify</p>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(minimas, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.plot(y, <span class="dv">10</span><span class="op">/</span><span class="dv">2</span> <span class="op">*</span> np.exp(<span class="op">-</span><span class="dv">10</span><span class="op">/</span><span class="dv">2</span> <span class="op">*</span> y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>minimas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(minimas, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.plot(y, <span class="dv">10</span><span class="op">/</span><span class="dv">2</span> <span class="op">*</span> np.exp(<span class="op">-</span><span class="dv">10</span><span class="op">/</span><span class="dv">2</span> <span class="op">*</span> y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>minimas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="02-statistical-simulation_files/figure-html/cell-19-output-1.png" width="576" height="411"></p>
 </div>
@@ -568,7 +582,7 @@ Solution
 <h4 data-number="2.1.5.1" class="anchored" data-anchor-id="quick-exercise-2"><span class="header-section-number">2.1.5.1</span> Quick exercise</h4>
 <p>Turn the code above into a function of <span class="math inline">\(k\)</span> and <span class="math inline">\(\beta\)</span>. Verify the formula visually for <span class="math inline">\(k = 7, 99\)</span> and <span class="math inline">\(\beta = 1, 100\)</span>.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -577,32 +591,38 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plotter(rng, beta, k):</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> rng.exponential(scale <span class="op">=</span> <span class="dv">2</span>, size <span class="op">=</span> (<span class="dv">10000</span>, <span class="dv">10</span>))</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  minimas <span class="op">=</span> x.<span class="bu">min</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  sns.histplot(minimas, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  plt.plot(y, k<span class="op">/</span>beta <span class="op">*</span> np.exp(<span class="op">-</span>k<span class="op">/</span>beta <span class="op">*</span> y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">1</span>, <span class="dv">7</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">10</span>, <span class="dv">7</span>)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">100</span>, <span class="dv">7</span>)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">1</span>, <span class="dv">99</span>)</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">10</span>, <span class="dv">99</span>)</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">100</span>, <span class="dv">99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed <span class="op">=</span> <span class="dv">313</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plotter(rng, beta, k):</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> rng.exponential(scale <span class="op">=</span> beta, size <span class="op">=</span> (<span class="dv">10000</span>, k))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  minimas <span class="op">=</span> x.<span class="bu">min</span>(axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  sns.histplot(minimas, stat <span class="op">=</span> <span class="st">"density"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> np.linspace(<span class="dv">0</span>, minimas.<span class="bu">max</span>(), <span class="dv">100</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  plt.plot(y, k<span class="op">/</span>beta <span class="op">*</span> np.exp(<span class="op">-</span>k<span class="op">/</span>beta <span class="op">*</span> y), color <span class="op">=</span> <span class="st">"red"</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  plt.show()</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">10</span>, <span class="dv">7</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">100</span>, <span class="dv">7</span>)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">1</span>, <span class="dv">99</span>)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">10</span>, <span class="dv">99</span>)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>plotter(rng, <span class="dv">100</span>, <span class="dv">99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="02-statistical-simulation_files/figure-html/cell-20-output-1.png" width="576" height="411"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-2.png" width="576" height="411"></p>
+<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-2.png" width="589" height="411"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-3.png" width="576" height="411"></p>
+<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-3.png" width="597" height="411"></p>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="02-statistical-simulation_files/figure-html/cell-20-output-4.png" width="593" height="411"></p>
@@ -611,7 +631,7 @@ Solution
 <p><img src="02-statistical-simulation_files/figure-html/cell-20-output-5.png" width="585" height="411"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-6.png" width="576" height="415"></p>
+<p><img src="02-statistical-simulation_files/figure-html/cell-20-output-6.png" width="589" height="411"></p>
 </div>
 </div>
 </div>
@@ -624,20 +644,208 @@ Solution
 <h2 data-number="2.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.2</span> Exercises</h2>
 <section id="exercise-1" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">2.2.1</span> Exercise 1</h3>
-<p>Write a function <code>maximum_throw</code> that approximates the probability of the maximal throw. It should take the same arguments as ‘minimum_throw’. Plot a bargraph of maximum_throw alongside a bar graph for minimum_throw when <code>throw = 5</code> in both cases. What do you see?</p>
+<p>Write a function <code>maximum_throw</code> that approximates the probability of the maximal throw among <code>throw</code> throw. In other words, you throw <code>throw</code> dice, and calculate the maximum of them. To to approximate the probability, do this many times and use the <code>np.unique</code> function. (This is done in video 3!). Plot a bargraph of <code>maximum_throw</code> alongside a bar graph for minimum_throw when <code>throw = 5</code> in both cases. What do you see?</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> maximum_throw(throws, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a dictionary where "face" is the face of the die and "probability"</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">    is the approximate probability that said face is the maximal die after</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">    "throws" throws of the dice.</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation.</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> rng.integers(low <span class="op">=</span> <span class="dv">1</span>, high <span class="op">=</span> <span class="dv">6</span> <span class="op">+</span> <span class="dv">1</span>, size <span class="op">=</span> (n_reps, throws))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    maximums <span class="op">=</span> np.apply_along_axis(func1d <span class="op">=</span> np.<span class="bu">max</span>, axis <span class="op">=</span> <span class="dv">1</span>, arr <span class="op">=</span> results)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    uniques, counts <span class="op">=</span> np.unique(maximums, return_counts <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"face"</span> : uniques, <span class="st">"probability"</span> : counts <span class="op">/</span> n_reps}</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> minimum_throw(throws, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a dictionary where "face" is the face of the die and "probability"</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co">    is the approximate probability that said face is the minimal die after</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co">    "throws" throws of the dice.</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation; rng is a </span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="co">    random number generator.</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    sims <span class="op">=</span> rng.integers(low <span class="op">=</span> <span class="dv">1</span>, high <span class="op">=</span> <span class="dv">6</span> <span class="op">+</span> <span class="dv">1</span>, size <span class="op">=</span> (n_reps, throws))</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> np.apply_along_axis(func1d <span class="op">=</span> np.<span class="bu">min</span>, axis <span class="op">=</span> <span class="dv">1</span>, arr <span class="op">=</span> sims)</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    uniques, counts <span class="op">=</span> np.unique(results, return_counts <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"face"</span> : uniques, <span class="st">"probability"</span> : counts <span class="op">/</span> n_reps}</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's simulate and plot!</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>minimal_throws <span class="op">=</span> minimum_throw(<span class="dv">5</span>, rng <span class="op">=</span> rng)</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>maximal_throws <span class="op">=</span> maximum_throw(<span class="dv">5</span>, rng <span class="op">=</span> rng)</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>sns.barplot(x <span class="op">=</span> <span class="st">"face"</span>, y <span class="op">=</span> <span class="st">"probability"</span>, data <span class="op">=</span> maximal_throws, ax <span class="op">=</span> ax[<span class="dv">0</span>])</span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>sns.barplot(x <span class="op">=</span> <span class="st">"face"</span>, y <span class="op">=</span> <span class="st">"probability"</span>, data <span class="op">=</span> minimal_throws, ax <span class="op">=</span> ax[<span class="dv">1</span>])</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="02-statistical-simulation_files/figure-html/cell-21-output-1.png" width="571" height="411"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="exercise-2" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">2.2.2</span> Exercise 2</h3>
 <p>Write a function <code>sum_throw</code> that finds the probability of obtaining every possible sums of <code>throw</code> dice. Make a bar plot of the distribution when <code>throw</code> equals 7.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_throw(throws, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a dictionary where "sum" is the sum of the dice and "probability"</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">    is the approximate probability that said sum occured.</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation.</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> rng.integers(low <span class="op">=</span> <span class="dv">1</span>, high <span class="op">=</span> <span class="dv">6</span> <span class="op">+</span> <span class="dv">1</span>, size <span class="op">=</span> (n_reps, throws))</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    maximums <span class="op">=</span> np.apply_along_axis(func1d <span class="op">=</span> np.<span class="bu">sum</span>, axis <span class="op">=</span> <span class="dv">1</span>, arr <span class="op">=</span> results)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    uniques, counts <span class="op">=</span> np.unique(maximums, return_counts <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"sum"</span> : uniques, <span class="st">"probability"</span> : counts <span class="op">/</span> n_reps}</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's simulate and plot!</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>simulated_throws <span class="op">=</span> sum_throw(<span class="dv">7</span>, rng <span class="op">=</span> rng)</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="st">"sum"</span>, </span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> <span class="st">"probability"</span>, </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> simulated_throws)</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="02-statistical-simulation_files/figure-html/cell-22-output-1.png" width="580" height="411"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="exercise-3" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">2.2.3</span> Exercise 3</h3>
 <p>Write a function that calculates the expected value of the sums in (2), i.e, <code>sum(probs * value)</code>.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sum_expected(throws, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Approximates the expected value of sum of "throws" dice throws.</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation; rng is a </span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co">    random number generator.</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    simulated_throws <span class="op">=</span> sum_throw(throws, rng)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    sums <span class="op">=</span> simulated_throws[<span class="st">"sum"</span>]</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    probabilities <span class="op">=</span> simulated_throws[<span class="st">"probability"</span>]</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(sums <span class="op">*</span> probabilities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s plot the expected values, checking the linearity of expectation, i.e, <span class="math inline">\(E(\sum X_i) = \sum E(X_i)\)</span>. When every <span class="math inline">\(X_i\)</span> have the same expectation, we’ll have <span class="math inline">\(E(\sum X_i ) = n E(X_1\)</span>) when we sum over <span class="math inline">\(n\)</span> iterations.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">17</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>ys <span class="op">=</span> [sum_expected(throws, rng) <span class="cf">for</span> throws <span class="kw">in</span> xs]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x <span class="op">=</span> xs, y <span class="op">=</span> ys) <span class="co"># Expects the function y = a*x for some a!</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="02-statistical-simulation_files/figure-html/cell-24-output-1.png" width="566" height="411"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="exercise-4" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">2.2.4</span> Exercise 4</h3>
-<p>Write a function that finds the probability of obtaining every possible product of <code>throw</code> dice. Rember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.</p>
-<p><em>Hints:</em> Look up np.max, np.sum.</p>
+<p>Write a function that finds the probability of obtaining every possible product of <code>throw</code> dice. Remember the docstring. Find the probability that the product of 5 dice throws exceeds 3888.</p>
+<p><em>Hints:</em> Look up <code>np.max</code>, <code>np.sum</code>.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> product_throw(throws, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a dictionary where "product" is the product of "throws" throws and </span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">    "probability" is the approximate probability that the product equals </span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">    "product".</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation; rng is a </span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">    random number generator.</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    sims <span class="op">=</span> rng.integers(low <span class="op">=</span> <span class="dv">1</span>, high <span class="op">=</span> <span class="dv">6</span> <span class="op">+</span> <span class="dv">1</span>, size <span class="op">=</span> (n_reps, throws))</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> np.apply_along_axis(func1d <span class="op">=</span> np.product, axis <span class="op">=</span> <span class="dv">1</span>, arr <span class="op">=</span> sims)    </span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    uniques, counts <span class="op">=</span> np.unique(results, return_counts <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"product"</span> : uniques, <span class="st">"probability"</span> : counts <span class="op">/</span> n_reps}</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>simulated_throws <span class="op">=</span> product_throw(<span class="dv">5</span>, rng)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a><span class="co"># The probability that the product exceeds 3888:</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> simulated_throws[<span class="st">"product"</span>]</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> simulated_throws[<span class="st">"probability"</span>]</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>([probabilities[i] <span class="cf">for</span> i, _ <span class="kw">in</span> <span class="bu">enumerate</span>(products) <span class="cf">if</span> products[i] <span class="op">&gt;</span> <span class="dv">3888</span>])</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a><span class="co">### Coda: Always a good idea to generalize your functions!</span></span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> throw_dice(throws, func, rng, n_reps <span class="op">=</span> <span class="dv">10</span> <span class="op">**</span> <span class="dv">5</span>):</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">""" </span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a dictionary where "result" is the result of applying func to </span></span>
+<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a><span class="co">    "throws" throws and "probability" is the approximate probability that the </span></span>
+<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a><span class="co">    result equals "result".</span></span>
+<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a><span class="co">    n_reps is the number of repetitions used in the simulation.</span></span>
+<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a>    simulation <span class="op">=</span> rng.integers(low <span class="op">=</span> <span class="dv">1</span>, high <span class="op">=</span> <span class="dv">7</span>, size <span class="op">=</span> (n_reps, throws))</span>
+<span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> np.apply_along_axis(func1d <span class="op">=</span> func, axis <span class="op">=</span> <span class="dv">1</span>, arr <span class="op">=</span> simulation)    </span>
+<span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a>    uniques, counts <span class="op">=</span> np.unique(products, return_counts <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"result"</span> : uniques, <span class="st">"probability"</span> : counts <span class="op">/</span> n_reps}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-5" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">2.2.5</span> Exercise 5</h3>
+<p>Make a Python function that displays a histogram and density for the beta distribution, found in <code>np.random</code>. It takes the arguments <code>n</code>, <code>a</code>, and <code>b</code>, then simulates <code>n</code> observations from a beta distribution with parameters <code>a</code> and <code>b</code>. It displays a histogram of the observations on <code>[0,1]</code> with the true Beta density superimposed.</p>
 
 
 </section>

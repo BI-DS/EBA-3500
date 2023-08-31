@@ -1,7 +1,8 @@
 # Limit theorems
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: {.callout-note}
+**Updated 31/8:** Added a short note about simulating the central limit 
+theorem. Added exercises.
 :::
 
 ## Curriculum
@@ -9,4 +10,87 @@ This page is ***not finished***, but might contain notes from the course develop
 
 2.  Dekking et al., Chapter 14: The central limit theorem
 
+3. The short notes below.
+
+## Notes
+Informally speaking, the central limit theorem states that whenever $\{X_i\}_{i=0}^n$ are independently and identically distributed according to some distribution $F$ with mean $\mu$ and standard deviation $\sigma$ (in mathematical notation $X_i \stackrel{iid}{\sim} F$) then $\sqrt{n}\frac{\overline{X} - \mu}{\sigma}$ is approximately normally distributed. (Here $\overline{X}$ denotes the sample mean.) There is a more precise statements of this result, but that is beyond the scope of this course; see e.g. wikipedia for more details.
+
+It is fairly easy to illustrate the central limit theorem (CLT) using simulations.
+
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+
+n = 100
+x = rng.gamma(3, 4, (n, 10000))
+means = x.mean(axis = 0)
+rescaled = np.sqrt(n) * (means - x.mean()) / np.std(x, ddof = 1)
+```
+
+Here the `rescaled`, the rescaled sample means, approximates the distribution of $\sqrt{n}\frac{\overline{X} - \mu}{\sigma}$.
+
+Let's simulate some true normal values to verify this:
+
+```{python}
+normals = rng.standard_normal(10000)
+```
+
+Now we can plot.
+```{python}
+import seaborn as sns
+import matplotlib.pylab as plt
+plt.clf()
+sns.histplot(rescaled, stat = "density")
+sns.histplot(normals, stat = "density")
+plt.show()
+```
+
+Observe that the histograms overlap closely. 
+
+**Quick exericise:** If you run the simulation with $n=10$ instead of $n=100$, do
+you think the histograms will match more or less closely? Run the simulation to
+verify. 
+
+**Quick exercise:** Change the parameters of the gamma distribution `rng.gamma`;
+look up the documentation if you have to. Can you find parameters where the
+normal approximation in the central limit theorem is really poor when $n=100$?
+
 ## Exercises
+### Chapter 13
+* 13.1: Use Python to simulate from these variables. You can find all of these
+distributions in `np.random`, just initialize an `rng` object first! If you
+struggle finding the distributions, take a look at the Numpy documentation. Use
+the `.mean` method to approximate the probabilities and Wikipedia for the standard
+deviations (or use Numpy here as well.)
+* 13.2
+* 13.3
+* 13.5
+* 13.7: The function $F_n$ is known a the empirical cumulative distribution 
+function, shortened to `ecdf`. You can use Numpy to verify the claims of this
+exercise; write your own function or use the `ecdf` function from the
+statsmodels packae, `from statsmodels.distributions.empirical_distribution import ECDF`.
+* 13.9: If you are not able to find the required $a$, find it using simulations.
+* 13.12: (Optional)
+
+### Chapter 14
+In some of these exercises you will need the quantile function for the normal
+distribution. You can find this in the `scipy` package, where it is called the
+`ppf`.
+
+Here is an example of $\Phi^{-1}(0.95)$.
+```{python}
+from scipy.stats import norm 
+norm.ppf(0.95, loc=0, scale=1)
+```
+
+* 14.1: Solve this using Python.
+* 14.2: You can use `np.random.beta` to simulate from the Beta distribution. The
+parameters corresponding to the distribution in the exercise is $a=1$, $b=4$.
+Use this to compare the normal approximation to the true distribution of means.
+(*Hint:* Simulate a $625$ variables a bunch of times and use the mean function. 
+You can either calculate the variance of $X$ yourself or use wikipedia.)
+* 14.8
+* 14.3
+* 14.4
+* 14.7
+* 14.9: This is an exercise about translating a textual problem into a mathematical one! It's always a good idea to do all translations first and calculations afterward.
