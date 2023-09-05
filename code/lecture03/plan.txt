@@ -1,0 +1,9 @@
+## Law of large numbers
+1. [ ] Illustrate Chebyshev's inequality with numerical simulations.
+2. [x] Discuss law of large numbers with infinite variance and what
+   happens when the expected value does not exist.
+
+## Central limit theorem.
+1. [ ] State and explain with histograms.
+2. [ ] The density of the sums actually exists: Show the Irwin-Hall distribution and the sum of exponentials.
+3. [x] What happens when the variance is infinite?
