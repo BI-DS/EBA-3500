@@ -22,6 +22,7 @@ $1/2$.
 
 #### Quick exercise
 Show that the expected value of the uniform distribution on $[a,b]$ is $(b+a)/2$ using the definition $f(x;a,b) = 1/(b-a)1[x\in[a,b]]$. 
+
 ::: {.callout-tip collapse="true"}
 #### Solution
 $$\int_a^b x/(b-a)dx = \frac{1}{2}(b^2-a^2)/(b-a) = \frac{1}{2}(b+a)(b-a)/(b-a) = \frac{1}{2}(b+a)$$.

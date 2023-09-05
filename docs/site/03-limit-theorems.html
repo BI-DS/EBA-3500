@@ -281,7 +281,23 @@ Note
 <p>The law of large numbers states that the sample means <span class="math inline">\(\overline{X}_i=\frac{1}{n}\sum_{i=1}^n X_i\)</span> converges to the population mean <span class="math inline">\(EX\)</span> in probability as <span class="math inline">\(n\to \infty\)</span>. We illustrate this result using the continuous uniform distribution on <span class="math inline">\([0,1]\)</span>, called <code>rng.uniform</code> in Numpy. The density of this distribution is <span class="math inline">\(f(x)=1[x\in[0,1]]\)</span>, where <span class="math inline">\(1(x\in A)\)</span> denotes the indicator function you are used to from the previous probability course. (It is commonly written as <span class="math inline">\(I[x\inA]\)</span> or just <span class="math inline">\(I(A)\)</span>.) Its expectation is equal to <span class="math inline">\(1/2\)</span>.</p>
 <section id="quick-exercise" class="level4" data-number="3.2.1.1">
 <h4 data-number="3.2.1.1" class="anchored" data-anchor-id="quick-exercise"><span class="header-section-number">3.2.1.1</span> Quick exercise</h4>
-<p>Show that the expected value of the uniform distribution on <span class="math inline">\([a,b]\)</span> is <span class="math inline">\((b+a)/2\)</span> using the definition <span class="math inline">\(f(x;a,b) = 1/(b-a)1[x\in[a,b]]\)</span>. ::: {.callout-tip collapse=“true”} #### Solution <span class="math display">\[\int_a^b x/(b-a)dx = \frac{1}{2}(b^2-a^2)/(b-a) = \frac{1}{2}(b+a)(b-a)/(b-a) = \frac{1}{2}(b+a)\]</span>. :::</p>
+<p>Show that the expected value of the uniform distribution on <span class="math inline">\([a,b]\)</span> is <span class="math inline">\((b+a)/2\)</span> using the definition <span class="math inline">\(f(x;a,b) = 1/(b-a)1[x\in[a,b]]\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\int_a^b x/(b-a)dx = \frac{1}{2}(b^2-a^2)/(b-a) = \frac{1}{2}(b+a)(b-a)/(b-a) = \frac{1}{2}(b+a)\]</span>.</p>
+</div>
+</div>
+</div>
 <p>We first simulate <span class="math inline">\(n=10000\)</span> of uniforms and store them <code>x</code>. These correspond to a sequence <span class="math inline">\(X_1,X_2,X_3,\ldots X_n\)</span> of independently and identically distributed uniform variables.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
