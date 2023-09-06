@@ -1,8 +1,7 @@
 # Statistical simulation
 
 ::: {.callout-note}
-**Updated 31/8:** Added solutions to exercises 1-4 and fixed a bug in the
-solution to the quick exercise at the bottom.
+**Updated 5/9:** Added solution to exercise 5.
 :::
 
 > For us, there are two reasons to learn about stochastic simulation. The first is that for complex systems, simulation can be an alternative to mathematical analysis, sometimes the only one. The second reason is that through simulation, we can get more feeling for random variables, and this is why we study stochastic simulation at this point in the book. (Dekking et al., p. 72)
@@ -377,5 +376,30 @@ def throw_dice(throws, func, rng, n_reps = 10 ** 5):
 ```
 :::
 
-### Exercise 5
+## Exercise 5
 Make a Python function that displays a histogram and density for the beta distribution, found in `np.random`. It takes the arguments `n`, `a`, and `b`, then simulates `n` observations from a beta distribution with parameters `a` and `b`. It displays a histogram of the observations on `[0,1]` with the true Beta density superimposed.
+
+::: {.callout-tip collapse="true"}
+### Solution
+```{python}
+import numpy as np
+import matplotlib.pylab as plt
+import seaborn as sns
+import scipy.stats as st
+
+rng = np.random.default_rng(seed=313)
+
+
+def sim_beta(a, b, n):
+    """Simulate n beta(a,b) variables and plot a histogram."""
+    x = rng.beta(a, b, n)
+    obj = st.beta(a, b)
+    z = np.linspace(0, 1, 10)
+    sns.histplot(x, stat="density")
+    plt.plot(z, obj.pdf(z))
+    plt.show()
+
+
+sim_beta(2, 7, 10000)
+```
+:::
