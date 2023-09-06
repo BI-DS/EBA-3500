@@ -4,3 +4,21 @@
 .Ruserdata
 
 /.quarto/
+docs/index-OS-BI20026-EMP.html
+docs/search-OS-BI20026-EMP.json
+docs/site/00-python-tips-OS-BI20026-EMP.html
+docs/site/01-scipy-numpy-OS-BI20026-EMP.html
+docs/site/02-statistical-simulation-OS-BI20026-EMP.html
+docs/site/03-limit-theorems-OS-BI20026-EMP.html
+docs/site/04-exploratory-data-analysis-OS-BI20026-EMP.html
+docs/site/05-statistical-models-OS-BI20026-EMP.html
+docs/site/06-unbiased-estimators-efficiency-OS-BI20026-EMP.html
+docs/site/07-constructing-estimators-OS-BI20026-EMP.html
+docs/site/08-confidence-intervals-OS-BI20026-EMP.html
+docs/site/09-testing-hypotheses-OS-BI20026-EMP.html
+docs/site/10-testing-the-sample-mean-OS-BI20026-EMP.html
+docs/site/11-statistical-learning-OS-BI20026-EMP.html
+docs/site/12-basics-of-linear-regression-OS-BI20026-EMP.html
+docs/site/13-inference-for-linear-regression-OS-BI20026-EMP.html
+docs/site_libs/bootstrap/bootstrap.min-OS-BI20026-EMP.css
+*.json
