@@ -1,0 +1,363 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $X$
+\end_inset
+
+ be a random variable distributed according to the distribution function
+ 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\mu=EX$
+\end_inset
+
+ be the expected value and 
+\begin_inset Formula $\sigma^{2}=\Var X$
+\end_inset
+
+ be the variance of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The central limit theorem is about sums of independent and identically distribut
+ed random variables, which are frequently interesting in and of themselves.
+ 
+\end_layout
+
+\begin_layout Standard
+Consider the sequence of random variables
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{i}\stackrel{iid}{\sim}F,\quad i=1,\ldots,
+\]
+
+\end_inset
+
+and define the 
+\emph on
+partial sums
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M_{n}=\frac{1}{n}\sum_{i=1}^{n}X_{i}
+\]
+
+\end_inset
+
+The most important fact about 
+\begin_inset Formula $M_{n}=\frac{1}{n}\sum_{i=1}^{n}X_{i}$
+\end_inset
+
+ is that it has expectation 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and variance 
+\begin_inset Formula $\frac{1}{n}\sigma^{2}$
+\end_inset
+
+.
+ You can show this using the following properties of the expectation and
+ the variance.
+\end_layout
+
+\begin_layout Itemize
+linearity of expectation 
+\begin_inset Formula $E(aX+bY)=aEX+bEY$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+the fact that 
+\begin_inset Formula $\Var aX+bY=a^{2}\Var X+b^{2}\Var Y$
+\end_inset
+
+ when 
+\begin_inset Formula $X,Y$
+\end_inset
+
+ are independent.
+\end_layout
+
+\begin_layout Standard
+Quick exercise: Show that 
+\begin_inset Formula $EM_{n}=\mu$
+\end_inset
+
+ and 
+\begin_inset Formula $\Var M_{n}=\frac{1}{n}\sigma^{2}$
+\end_inset
+
+ using the properties above.
+\end_layout
+
+\begin_layout Standard
+Now make the following observation: Due to the fact that 
+\begin_inset Formula $\Var aX=a^{2}\Var X$
+\end_inset
+
+, that 
+\begin_inset Formula $E(aX)=aEX$
+\end_inset
+
+, and that 
+\begin_inset Formula $E(X-\mu)=0$
+\end_inset
+
+, we have that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E\left[\frac{\sqrt{n}}{\sigma}(M_{n}-\mu)\right]=\frac{\sqrt{n}}{\sigma}E[M_{n}-\mu]=0,
+\]
+
+\end_inset
+
+and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Var\left[\frac{\sqrt{n}}{\sigma}(X-\mu)\right]=1.
+\]
+
+\end_inset
+
+It follows that the rescaled and recentered mean 
+\begin_inset Formula $\sqrt{n}\frac{M_{n}-\mu}{\sigma}$
+\end_inset
+
+ has expectation 
+\begin_inset Formula $0$
+\end_inset
+
+ and variance 
+\begin_inset Formula $1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Python illustration.
+ 
+\end_layout
+
+\begin_layout Standard
+You should know, but we won't prove, that if 
+\begin_inset Formula $X_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{2}$
+\end_inset
+
+ are independently distributed normal variables with mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and variance 
+\begin_inset Formula $\sigma^{2}$
+\end_inset
+
+ (written 
+\begin_inset Formula $N(\mu,\sigma)$
+\end_inset
+
+, where 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is the standard deviation), then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+aX+b\sim N(a\mu+b,a\sigma),
+\]
+
+\end_inset
+
+and that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{1}+X_{2}\sim N(2\mu,\sqrt{2}\sigma)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Applying these facts many times, we find that, with 
+\begin_inset Formula $X_{i}\sim N(\mu,\sigma)$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\sum_{i=1}^{n}X_{i}\sim N(n\mu,\sqrt{n}\sigma).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And that the rescaled and recentered mean 
+\begin_inset Formula $\sqrt{n}\frac{M_{n}-\mu}{\sigma}$
+\end_inset
+
+ is 
+\emph on
+exactly
+\emph default
+ 
+\begin_inset Formula $N(0,1)$
+\end_inset
+
+.
+ (Recall that 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ are normal now!) 
+\end_layout
+
+\begin_layout Standard
+The central limit theorem states that, no matter what the distribution of
+ 
+\begin_inset Formula $X$
+\end_inset
+
+, the rescaled and recentered means are 
+\emph on
+approximately normal 
+\emph default
+(with mean 
+\begin_inset Formula $0$
+\end_inset
+
+ and variance 
+\begin_inset Formula $1$
+\end_inset
+
+) when 
+\begin_inset Formula $n$
+\end_inset
+
+ is sufficiently large.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sqrt{n}\frac{M_{n}-\mu}{\sigma}\stackrel{d}{\to}N(0,1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

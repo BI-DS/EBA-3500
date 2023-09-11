@@ -1,7 +1,7 @@
 # Exploratory data analysis
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout
+**Update 11/9:** Added Python notes and exercises.
 :::
 
 
@@ -18,6 +18,123 @@ This page is ***not finished***, but might contain notes from the course develop
 
 #### Using `seaborn` for graphical summaries
 
-#### Numpy and scipy for numerical summaries
+##### The `pairplot`
+We have covered how to use the `sns.histplot` already, with the key point
+being that you have to use `stat="density"` to make it plot a *density* instead
+of just counts. There are several plotting methods in `seaborn` that are useful,
+but for exploratory data analysis the `sns.pairplot` is especially important.
+
+To illustrate the `sns.pairplot` function, we will first load some data. The
+`seaborn` package comes equipped with several nice data sets, which we will use
+for illustrations.
+
+```{python}
+import seaborn as sns
+sns.get_dataset_names()
+```
+Here we have a list of available data sets. Let's load the `mpg` data set, which contains information about the miles per gallon (mpg) for various car makes, along
+with other information.
+
+```{python}
+mpg = sns.load_dataset("mpg")
+mpg.head()
+```
+We can investigate the data types of this data frame,
+```{python}
+mpg.dtypes
+```
+The last two columns are of data type `object`, which is a placeholder for
+non-numeric types. `float64` are decimal numbers and `int64` are integers.
+
+Using `sns.pairplot` we get a convenient graphical representation of the 
+numeric types.
+
+```{python}
+import matplotlib.pyplot as plt
+sns.pairplot(mpg)
+plt.show()
+```
+Observe that the diagonal contains the histograms of each column and the
+off-diagonal elements the scatter plot of each combination of columns. From
+this plot we can immediately read that, e.g., the model year is approximately
+uniformly distributed and that the mpg is positively associated with the 
+model year. (You might need to use the scroll bar to see this.) This shouldn't be surprising, given continual developments in
+car technology.
+
+Observe that you can use the kernel density estimator here as well, on the
+diagonal, by specifying `diag_kind="kde"`. Kernel density estimators should
+generally be prefered when interacting with people with some statistical
+background, as they usually give a better indication of the population 
+density than a histogram.
+
+```{python}
+plt.clf()
+sns.pairplot(mpg, diag_kind="kde")
+plt.show()
+```
+
+There are several other options in `pairplot`; feel free to play around with
+them to find the best-looking plot! If you work as a data analyst, preparing
+nice-looking and informative plots is one of the most important parts of 
+the job, but we won't test you on your graphical design skills in this course.
+
+##### Count plots
+
+Recall the difference between discrete and continuous random variables. Continuous random
+variables are defined for decimal numbers and have a probability density function (PDF). That is,
+$f(x)$ is a probability density of a random variable if and and only if $f(x)\geq 0$ and its integral is $\int f(x) dx = 1$. Continuous random variables can be modeled with histograms
+and kernel density estimators, and the result is a density in itself.
+
+On the other hand, discrete random variables (defined on a set of integers or categorical values) have a probability mass function (PMF), a function $p(x)\geq0$ that sums to $1$, i.e., $\sum p(x) = 1$. These should ideally not be modeled using histograms, but with count plots (bar plots). For instance, the `model_year` column of the `mpg` data set have data type `int64`, a discrete data type. The result is a is almost a probability mass function, provided it is normalized by $n$. (The countplot function has, sadly, no option of returning a probability mass function instead of just counts.)
+
+```{python}
+plt.clf()
+sns.countplot(x="model_year", data=mpg)
+plt.show()
+```
+
+
+#### Numerical summaries
+
+A convenient way to quickly obtain numerical summaries is the `.describe` method.
+```{python}
+mpg.describe()
+```
+
+There are many similar methods showing numerical summaries for data frames. We mention `pd.mean()`, `pd.std()`, and `pd.median()`.
+
+Finally, here are some comments regarding the other statistics and methods mentioned in the book.
+
+1. **Empirical distribution function.** The [empirical distribution function](https://scipy.github.io/devdocs/reference/generated/scipy.stats.ecdf.html) can be found in `scipy`. It is also available in the `statsmodels` package (see the videos). 
+2. **Boxplots.** Seaborn has the function `boxplot`. An arguably better option here is the (violin plot)[https://seaborn.pydata.org/generated/seaborn.violinplot.html]. The violin plot is essentially a box plot, but using a kernel density estimator. It makes the graphs look better.
+3. **MAD.** The median of absolute deviations from the median is not implemented in Numpy, but implementing it is straight-forward and left as an exercise.
 
 ## Exercises
+### Python exercises
+1. Make a Python function `mad` that calculates the median absolute deviation of a 
+numeric array.
+2. Generalize the function `mad` to work with columns of a data frame, such as e.g.
+`mpg.mean()`.
+3. Make your own empirical distribution function `ecdf` in Numpy, following 
+the definition in the book. Be sure to make it return a function! Compare it against the implementation in `scipy` or `statsmodels`. You only need to make it work for scalar values.
+4. **Optional, but highly recommended, exercise.** Implement the `ecdf` function *efficiently* in Numpy so that it works for vectors. This is exercise *hard*, but a great exercise for learning!
+(**Hints:** You need to sort your data; use `np.sort` for that. Look up
+`np.digitize`. You might need `np.unique` too. You also need to keep track of your sorted indices; use `np.argsort` for that.)
+
+
+### Chapter 15
+* 15.2. Copy the data into Numpy and make a histogram; you don't have to
+compute the histogram by hand (and don't bother with making the bin widths 5!). Experiment with the `bins` and `binwidth` parameters to find a good histogram.
+* 15.8.
+* 15.10.
+* 15.11. 
+* 15.12.
+
+### Chapter 16
+* 16.1.
+* 16.6.
+* 16.7.
+* 16.3. 
+* 16.4.
+* 16.10.
+* 16.11.

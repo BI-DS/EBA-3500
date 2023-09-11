@@ -1,0 +1,42 @@
+---
+title: "Partial means (ii): Mean and variance"
+author: "Jonas Moss"
+format:
+  revealjs:
+    logo: logo.png
+    incremental: true   
+---
+
+## The mean and variance of $M_n$.
+- Remember that $M_{n}=\frac{1}{n}\sum_{i=1}^{n}X_{i}$ for iid variables with
+  mean $\mu$ and standard deviation $\sigma$.
+- What do we know about the mean and variance of the sum?
+
+. . .
+
+Two things!
+
+- $E(M_n) = \mu$.
+- $\textrm{Var} M_n = \frac{1}{n}\sigma^2$.
+
+## Showing this
+- Linearity of expectation $E(aX+bY)=aEX+bEY$,
+- $\textrm{Var} (aX+bY)=a^{2} \textrm{Var} X+b^{2}\textrm{Var} Y$ when $X$,$Y$ are independent.
+- **Task:** Prove the following:
+  - $E(M_n) = \mu$.
+  - $\textrm{Var} M_n = \frac{1}{n}\sigma^2$.
+
+## Rescaled means
+- $M_{n}$ converges to a point, but can we make it converge to a distribution instead?
+- Then we need the variance to be stabilized, i.e., not go to $0$!
+- We can do that by rescaling and recentering.
+- In fact: $\sqrt{n}\frac{M_{n}-\mu}{\sigma}$ has mean $0$ and variance $1$!
+
+## Proving this:
+(a) $\text{Var} (aX)=a^{2}\text{Var} X$
+(b) $E(aX)=aEX$ 
+(c) $E(X-\mu) = 0$.
+- **Task:** Use (b) and (c) to show that $$E\left[\frac{\sqrt{n}}{\sigma}(M_{n}-\mu)\right]=0,$$
+- **Task:** Use these to (a) combined with (d) to show that $\sqrt{n}\frac{M_{n}-\mu}{\sigma}$ has mean $0$ and variance $1$.
+
+# Python illustration

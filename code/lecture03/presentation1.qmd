@@ -1,0 +1,31 @@
+---
+title: "Partial means (i): Law of large numbers"
+author: "Jonas Moss"
+format:
+  revealjs:
+    logo: logo.png
+    incremental: true   
+---
+
+## Setup
+- $X$ distributed according to the distribution function $F$, taking values on $\mathbb{R}$.
+- $\mu=EX$ is the expected value.
+- $\sigma^2 = \textrm{Var} X$ is the variance.
+- So $\sigma$ is the standard deviation.
+
+## Means of random variables
+- Let $X_{i}\stackrel{iid}{\sim}F,\quad i=1,\ldots$
+- Partial means: $M_{n}=\frac{1}{n}\sum_{i=1}^{n}X_{i}$. 
+- What do we know about these partial means?
+- Law of large numbers: The sample means converge in probability to $\mu$ as $n\to\infty$.
+- Think about it like this: The sample mean will get closer and closer to the
+  population mean (expected value) when $n$ increases.
+  
+## Generality of the law of large number
+- The book states and proves the law of large numbers for variables with
+  finite variance.
+- But the law of large numbers is *true* for all other distributions as well,
+  we only require the sample mean to be *defined*.
+- Proving this is beyond the scope of this course.
+
+# Python illustration

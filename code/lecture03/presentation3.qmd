@@ -1,0 +1,71 @@
+---
+title: "Partial means (iii): Central limit theorem"
+author: "Jonas Moss"
+format:
+  revealjs:
+      logo: logo.png
+      incremental: true   
+---
+  
+## Normal variables (i)
+- Let $X_1,X_2\sim N(\mu,\sigma)$, i.e., they are normal with expected value $\mu$ and standard deviaton $\sigma$.
+- Then $aX+b\sim N(a\mu+b,a\sigma)$
+- And $X_1 + X_2 \sim N(2\mu, \sqrt{2}\sigma)$.
+- **Task 1:** Use these to show that $\sum_{i=1}^{n}X_{i}\sim N(n\mu,\sqrt{n}\sigma).$
+- **Task 2:** Use these to show that $\sqrt{n}\frac{M_{n}-\mu}{\sigma}\sim N(0,1)$.
+
+## Normal variables (ii)
+- The rescaled and recentered means $\sqrt{n}\frac{M_{n}-\mu}{\sigma}$ follow a standard normal distribution *exactly*.
+- By "standard normal" I mean $N(0,1)$.
+- This is **not true** for any other random variables.
+
+## The central limit theorem (i)
+- The central limit theorem states, formally, that
+$$\sqrt{n}\frac{M_{n}-\mu}{\sigma}\stackrel{d}{\to}N(0,1)$$
+- Here "$\stackrel{d}{\to}$" denotes convergence in distribution. 
+- Definition: $X_n\stackrel{d}{\to} F$ for a continuous $F$ if, when $F_n$ is the distribution of $X_n$, the distribution function $F_n(x)$ converges to $F(x)$ pointwise. 
+- But think about it in terms of approximations instead.  
+
+## The central limit theorem (ii)
+$$\sqrt{n}\frac{M_{n}-\mu}{\sigma}\stackrel{d}{\to}N(0,1)$$
+
+- You can expect the distribution of the rescaled means to be approximately normal provided $n$ is large enough. 
+- What a large $n$ means varies, but $n=30$ usually suffices for a solid approximation.
+- Recall that normal variables obey the central limit theorem exactly. But no 
+  other distribution does that.
+  
+## Application
+- Let $M_{10}$ be the sum of 10 uniformly distributed variables.
+- They have mean $\mu=1/2$ and variance $\sigma^2=1/12$.
+- What is the approximate probability $P(M_{10}>3/4)$?
+- From the central limit theorem we have that $M_n\approx N(\mu,\sigma/\sqrt{n})$ in distribution.
+- **Task:** Using the properties of the normal distribution and the central limit theorem,
+  convince yourself that this is the case. (*Hint:* Divide, multiply, and subtract.)
+
+
+## Application (ii)
+- The CDF of a normal $Z\sim N(\mu,\sigma)$ is denoted $P(Z\leq z)=\Phi(z;\mu,\sigma)$.
+
+. . .
+
+$$P(M_{10}>3/4) = 1-P(M_{10}\leq3/4)\approx 1 - \Phi(3/4;\mu,\sigma).$$
+
+. . .
+
+```{python}
+#| echo: true
+import scipy.stats as st
+import numpy as np
+1 - st.norm(1/2, np.sqrt(1/12) / np.sqrt(10)).cdf(3/4)
+```
+. . .
+
+```{python}
+#| echo: true
+rng = np.random.default_rng(seed=313)
+x = rng.uniform(0, 1, (10000, 10))
+means = x.mean(axis=1)
+(means > 3/4).mean()
+```
+
+# Python illustration
