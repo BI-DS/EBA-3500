@@ -263,7 +263,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Updated 5/9:</strong> Added short note about law of large numbers.</p>
+<p><strong>Updated 12/9:</strong> Added note to exercises and removed a redundant comment.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="3.1">
@@ -367,28 +367,27 @@ Solution
 <section id="chapter-13" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="chapter-13"><span class="header-section-number">3.3.1</span> Chapter 13</h3>
 <ul>
-<li>13.1: Use Python to simulate from these variables. You can find all of these distributions in <code>np.random</code>, just initialize an <code>rng</code> object first! If you struggle finding the distributions, take a look at the Numpy documentation. Use the <code>.mean</code> method to approximate the probabilities and Wikipedia for the standard deviations (or use Numpy here as well.)</li>
+<li>13.1: Use Python to simulate from these variables. You can find all of these distributions in <code>np.random</code>, just initialize an <code>rng</code> object first! If you struggle finding the distributions, take a look at the Numpy documentation. Use the <code>.mean</code> method to approximate the probabilities and Wikipedia for the standard deviations (or use Numpy here as well.) <em>Note:</em> Be sure to do the exercise for one <span class="math inline">\(k\)</span> and one distribution first, then generalize!</li>
 <li>13.2</li>
 <li>13.3</li>
 <li>13.5</li>
-<li>13.7: The function <span class="math inline">\(F_n\)</span> is known a the empirical cumulative distribution function, shortened to <code>ecdf</code>. You can use Numpy to verify the claims of this exercise; write your own function or use the <code>ecdf</code> function from the statsmodels packae, <code>from statsmodels.distributions.empirical_distribution import ECDF</code>.</li>
+<li>13.7: The function <span class="math inline">\(F_n\)</span> is known a the empirical cumulative distribution function, shortened to <code>ecdf</code>. You can use Numpy to verify the claims of this exercise; write your own function or use the <code>ecdf</code> function from the statsmodels package, <code>from statsmodels.distributions.empirical_distribution import ECDF</code>.</li>
 <li>13.9: If you are not able to find the required <span class="math inline">\(a\)</span>, find it using simulations.</li>
 <li>13.12: (Optional)</li>
 </ul>
 </section>
 <section id="chapter-14" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="chapter-14"><span class="header-section-number">3.3.2</span> Chapter 14</h3>
-<p>In some of these exercises you will need the quantile function for the normal distribution. You can find this in the <code>scipy</code> package, where it is called the <code>ppf</code>.</p>
-<p>Here is an example of <span class="math inline">\(\Phi^{-1}(0.95)\)</span>.</p>
+<p>The cumulative distribution function of a normal variable can be found in Scipy. For instance, when <span class="math inline">\(X\)</span> is normal with mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(1\)</span>. Then we have:</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>norm.ppf(<span class="fl">0.95</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">0</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>1.6448536269514722</code></pre>
+<pre><code>0.5</code></pre>
 </div>
 </div>
 <ul>
-<li>14.1: Solve this using Python.</li>
+<li>14.1: Solve this using Python. You can also simulate variables with the required means and variances using <code>np.uniform</code> with the correct choices of <code>low</code> and <code>high</code>. Use the formulas <span class="math inline">\(E(X)=(b+a) / 2\)</span> and <span class="math inline">\(\textrm{Var}X = (b-a)^2/12\)</span> and solve for <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>.</li>
 <li>14.2: You can use <code>np.random.beta</code> to simulate from the Beta distribution. The parameters corresponding to the distribution in the exercise is <span class="math inline">\(a=1\)</span>, <span class="math inline">\(b=4\)</span>. Use this to compare the normal approximation to the true distribution of means. (<em>Hint:</em> Simulate a <span class="math inline">\(625\)</span> variables a bunch of times and use the mean function. You can either calculate the variance of <span class="math inline">\(X\)</span> yourself or use wikipedia.)</li>
 <li>14.8</li>
 <li>14.3</li>

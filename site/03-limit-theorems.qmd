@@ -1,7 +1,7 @@
 # Limit theorems
 
 ::: {.callout-note}
-**Updated 5/9:** Added short note about law of large numbers.
+**Updated 12/9:** Added note to exercises and removed a redundant comment.
 :::
 
 ## Curriculum
@@ -106,29 +106,29 @@ normal approximation in the central limit theorem is really poor when $n=100$?
 distributions in `np.random`, just initialize an `rng` object first! If you
 struggle finding the distributions, take a look at the Numpy documentation. Use
 the `.mean` method to approximate the probabilities and Wikipedia for the standard
-deviations (or use Numpy here as well.)
+deviations (or use Numpy here as well.) *Note:* Be sure to do the exercise for
+one $k$ and one distribution first, then generalize! 
 * 13.2
 * 13.3
 * 13.5
 * 13.7: The function $F_n$ is known a the empirical cumulative distribution 
 function, shortened to `ecdf`. You can use Numpy to verify the claims of this
 exercise; write your own function or use the `ecdf` function from the
-statsmodels packae, `from statsmodels.distributions.empirical_distribution import ECDF`.
+statsmodels package, `from statsmodels.distributions.empirical_distribution import ECDF`.
 * 13.9: If you are not able to find the required $a$, find it using simulations.
 * 13.12: (Optional)
 
 ### Chapter 14
-In some of these exercises you will need the quantile function for the normal
-distribution. You can find this in the `scipy` package, where it is called the
-`ppf`.
-
-Here is an example of $\Phi^{-1}(0.95)$.
+The cumulative distribution function of a normal variable can be found in Scipy. For instance, when $X$ is normal with mean $0$ and standard deviation $1$. Then we have:
 ```{python}
 from scipy.stats import norm 
-norm.ppf(0.95, loc=0, scale=1)
+norm.cdf(0, loc=0, scale=1)
 ```
 
-* 14.1: Solve this using Python.
+* 14.1: Solve this using Python. You can also simulate variables with the required
+means and variances using `np.uniform` with the correct choices of `low` and `high`.
+Use the formulas $E(X)=(b+a) / 2$ and $\textrm{Var}X = (b-a)^2/12$ and solve
+for $a$ and $b$.
 * 14.2: You can use `np.random.beta` to simulate from the Beta distribution. The
 parameters corresponding to the distribution in the exercise is $a=1$, $b=4$.
 Use this to compare the normal approximation to the true distribution of means.
