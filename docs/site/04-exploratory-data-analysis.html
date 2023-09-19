@@ -262,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>Update 11/9:</strong> Added Python notes and exercises.</p>
+<p><strong>Update 19/9:</strong> Removed two exercises.</p>
 </div>
 </div>
 </div>
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h5 data-number="4.1.2.1.1" class="anchored" data-anchor-id="the-pairplot"><span class="header-section-number">4.1.2.1.1</span> The <code>pairplot</code></h5>
 <p>We have covered how to use the <code>sns.histplot</code> already, with the key point being that you have to use <code>stat="density"</code> to make it plot a <em>density</em> instead of just counts. There are several plotting methods in <code>seaborn</code> that are useful, but for exploratory data analysis the <code>sns.pairplot</code> is especially important.</p>
 <p>To illustrate the <code>sns.pairplot</code> function, we will first load some data. The <code>seaborn</code> package comes equipped with several nice data sets, which we will use for illustrations.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sns.get_dataset_names()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
@@ -316,7 +316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Here we have a list of available data sets. Let’s load the <code>mpg</code> data set, which contains information about the miles per gallon (mpg) for various car makes, along with other information.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> sns.load_dataset(<span class="st">"mpg"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mpg.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We can investigate the data types of this data frame,</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mpg.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>mpg             float64
@@ -423,7 +423,7 @@ dtype: object</code></pre>
 </div>
 <p>The last two columns are of data type <code>object</code>, which is a placeholder for non-numeric types. <code>float64</code> are decimal numbers and <code>int64</code> are integers.</p>
 <p>Using <code>sns.pairplot</code> we get a convenient graphical representation of the numeric types.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -433,7 +433,7 @@ dtype: object</code></pre>
 </div>
 <p>Observe that the diagonal contains the histograms of each column and the off-diagonal elements the scatter plot of each combination of columns. From this plot we can immediately read that, e.g., the model year is approximately uniformly distributed and that the mpg is positively associated with the model year. (You might need to use the scroll bar to see this.) This shouldn’t be surprising, given continual developments in car technology.</p>
 <p>Observe that you can use the kernel density estimator here as well, on the diagonal, by specifying <code>diag_kind="kde"</code>. Kernel density estimators should generally be prefered when interacting with people with some statistical background, as they usually give a better indication of the population density than a histogram.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, diag_kind<span class="op">=</span><span class="st">"kde"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -450,7 +450,7 @@ dtype: object</code></pre>
 <h5 data-number="4.1.2.1.2" class="anchored" data-anchor-id="count-plots"><span class="header-section-number">4.1.2.1.2</span> Count plots</h5>
 <p>Recall the difference between discrete and continuous random variables. Continuous random variables are defined for decimal numbers and have a probability density function (PDF). That is, <span class="math inline">\(f(x)\)</span> is a probability density of a random variable if and and only if <span class="math inline">\(f(x)\geq 0\)</span> and its integral is <span class="math inline">\(\int f(x) dx = 1\)</span>. Continuous random variables can be modeled with histograms and kernel density estimators, and the result is a density in itself.</p>
 <p>On the other hand, discrete random variables (defined on a set of integers or categorical values) have a probability mass function (PMF), a function <span class="math inline">\(p(x)\geq0\)</span> that sums to <span class="math inline">\(1\)</span>, i.e., <span class="math inline">\(\sum p(x) = 1\)</span>. These should ideally not be modeled using histograms, but with count plots (bar plots). For instance, the <code>model_year</code> column of the <code>mpg</code> data set have data type <code>int64</code>, a discrete data type. The result is a is almost a probability mass function, provided it is normalized by <span class="math inline">\(n\)</span>. (The countplot function has, sadly, no option of returning a probability mass function instead of just counts.)</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span><span class="st">"model_year"</span>, data<span class="op">=</span>mpg)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -463,7 +463,7 @@ dtype: object</code></pre>
 <section id="numerical-summaries" class="level4" data-number="4.1.2.2">
 <h4 data-number="4.1.2.2" class="anchored" data-anchor-id="numerical-summaries"><span class="header-section-number">4.1.2.2</span> Numerical summaries</h4>
 <p>A convenient way to quickly obtain numerical summaries is the <code>.describe</code> method.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mpg.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
@@ -594,8 +594,6 @@ dtype: object</code></pre>
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="chapter-15"><span class="header-section-number">4.2.2</span> Chapter 15</h3>
 <ul>
 <li>15.2. Copy the data into Numpy and make a histogram; you don’t have to compute the histogram by hand (and don’t bother with making the bin widths 5!). Experiment with the <code>bins</code> and <code>binwidth</code> parameters to find a good histogram.</li>
-<li>15.8.</li>
-<li>15.10.</li>
 <li>15.11.</li>
 <li>15.12.</li>
 </ul>
