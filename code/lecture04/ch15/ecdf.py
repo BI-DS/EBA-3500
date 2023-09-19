@@ -1,5 +1,4 @@
 import numpy as np
-from statsmodels.distributions.empirical_distribution import ECDF
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -8,11 +7,12 @@ x = rng.normal(size=100)
 mean = x.mean()
 sd = x.std(ddof=1)
 
-
 # https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales
 
 supermarket = pd.read_csv("supermarket_sales.csv")
 supermarket.head()
+
+from statsmodels.distributions.empirical_distribution import ECDF
 
 # cogs: Cost of good sold.
 ecdf = ECDF(supermarket.cogs)
@@ -50,3 +50,13 @@ yangon = supermarket.query(f"City == 'Yangon'").cogs
 kstest(mandalay, naypyitaw).pvalue
 kstest(mandalay, yangon).pvalue
 kstest(naypyitaw, yangon).pvalue
+
+
+import numpy as np
+import matplotlib.pylab as plt
+
+rng = np.random.default_rng(seed=313)
+x = rng.normal(0, 1, 10000)
+medians = [np.median(x[0:i]) for i in range(1, 10001)]
+plt.plot(medians)
+plt.show()

@@ -3,16 +3,23 @@ import numpy as np
 import matplotlib.pylab as plt
 import seaborn as sns
 
+
 old_faithful = np.loadtxt("old_faithful.dat", dtype=np.float64)
 sns.kdeplot(old_faithful)
 sns.histplot(old_faithful, stat="density")
 plt.show()
 plt.clf()
 
-# Exercise: Figure out how to modify the smoothing bandwidth
-# parameter h multiplicatively.
-
 sns.kdeplot(old_faithful, bw_adjust=0.01)
+plt.show()
+plt.clf()
+
+sns.kdeplot(old_faithful, bw_adjust=0.5)
+sns.histplot(old_faithful, stat="density")
+plt.show()
+plt.clf()
+
+sns.kdeplot(old_faithful, bw_adjust=0.5)
 plt.show()
 plt.clf()
 
@@ -20,10 +27,9 @@ plt.clf()
 
 # Let's make our own kde-ish function.
 
-
 # Also available in Scipy.
 def standard_norm(x):
-    return 1 / np.sqrt(2 * np.pi) * np.exp(-0.5 * x**2)
+    return 1 / np.sqrt(2 * np.pi) * np.exp(-0.5 * x ** 2)
 
 
 def kde(x, h):
