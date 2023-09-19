@@ -1,7 +1,7 @@
 # Exploratory data analysis
 
 ::: callout
-**Update 11/9:** Added Python notes and exercises.
+**Update 19/9:** Removed two exercises.
 :::
 
 
@@ -125,8 +125,6 @@ the definition in the book. Be sure to make it return a function! Compare it aga
 ### Chapter 15
 * 15.2. Copy the data into Numpy and make a histogram; you don't have to
 compute the histogram by hand (and don't bother with making the bin widths 5!). Experiment with the `bins` and `binwidth` parameters to find a good histogram.
-* 15.8.
-* 15.10.
 * 15.11. 
 * 15.12.
 
