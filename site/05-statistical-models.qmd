@@ -1,7 +1,7 @@
 # Basic statistical models and the bootstrap
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout-note
+**20/9:** Added exercises and a section on the bootstrap in Python.
 :::
 
 ## Curriculum
@@ -14,11 +14,96 @@ This page is ***not finished***, but might contain notes from the course develop
 
 2. Dekking et al., Chapter 18: The bootstrap
 
-### Basic statistical model in Python
+### Bootstrap and Python
+:::{.callout-note}
+Please read the book chapter on the bootstrap before reading these notes. Also,
+be aware that there are many of YouTube videos explaining the bootstrap in an intuitive way.
+If you struggle understanding what we are doing, try to take a look at a few of those, for instance [this one](https://www.youtube.com/watch?v=Xz0x-8-cgaQ).
+:::
 
-### Bootstrap in Python
+Recall the bootstrap principle from the book. In the following definition, $\hat{F}$ is the empirical cumulative distribution function of the data $x_1, x_2,...,x_n$.
+
+:::{.callout}
+## Bootstrap principle (Dekker et al.)
+Use the dataset $x_1, x_2,...,x_n$ to compute an estimate $\hat{F}$ for the true distribution function $F$. Replace the random sample $X_1, X_2,...,X_n$ from $F$ by a random sample $X^\star_1, X^\star_2 ,...,X^\star_n$ from $\hat{F}$, and approximate the probability distribution of $h(X_1, X_2,...,X_n)$ by that of $h(X^\star_1 , X^\star_2 ,...,X^\star_n).$
+:::
+
+The functions $h$ will typically be estimators, e.g., the sample mean, sample median, quantiles, or even a kernel density estimator. 
+
+Let's look an example using the supermarket sales data. 
+
+```{python}
+import pandas as pd
+supermarket = pd.read_csv("supermarket_sales.csv")
+supermarket.describe()
+```
+Observe that each column has $n=1000$ observations. Moreover, the sample mean of `gross income` is $\approx 15.37$, which is the data we will focus on. We will try to figure out the uncertainty, broadly speaking, of this estimate, using the bootstrap.
+
+We will not sample directly from the empirical cumulative distribution function. Instead, we will sample *with replacement* from the observed data. Sampling with replacement is not difficulty conceptually, but if are unfamiliar with the concept, use e.g. [this YouTube video](https://www.youtube.com/watch?v=LnGFL_A6A6A) or read the Wikipedia page.
+
+We need to sample $n = 1000$ observations with replacement from `supermarket["gross margin percentage"]`. We will do this a large number of times, `n_reps = 1000` is standard, and a recommended default option when doing bootstrapping.  
+
+First we make an `rng` object. This is required for doing the sampling without
+replacement. Using an `rng` object is crucial here, as you want the random 
+samples to reproduce on different machines and at different times!
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+```
+
+Now we use the Numpy function [`choice`](https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html) to sample with replacement from the underlying data.
+
+```{python}
+x = supermarket["gross income"]
+n = x.size # equals 1000.
+n_reps = 100
+boots = rng.choice(x, (n, n_reps))
+boots.shape
+boots
+```
+Now we $1000$ columns containing $1000$ samples with replacement from `x`. Now we
+need to find the distribution of these sample means. We have done such an exercise
+many times already, but always with purely simulated data.
+
+```{python}
+import seaborn as sns
+import matplotlib.pylab as plt
+means = boots.mean(axis = 1) - x.mean()
+sns.histplot(means, stat="density")
+plt.show()
+```
+The histogram above shows, approximately, what sort of sample means we could have
+got had we observed a different sample from the true distribution $F$. Looking at
+this histogram, we see there is substantial uncertainty in the sample mean of 
+gross income, with deviations from the observed sample mean ranging from $-2$ to $+2$ appearing to be quite likely. To be more precise, we can calculate the quantiles and standard deviation of the bootstrapped sample means.
+
+```{python}
+means.std()
+
+```
+It follows that the standard deviation of the sample mean is approximately $1.17$ by the bootstrap principle. Moreover, we can calculate some quantiles. 
+
+```{python}
+np.quantile(means, (0.1, 0.9))
+```
+
+When we calculate the $0.1$ and $0.9$ quantiles and add the sample mean, we can - very informally! (we will make this formal later on) - say that we are $90\%$ confident that the true population mean lies in the resulting interval. 
+
+```{python}
+np.quantile(means, (0.1, 0.9)) + x.mean()
+```
+In this case, our bootstrapped confidence interval is approximately $[13.9, 16.9]$. This is a reasonably intuitive quantification of the uncertainty in the data set. 
+
+
 
 ## Exercises
+The following two exercises are the most important and should be attempted first.
+
+1. Make a function that calculates and shows the histogram of the bootstrapped means
+for any vector `x`. Apply it to the columns `unit price` and `quantity` of the `supermarket` data frame (found e.g. [here](https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales). 
+2. Using the central limit theorem we can derive the asymptotic distribution for the sample mean. Make a function that superimposes a normal distribution as implied by the central limit theorem on the histograms above. (*Hint:* You need to take care of the rescaling factor $\sqrt{n}$ and the standard deviation $\sigma$ in the central limit theorem $\sqrt{n}(\overline{X}-\mu)/\sigma \to N(0,1))$; another way to write this result is $\overline(X) - \mu \approx N(0, \sigma/\sqrt{n})$.)
+
+### Chapter 17
 * 17.1
 * 17.2
 * 17.4 (use Python to visualize part b)
@@ -27,6 +112,7 @@ This page is ***not finished***, but might contain notes from the course develop
 * 17.10
 * 17.11
 
+### Chapter 18
 * 18.1 (*Hint*: How many combinations are double counted due to the two 1s?)
 * 18.2 Use exact computations!
 * 18.3 Use exact computations!
@@ -35,5 +121,3 @@ This page is ***not finished***, but might contain notes from the course develop
 * 18.7
 * 18.12
 * 18.13
-
-## Additional resources

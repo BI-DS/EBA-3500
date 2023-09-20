@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -50,7 +84,12 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -186,11 +225,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">5.1</span> Curriculum</a>
   <ul class="collapse">
   <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">5.1.1</span> Core readings</a></li>
-  <li><a href="#basic-statistical-model-in-python" id="toc-basic-statistical-model-in-python" class="nav-link" data-scroll-target="#basic-statistical-model-in-python"><span class="header-section-number">5.1.2</span> Basic statistical model in Python</a></li>
-  <li><a href="#bootstrap-in-python" id="toc-bootstrap-in-python" class="nav-link" data-scroll-target="#bootstrap-in-python"><span class="header-section-number">5.1.3</span> Bootstrap in Python</a></li>
+  <li><a href="#bootstrap-and-python" id="toc-bootstrap-and-python" class="nav-link" data-scroll-target="#bootstrap-and-python"><span class="header-section-number">5.1.2</span> Bootstrap and Python</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.2</span> Exercises</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">5.3</span> Additional resources</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">5.2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#chapter-17" id="toc-chapter-17" class="nav-link" data-scroll-target="#chapter-17"><span class="header-section-number">5.2.1</span> Chapter 17</a></li>
+  <li><a href="#chapter-18" id="toc-chapter-18" class="nav-link" data-scroll-target="#chapter-18"><span class="header-section-number">5.2.2</span> Chapter 18</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -214,17 +255,17 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This page is <strong><em>not finished</em></strong>, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.</p>
+<p><strong>20/9:</strong> Added exercises and a section on the bootstrap in Python.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="5.1">
@@ -240,37 +281,249 @@ Important
 <li><p>Dekking et al., Chapter 18: The bootstrap</p></li>
 </ol>
 </section>
-<section id="basic-statistical-model-in-python" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="basic-statistical-model-in-python"><span class="header-section-number">5.1.2</span> Basic statistical model in Python</h3>
-</section>
-<section id="bootstrap-in-python" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="bootstrap-in-python"><span class="header-section-number">5.1.3</span> Bootstrap in Python</h3>
+<section id="bootstrap-and-python" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="bootstrap-and-python"><span class="header-section-number">5.1.2</span> Bootstrap and Python</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please read the book chapter on the bootstrap before reading these notes. Also, be aware that there are many of YouTube videos explaining the bootstrap in an intuitive way. If you struggle understanding what we are doing, try to take a look at a few of those, for instance <a href="https://www.youtube.com/watch?v=Xz0x-8-cgaQ">this one</a>.</p>
+</div>
+</div>
+<p>Recall the bootstrap principle from the book. In the following definition, <span class="math inline">\(\hat{F}\)</span> is the empirical cumulative distribution function of the data <span class="math inline">\(x_1, x_2,...,x_n\)</span>.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bootstrap principle (Dekker et al.)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the dataset <span class="math inline">\(x_1, x_2,...,x_n\)</span> to compute an estimate <span class="math inline">\(\hat{F}\)</span> for the true distribution function <span class="math inline">\(F\)</span>. Replace the random sample <span class="math inline">\(X_1, X_2,...,X_n\)</span> from <span class="math inline">\(F\)</span> by a random sample <span class="math inline">\(X^\star_1, X^\star_2 ,...,X^\star_n\)</span> from <span class="math inline">\(\hat{F}\)</span>, and approximate the probability distribution of <span class="math inline">\(h(X_1, X_2,...,X_n)\)</span> by that of <span class="math inline">\(h(X^\star_1 , X^\star_2 ,...,X^\star_n).\)</span></p>
+</div>
+</div>
+<p>The functions <span class="math inline">\(h\)</span> will typically be estimators, e.g., the sample mean, sample median, quantiles, or even a kernel density estimator.</p>
+<p>Let’s look an example using the supermarket sales data.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>supermarket <span class="op">=</span> pd.read_csv(<span class="st">"supermarket_sales.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>supermarket.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Unit price</th>
+<th data-quarto-table-cell-role="th">Quantity</th>
+<th data-quarto-table-cell-role="th">Tax 5%</th>
+<th data-quarto-table-cell-role="th">Total</th>
+<th data-quarto-table-cell-role="th">cogs</th>
+<th data-quarto-table-cell-role="th">gross margin percentage</th>
+<th data-quarto-table-cell-role="th">gross income</th>
+<th data-quarto-table-cell-role="th">Rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>1000.000000</td>
+<td>1000.000000</td>
+<td>1000.000000</td>
+<td>1000.000000</td>
+<td>1000.00000</td>
+<td>1000.000000</td>
+<td>1000.000000</td>
+<td>1000.00000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>55.672130</td>
+<td>5.510000</td>
+<td>15.379369</td>
+<td>322.966749</td>
+<td>307.58738</td>
+<td>4.761905</td>
+<td>15.379369</td>
+<td>6.97270</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>26.494628</td>
+<td>2.923431</td>
+<td>11.708825</td>
+<td>245.885335</td>
+<td>234.17651</td>
+<td>0.000000</td>
+<td>11.708825</td>
+<td>1.71858</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>10.080000</td>
+<td>1.000000</td>
+<td>0.508500</td>
+<td>10.678500</td>
+<td>10.17000</td>
+<td>4.761905</td>
+<td>0.508500</td>
+<td>4.00000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>32.875000</td>
+<td>3.000000</td>
+<td>5.924875</td>
+<td>124.422375</td>
+<td>118.49750</td>
+<td>4.761905</td>
+<td>5.924875</td>
+<td>5.50000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>55.230000</td>
+<td>5.000000</td>
+<td>12.088000</td>
+<td>253.848000</td>
+<td>241.76000</td>
+<td>4.761905</td>
+<td>12.088000</td>
+<td>7.00000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>77.935000</td>
+<td>8.000000</td>
+<td>22.445250</td>
+<td>471.350250</td>
+<td>448.90500</td>
+<td>4.761905</td>
+<td>22.445250</td>
+<td>8.50000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>99.960000</td>
+<td>10.000000</td>
+<td>49.650000</td>
+<td>1042.650000</td>
+<td>993.00000</td>
+<td>4.761905</td>
+<td>49.650000</td>
+<td>10.00000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Observe that each column has <span class="math inline">\(n=1000\)</span> observations. Moreover, the sample mean of <code>gross income</code> is <span class="math inline">\(\approx 15.37\)</span>, which is the data we will focus on. We will try to figure out the uncertainty, broadly speaking, of this estimate, using the bootstrap.</p>
+<p>We will not sample directly from the empirical cumulative distribution function. Instead, we will sample <em>with replacement</em> from the observed data. Sampling with replacement is not difficulty conceptually, but if are unfamiliar with the concept, use e.g.&nbsp;<a href="https://www.youtube.com/watch?v=LnGFL_A6A6A">this YouTube video</a> or read the Wikipedia page.</p>
+<p>We need to sample <span class="math inline">\(n = 1000\)</span> observations with replacement from <code>supermarket["gross margin percentage"]</code>. We will do this a large number of times, <code>n_reps = 1000</code> is standard, and a recommended default option when doing bootstrapping.</p>
+<p>First we make an <code>rng</code> object. This is required for doing the sampling without replacement. Using an <code>rng</code> object is crucial here, as you want the random samples to reproduce on different machines and at different times!</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we use the Numpy function <a href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html"><code>choice</code></a> to sample with replacement from the underlying data.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> supermarket[<span class="st">"gross income"</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size <span class="co"># equals 1000.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>boots <span class="op">=</span> rng.choice(x, (n, n_reps))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>boots.shape</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>boots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([[39.065 , 11.7465,  6.1925, ..., 30.368 , 10.238 , 43.749 ],
+       [34.956 , 11.498 , 32.41  , ..., 10.1325,  4.3725,  6.456 ],
+       [16.0265, 22.7205,  1.921 , ...,  3.841 ,  6.1155,  3.333 ],
+       ...,
+       [ 5.679 ,  8.64  , 19.084 , ...,  6.1925,  5.2425,  1.616 ],
+       [14.55  ,  7.8785, 18.6095, ...,  7.278 , 10.168 , 26.208 ],
+       [27.275 , 22.01  , 10.863 , ...,  2.223 ,  3.47  ,  5.11  ]])</code></pre>
+</div>
+</div>
+<p>Now we <span class="math inline">\(1000\)</span> columns containing <span class="math inline">\(1000\)</span> samples with replacement from <code>x</code>. Now we need to find the distribution of these sample means. We have done such an exercise many times already, but always with purely simulated data.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> boots.mean(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">-</span> x.mean()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(means, stat<span class="op">=</span><span class="st">"density"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="05-statistical-models_files/figure-html/cell-5-output-1.png" width="597" height="411"></p>
+</div>
+</div>
+<p>The histogram above shows, approximately, what sort of sample means we could have got had we observed a different sample from the true distribution <span class="math inline">\(F\)</span>. Looking at this histogram, we see there is substantial uncertainty in the sample mean of gross income, with deviations from the observed sample mean ranging from <span class="math inline">\(-2\)</span> to <span class="math inline">\(+2\)</span> appearing to be quite likely. To be more precise, we can calculate the quantiles and standard deviation of the bootstrapped sample means.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>means.std()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>1.1363259590415926</code></pre>
+</div>
+</div>
+<p>It follows that the standard deviation of the sample mean is approximately <span class="math inline">\(1.17\)</span> by the bootstrap principle. Moreover, we can calculate some quantiles.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([-1.4862985,  1.404376 ])</code></pre>
+</div>
+</div>
+<p>When we calculate the <span class="math inline">\(0.1\)</span> and <span class="math inline">\(0.9\)</span> quantiles and add the sample mean, we can - very informally! (we will make this formal later on) - say that we are <span class="math inline">\(90\%\)</span> confident that the true population mean lies in the resulting interval.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>)) <span class="op">+</span> x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([13.8930705, 16.783745 ])</code></pre>
+</div>
+</div>
+<p>In this case, our bootstrapped confidence interval is approximately <span class="math inline">\([13.9, 16.9]\)</span>. This is a reasonably intuitive quantification of the uncertainty in the data set.</p>
 </section>
 </section>
 <section id="exercises" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">5.2</span> Exercises</h2>
+<p>The following two exercises are the most important and should be attempted first.</p>
+<ol type="1">
+<li>Make a function that calculates and shows the histogram of the bootstrapped means for any vector <code>x</code>. Apply it to the columns <code>unit price</code> and <code>quantity</code> of the <code>supermarket</code> data frame (found e.g.&nbsp;<a href="https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales">here</a>.</li>
+<li>Using the central limit theorem we can derive the asymptotic distribution for the sample mean. Make a function that superimposes a normal distribution as implied by the central limit theorem on the histograms above. (<em>Hint:</em> You need to take care of the rescaling factor <span class="math inline">\(\sqrt{n}\)</span> and the standard deviation <span class="math inline">\(\sigma\)</span> in the central limit theorem <span class="math inline">\(\sqrt{n}(\overline{X}-\mu)/\sigma \to N(0,1))\)</span>; another way to write this result is <span class="math inline">\(\overline(X) - \mu \approx N(0, \sigma/\sqrt{n})\)</span>.)</li>
+</ol>
+<section id="chapter-17" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="chapter-17"><span class="header-section-number">5.2.1</span> Chapter 17</h3>
 <ul>
-<li><p>17.1</p></li>
-<li><p>17.2</p></li>
-<li><p>17.4 (use Python to visualize part b)</p></li>
-<li><p>17.5</p></li>
-<li><p>17.6</p></li>
-<li><p>17.10</p></li>
-<li><p>17.11</p></li>
-<li><p>18.1 (<em>Hint</em>: How many combinations are double counted due to the two 1s?)</p></li>
-<li><p>18.2 Use exact computations!</p></li>
-<li><p>18.3 Use exact computations!</p></li>
-<li><p>18.4 Use exact computations!</p></li>
-<li><p>18.6</p></li>
-<li><p>18.7</p></li>
-<li><p>18.12</p></li>
-<li><p>18.13</p></li>
+<li>17.1</li>
+<li>17.2</li>
+<li>17.4 (use Python to visualize part b)</li>
+<li>17.5</li>
+<li>17.6</li>
+<li>17.10</li>
+<li>17.11</li>
 </ul>
 </section>
-<section id="additional-resources" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">5.3</span> Additional resources</h2>
+<section id="chapter-18" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="chapter-18"><span class="header-section-number">5.2.2</span> Chapter 18</h3>
+<ul>
+<li>18.1 (<em>Hint</em>: How many combinations are double counted due to the two 1s?)</li>
+<li>18.2 Use exact computations!</li>
+<li>18.3 Use exact computations!</li>
+<li>18.4 Use exact computations!</li>
+<li>18.6</li>
+<li>18.7</li>
+<li>18.12</li>
+<li>18.13</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
