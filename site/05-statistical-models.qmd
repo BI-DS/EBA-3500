@@ -2,6 +2,7 @@
 
 ::: callout-note
 **20/9:** Added exercises and a section on the bootstrap in Python.
+**20/9:** Fixed small error in code.
 :::
 
 ## Curriculum
@@ -56,10 +57,9 @@ Now we use the Numpy function [`choice`](https://numpy.org/doc/stable/reference/
 ```{python}
 x = supermarket["gross income"]
 n = x.size # equals 1000.
-n_reps = 100
+n_reps = 1000
 boots = rng.choice(x, (n, n_reps))
 boots.shape
-boots
 ```
 Now we $1000$ columns containing $1000$ samples with replacement from `x`. Now we
 need to find the distribution of these sample means. We have done such an exercise

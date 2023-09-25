@@ -230,8 +230,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.2</span> Exercises</a>
   <ul class="collapse">
   <li><a href="#python-exercises" id="toc-python-exercises" class="nav-link" data-scroll-target="#python-exercises"><span class="header-section-number">4.2.1</span> Python exercises</a></li>
-  <li><a href="#chapter-15" id="toc-chapter-15" class="nav-link" data-scroll-target="#chapter-15"><span class="header-section-number">4.2.2</span> Chapter 15</a></li>
-  <li><a href="#chapter-16" id="toc-chapter-16" class="nav-link" data-scroll-target="#chapter-16"><span class="header-section-number">4.2.3</span> Chapter 16</a></li>
+  <li><a href="#chapter-15" id="toc-chapter-15" class="nav-link" data-scroll-target="#chapter-15"><span class="header-section-number">4.2.6</span> Chapter 15</a></li>
+  <li><a href="#chapter-16" id="toc-chapter-16" class="nav-link" data-scroll-target="#chapter-16"><span class="header-section-number">4.2.7</span> Chapter 16</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -589,26 +589,114 @@ dtype: object</code></pre>
 <li>Make your own empirical distribution function <code>ecdf</code> in Numpy, following the definition in the book. Be sure to make it return a function! Compare it against the implementation in <code>scipy</code> or <code>statsmodels</code>. You only need to make it work for scalar values.</li>
 <li><strong>Optional, but highly recommended, exercise.</strong> Implement the <code>ecdf</code> function <em>efficiently</em> in Numpy so that it works for vectors. This is exercise <em>hard</em>, but a great exercise for learning! (<strong>Hints:</strong> You need to sort your data; use <code>np.sort</code> for that. Look up <code>np.digitize</code>. You might need <code>np.unique</code> too. You also need to keep track of your sorted indices; use <code>np.argsort</code> for that.)</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solutions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="exercise-1" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">4.2.2</span> Exercise 1</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mad1(x):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mad for a single array."""</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.median(np.<span class="bu">abs</span>(x <span class="op">-</span> np.median(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="chapter-15" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="chapter-15"><span class="header-section-number">4.2.2</span> Chapter 15</h3>
-<ul>
-<li>15.2. Copy the data into Numpy and make a histogram; you don’t have to compute the histogram by hand (and don’t bother with making the bin widths 5!). Experiment with the <code>bins</code> and <code>binwidth</code> parameters to find a good histogram.</li>
-<li>15.11.</li>
-<li>15.12.</li>
-</ul>
+<section id="exercise-2" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">4.2.3</span> Exercise 2</h3>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mad2(x, axis<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mad with axis argument (only 0 or 1)."""</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mad1(x)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [mad1(y) <span class="cf">for</span> y <span class="kw">in</span> x.T]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [mad1(y) <span class="cf">for</span> y <span class="kw">in</span> x]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="chapter-16" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="chapter-16"><span class="header-section-number">4.2.3</span> Chapter 16</h3>
-<ul>
-<li>16.1.</li>
-<li>16.6.</li>
-<li>16.7.</li>
-<li>16.3.</li>
-<li>16.4.</li>
-<li>16.10.</li>
-<li>16.11.</li>
-</ul>
+<section id="exercise-3" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">4.2.4</span> Exercise 3</h3>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ecdf(x):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Make an empirical CDF."""</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fun(y):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(x <span class="op">&lt;=</span> y)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fun</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng.normal(<span class="dv">0</span>, <span class="dv">1</span>, (<span class="dv">1000</span>, <span class="dv">10</span>))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>ecdf_fun <span class="op">=</span> ecdf(x[<span class="dv">0</span>, :])</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.distributions.empirical_distribution <span class="im">import</span> ECDF</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>ecdf_fun_2 <span class="op">=</span> ECDF(x[<span class="dv">0</span>, :])</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>ecdf_fun_2(<span class="fl">0.3</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ecdf_fun(<span class="fl">0.3</span>)</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">## Plotting.</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(x<span class="op">=</span>x[<span class="dv">0</span>, :])</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sort(x[<span class="dv">0</span>, :])</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>plt.plot(y, [ecdf_fun(z) <span class="cf">for</span> z <span class="kw">in</span> y])</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(x<span class="op">=</span>x[<span class="dv">0</span>, :])</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sort(x[<span class="dv">0</span>, :])</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.step(y, [ecdf_fun(z) <span class="cf">for</span> z <span class="kw">in</span> y], where<span class="op">=</span><span class="st">"post"</span>)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-1.png" width="589" height="416"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-2.png" width="589" height="416"></p>
+</div>
+</div>
+</section>
+<section id="exercise-4" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">4.2.5</span> Exercise 4</h3>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ecdf3(x):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">""" Returns the ECDF for the data x. The output function works for all vectors."""</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  x_sorted <span class="op">=</span> np.sort(x)  </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> fun(y):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    indices <span class="op">=</span> np.argsort(y)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    y_sorted <span class="op">=</span> np.sort(y)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    digitized <span class="op">=</span> np.digitize(x_sorted, y_sorted, right<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    values, counts <span class="op">=</span> np.unique(digitized,return_counts<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> np.cumsum(counts[<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span> x.size</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> means[indices]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> fun</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="chapter-15" class="level3" data-number="4.2.6">
+<h3 data-number="4.2.6" class="anchored" data-anchor-id="chapter-15"><span class="header-section-number">4.2.6</span> Chapter 15</h3>
+<p>See p.&nbsp;440 of the book for solution proposals. * 15.2. Copy the data into Numpy and make a histogram; you don’t have to compute the histogram by hand (and don’t bother with making the bin widths 5!). Experiment with the <code>bins</code> and <code>binwidth</code> parameters to find a good histogram. * 15.11. * 15.12.</p>
+</section>
+<section id="chapter-16" class="level3" data-number="4.2.7">
+<h3 data-number="4.2.7" class="anchored" data-anchor-id="chapter-16"><span class="header-section-number">4.2.7</span> Chapter 16</h3>
+<p>See p.&nbsp;441 of the book for solution proposals. * 16.1. * 16.6. * 16.7. * 16.3. * 16.4. * 16.10. * 16.11.</p>
 
 
 </section>

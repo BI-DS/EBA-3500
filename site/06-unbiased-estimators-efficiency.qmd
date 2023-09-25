@@ -1,6 +1,6 @@
 # Unbiased estimators and efficiency
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout-note
+**Updated 25/9.** Added exercises.
 :::
 
 ## Curriculum
@@ -11,3 +11,14 @@ This page is ***not finished***, but might contain notes from the course develop
 
 ## Exercises
 
+### Chapter 19
+* 19.1a: You need to integrate the uniform distribution.
+* 19.2: Do this with pen and paper!
+* 19.3 
+* 19.4a: Use simulations for this. Recall that an unbiased estimator has to be unbiased for all $n$.
+* 19.5: You need to figure out the expectation of $M_n$.
+
+## Chapter 20
+* 20.5
+* 20.8 Calculate the variance of $T$!
+* 20.10

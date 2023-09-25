@@ -121,16 +121,98 @@ the definition in the book. Be sure to make it return a function! Compare it aga
 (**Hints:** You need to sort your data; use `np.sort` for that. Look up
 `np.digitize`. You might need `np.unique` too. You also need to keep track of your sorted indices; use `np.argsort` for that.)
 
+::: {.callout-tip collapse="true"}
+## Solutions
+
+### Exercise 1
+```{python}
+import numpy as np
+def mad1(x):
+    """Calculate mad for a single array."""
+    return np.median(np.abs(x - np.median(x)))
+```
+
+### Exercise 2
+```{python}
+import numpy as np
+def mad2(x, axis=None):
+    """Calculate mad with axis argument (only 0 or 1)."""
+    if axis is None:
+        return mad1(x)
+    if axis == 0:
+        return [mad1(y) for y in x.T]
+    if axis == 1:
+        return [mad1(y) for y in x]
+```
+
+### Exercise 3
+```{python}
+import numpy as np
+def ecdf(x):
+    """Make an empirical CDF."""
+    def fun(y):
+        return np.mean(x <= y)
+
+    return fun
+
+rng = np.random.default_rng(seed=313)
+x = rng.normal(0, 1, (1000, 10))
+ecdf_fun = ecdf(x[0, :])
+
+import seaborn as sns
+import matplotlib.pylab as plt
+from statsmodels.distributions.empirical_distribution import ECDF
+
+ecdf_fun_2 = ECDF(x[0, :])
+
+ecdf_fun_2(0.3)
+ecdf_fun(0.3)
+
+## Plotting.
+
+sns.ecdfplot(x=x[0, :])
+y = np.sort(x[0, :])
+plt.plot(y, [ecdf_fun(z) for z in y])
+plt.show()
+
+
+sns.ecdfplot(x=x[0, :])
+y = np.sort(x[0, :])
+plt.step(y, [ecdf_fun(z) for z in y], where="post")
+plt.show()
+```
+
+### Exercise 4
+```{python}
+import numpy as np
+def ecdf3(x):
+  """ Returns the ECDF for the data x. The output function works for all vectors."""
+  x_sorted = np.sort(x)  
+  def fun(y):
+    indices = np.argsort(y)
+    y_sorted = np.sort(y)
+    digitized = np.digitize(x_sorted, y_sorted, right=True)
+    values, counts = np.unique(digitized,return_counts=True)
+    means = np.cumsum(counts[0:-1]) / x.size
+    return means[indices]
+    
+  return fun
+```
+
+:::
+
 
 ### Chapter 15
+See p. 440 of the book for solution proposals.
 * 15.2. Copy the data into Numpy and make a histogram; you don't have to
 compute the histogram by hand (and don't bother with making the bin widths 5!). Experiment with the `bins` and `binwidth` parameters to find a good histogram.
 * 15.11. 
 * 15.12.
 
 ### Chapter 16
+See p. 441 of the book for solution proposals.
 * 16.1.
-* 16.6.
+* 16.6. 
 * 16.7.
 * 16.3. 
 * 16.4.

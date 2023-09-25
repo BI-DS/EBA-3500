@@ -265,7 +265,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>20/9:</strong> Added exercises and a section on the bootstrap in Python.</p>
+<p><strong>20/9:</strong> Added exercises and a section on the bootstrap in Python. <strong>20/9:</strong> Fixed small error in code.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="5.1">
@@ -441,18 +441,11 @@ Bootstrap principle (Dekker et al.)
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> supermarket[<span class="st">"gross income"</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size <span class="co"># equals 1000.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">1000</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>boots <span class="op">=</span> rng.choice(x, (n, n_reps))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>boots.shape</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>boots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>boots.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>array([[39.065 , 11.7465,  6.1925, ..., 30.368 , 10.238 , 43.749 ],
-       [34.956 , 11.498 , 32.41  , ..., 10.1325,  4.3725,  6.456 ],
-       [16.0265, 22.7205,  1.921 , ...,  3.841 ,  6.1155,  3.333 ],
-       ...,
-       [ 5.679 ,  8.64  , 19.084 , ...,  6.1925,  5.2425,  1.616 ],
-       [14.55  ,  7.8785, 18.6095, ...,  7.278 , 10.168 , 26.208 ],
-       [27.275 , 22.01  , 10.863 , ...,  2.223 ,  3.47  ,  5.11  ]])</code></pre>
+<pre><code>(1000, 1000)</code></pre>
 </div>
 </div>
 <p>Now we <span class="math inline">\(1000\)</span> columns containing <span class="math inline">\(1000\)</span> samples with replacement from <code>x</code>. Now we need to find the distribution of these sample means. We have done such an exercise many times already, but always with purely simulated data.</p>
@@ -463,28 +456,28 @@ Bootstrap principle (Dekker et al.)
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>sns.histplot(means, stat<span class="op">=</span><span class="st">"density"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="05-statistical-models_files/figure-html/cell-5-output-1.png" width="597" height="411"></p>
+<p><img src="05-statistical-models_files/figure-html/cell-5-output-1.png" width="595" height="411"></p>
 </div>
 </div>
 <p>The histogram above shows, approximately, what sort of sample means we could have got had we observed a different sample from the true distribution <span class="math inline">\(F\)</span>. Looking at this histogram, we see there is substantial uncertainty in the sample mean of gross income, with deviations from the observed sample mean ranging from <span class="math inline">\(-2\)</span> to <span class="math inline">\(+2\)</span> appearing to be quite likely. To be more precise, we can calculate the quantiles and standard deviation of the bootstrapped sample means.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>means.std()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>1.1363259590415926</code></pre>
+<pre><code>0.3648452061616619</code></pre>
 </div>
 </div>
 <p>It follows that the standard deviation of the sample mean is approximately <span class="math inline">\(1.17\)</span> by the bootstrap principle. Moreover, we can calculate some quantiles.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>array([-1.4862985,  1.404376 ])</code></pre>
+<pre><code>array([-0.44542685,  0.46771745])</code></pre>
 </div>
 </div>
 <p>When we calculate the <span class="math inline">\(0.1\)</span> and <span class="math inline">\(0.9\)</span> quantiles and add the sample mean, we can - very informally! (we will make this formal later on) - say that we are <span class="math inline">\(90\%\)</span> confident that the true population mean lies in the resulting interval.</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>)) <span class="op">+</span> x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>array([13.8930705, 16.783745 ])</code></pre>
+<pre><code>array([14.93394215, 15.84708645])</code></pre>
 </div>
 </div>
 <p>In this case, our bootstrapped confidence interval is approximately <span class="math inline">\([13.9, 16.9]\)</span>. This is a reasonably intuitive quantification of the uncertainty in the data set.</p>
