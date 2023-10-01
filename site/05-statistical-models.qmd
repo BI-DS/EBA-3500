@@ -3,6 +3,7 @@
 ::: callout-note
 **20/9:** Added exercises and a section on the bootstrap in Python.
 **20/9:** Fixed small error in code.
+**1/10:** Added exercise solutions.
 :::
 
 ## Curriculum

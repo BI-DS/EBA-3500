@@ -265,7 +265,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>20/9:</strong> Added exercises and a section on the bootstrap in Python. <strong>20/9:</strong> Fixed small error in code.</p>
+<p><strong>20/9:</strong> Added exercises and a section on the bootstrap in Python. <strong>20/9:</strong> Fixed small error in code. <strong>1/10:</strong> Added exercise solutions.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="5.1">
@@ -312,7 +312,7 @@ Bootstrap principle (Dekker et al.)
 </div>
 <p>The functions <span class="math inline">\(h\)</span> will typically be estimators, e.g., the sample mean, sample median, quantiles, or even a kernel density estimator.</p>
 <p>Let’s look an example using the supermarket sales data.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>supermarket <span class="op">=</span> pd.read_csv(<span class="st">"supermarket_sales.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>supermarket.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -433,12 +433,12 @@ Bootstrap principle (Dekker et al.)
 <p>We will not sample directly from the empirical cumulative distribution function. Instead, we will sample <em>with replacement</em> from the observed data. Sampling with replacement is not difficulty conceptually, but if are unfamiliar with the concept, use e.g.&nbsp;<a href="https://www.youtube.com/watch?v=LnGFL_A6A6A">this YouTube video</a> or read the Wikipedia page.</p>
 <p>We need to sample <span class="math inline">\(n = 1000\)</span> observations with replacement from <code>supermarket["gross margin percentage"]</code>. We will do this a large number of times, <code>n_reps = 1000</code> is standard, and a recommended default option when doing bootstrapping.</p>
 <p>First we make an <code>rng</code> object. This is required for doing the sampling without replacement. Using an <code>rng</code> object is crucial here, as you want the random samples to reproduce on different machines and at different times!</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we use the Numpy function <a href="https://numpy.org/doc/stable/reference/random/generated/numpy.random.choice.html"><code>choice</code></a> to sample with replacement from the underlying data.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> supermarket[<span class="st">"gross income"</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size <span class="co"># equals 1000.</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">1000</span></span>
@@ -449,7 +449,7 @@ Bootstrap principle (Dekker et al.)
 </div>
 </div>
 <p>Now we <span class="math inline">\(1000\)</span> columns containing <span class="math inline">\(1000\)</span> samples with replacement from <code>x</code>. Now we need to find the distribution of these sample means. We have done such an exercise many times already, but always with purely simulated data.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> boots.mean(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">-</span> x.mean()</span>
@@ -460,21 +460,21 @@ Bootstrap principle (Dekker et al.)
 </div>
 </div>
 <p>The histogram above shows, approximately, what sort of sample means we could have got had we observed a different sample from the true distribution <span class="math inline">\(F\)</span>. Looking at this histogram, we see there is substantial uncertainty in the sample mean of gross income, with deviations from the observed sample mean ranging from <span class="math inline">\(-2\)</span> to <span class="math inline">\(+2\)</span> appearing to be quite likely. To be more precise, we can calculate the quantiles and standard deviation of the bootstrapped sample means.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>means.std()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>0.3648452061616619</code></pre>
 </div>
 </div>
 <p>It follows that the standard deviation of the sample mean is approximately <span class="math inline">\(1.17\)</span> by the bootstrap principle. Moreover, we can calculate some quantiles.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([-0.44542685,  0.46771745])</code></pre>
 </div>
 </div>
 <p>When we calculate the <span class="math inline">\(0.1\)</span> and <span class="math inline">\(0.9\)</span> quantiles and add the sample mean, we can - very informally! (we will make this formal later on) - say that we are <span class="math inline">\(90\%\)</span> confident that the true population mean lies in the resulting interval.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>np.quantile(means, (<span class="fl">0.1</span>, <span class="fl">0.9</span>)) <span class="op">+</span> x.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([14.93394215, 15.84708645])</code></pre>
@@ -504,7 +504,7 @@ Solution
 <div class="callout-body-container callout-body">
 <section id="exercise-1" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">5.3</span> Exercise 1</h2>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>supermarket <span class="op">=</span> pd.read_csv(<span class="st">"supermarket_sales.csv"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -778,7 +778,7 @@ Solution
 </section>
 <section id="exercise-2" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">5.4</span> Exercise 2</h2>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> st</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> supermarket[<span class="st">"Unit price"</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size</span>
@@ -819,7 +819,7 @@ Some solution guide
 <section id="a" class="level4" data-number="5.4.3.1">
 <h4 data-number="5.4.3.1" class="anchored" data-anchor-id="a"><span class="header-section-number">5.4.3.1</span> (a)</h4>
 <p>The mean. Use wikipedia or the book; also, see the video for lecture 6. #### (b)</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>number <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>])</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>obs <span class="op">=</span> np.array([<span class="dv">229</span>, <span class="dv">211</span>, <span class="dv">93</span>, <span class="dv">35</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>])</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> number <span class="op">@</span> obs <span class="op">/</span> obs.<span class="bu">sum</span>()</span>
@@ -865,7 +865,7 @@ Some solution guide
 <li><p>There are 4^4 possibilities and only one yields (1,1,1,1). The probabiltiy is 1/4^4.</p></li>
 <li><p>This happens if 6 is included in the data set. That’s 1 - 3<sup>4/4</sup>4</p></li>
 </ol>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.choice([<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>], (<span class="dv">10000</span>, <span class="dv">4</span>))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>np.mean(samples.<span class="bu">max</span>(axis <span class="op">=</span> <span class="dv">1</span>) <span class="op">==</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">

@@ -264,6 +264,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Updated 12/9:</strong> Added note to exercises and removed a redundant comment.</p>
+<p><strong>Updated 1/10:</strong> Added some exercise solutions.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="3.1">
@@ -299,7 +300,7 @@ Solution
 </div>
 </div>
 <p>We first simulate <span class="math inline">\(n=10000\)</span> of uniforms and store them <code>x</code>. These correspond to a sequence <span class="math inline">\(X_1,X_2,X_3,\ldots X_n\)</span> of independently and identically distributed uniform variables.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
@@ -308,11 +309,11 @@ Solution
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> rng.uniform(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we compute the partial means <span class="math inline">\(\overline{X}_j = \frac{1}{n}\sum_{i=1}^n X_i\)</span>. This is most conveniently done using the <code>np.cumsum</code> function, which calculate the cumulative sums of <code>x</code>, i.e., <code>y[i] = x[0:(i+1)].sum()</code> when <code>y=np.cumsum(x)</code>.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> np.cumsum(x) <span class="op">/</span> (np.arange(<span class="bu">len</span>(x)) <span class="op">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can illustrate the law of large numbers:</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.plot(means)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.axhline(y <span class="op">=</span> <span class="fl">0.5</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -331,7 +332,7 @@ Solution
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="central-limit-theorem"><span class="header-section-number">3.2.2</span> Central limit theorem</h3>
 <p>Informally speaking, the central limit theorem states that whenever <span class="math inline">\(\{X_i\}_{i=0}^n\)</span> are independently and identically distributed according to some distribution <span class="math inline">\(F\)</span> with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> (in mathematical notation <span class="math inline">\(X_i \stackrel{iid}{\sim} F\)</span>) then <span class="math inline">\(\sqrt{n}\frac{\overline{X} - \mu}{\sigma}\)</span> is approximately normally distributed. (Here <span class="math inline">\(\overline{X}\)</span> denotes the sample mean.) There is a more precise statements of this result, but that is beyond the scope of this course; see e.g.&nbsp;wikipedia for more details.</p>
 <p>It is fairly easy to illustrate the central limit theorem (CLT) using simulations.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -342,11 +343,11 @@ Solution
 </div>
 <p>Here the <code>rescaled</code>, the rescaled sample means, approximates the distribution of <span class="math inline">\(\sqrt{n}\frac{\overline{X} - \mu}{\sigma}\)</span>.</p>
 <p>Let’s simulate some true normal values to verify this:</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>normals <span class="op">=</span> rng.standard_normal(<span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we can plot.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
@@ -381,7 +382,7 @@ Solution to some exercises
 <div class="callout-body-container callout-body">
 <section id="exercise-13.1" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="exercise-13.1"><span class="header-section-number">3.3.2</span> Exercise 13.1</h3>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The “µ ± a few σ” rule. Most of the probability mass of a</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># random variable is within a few standard deviations from its expectation.</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -433,12 +434,9 @@ Solution to some exercises
 <section id="chapter-14" class="level3" data-number="3.3.4">
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="chapter-14"><span class="header-section-number">3.3.4</span> Chapter 14</h3>
 <p>The cumulative distribution function of a normal variable can be found in Scipy. For instance, when <span class="math inline">\(X\)</span> is normal with mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(1\)</span>. Then we have:</p>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>norm.cdf(<span class="dv">0</span>, loc<span class="op">=</span><span class="dv">0</span>, scale<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>0.5</code></pre>
-</div>
 </div>
 <p>Short solution proposals can be found in the book.</p>
 <ul>

@@ -2,6 +2,8 @@
 
 ::: {.callout-note}
 **Updated 12/9:** Added note to exercises and removed a redundant comment.
+
+**Updated 1/10:** Added some exercise solutions.
 :::
 
 ## Curriculum
@@ -169,6 +171,7 @@ Either integrate or use wikipedia. The mean is $(b+a) / 2$.
 ### Chapter 14
 The cumulative distribution function of a normal variable can be found in Scipy. For instance, when $X$ is normal with mean $0$ and standard deviation $1$. Then we have:
 ```{python}
+#| eval: false
 from scipy.stats import norm 
 norm.cdf(0, loc=0, scale=1)
 ```
@@ -193,6 +196,7 @@ You can either calculate the variance of $X$ yourself or use wikipedia.)
 ::: {.callout-tip collapse="true"}
 ### Solution to exercise 14.1 
 
+```{python}
 # CLT: Use that the sum has mean approximate 144 * 2 and variance approximately
 # 144 * 4 (so standard deviation sqrt(144) * 2)
 from scipy.stats import norm
