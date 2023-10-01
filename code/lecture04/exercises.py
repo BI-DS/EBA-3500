@@ -3,7 +3,6 @@ import numpy as np
 rng = np.random.default_rng(seed=313)
 x = rng.normal(0, 1, (1000, 10))
 
-
 ### Exercise 1
 def mad1(x):
     """Calculate mad for a single array."""
@@ -36,7 +35,6 @@ def mad3(x, axis=None):
 
 def ecdf(x):
     """Make an empirical CDF."""
-
     def fun(y):
         return np.mean(x <= y)
 

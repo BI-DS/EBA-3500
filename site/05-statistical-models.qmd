@@ -103,7 +103,40 @@ The following two exercises are the most important and should be attempted first
 for any vector `x`. Apply it to the columns `unit price` and `quantity` of the `supermarket` data frame (found e.g. [here](https://www.kaggle.com/datasets/aungpyaeap/supermarket-sales). 
 2. Using the central limit theorem we can derive the asymptotic distribution for the sample mean. Make a function that superimposes a normal distribution as implied by the central limit theorem on the histograms above. (*Hint:* You need to take care of the rescaling factor $\sqrt{n}$ and the standard deviation $\sigma$ in the central limit theorem $\sqrt{n}(\overline{X}-\mu)/\sigma \to N(0,1))$; another way to write this result is $\overline(X) - \mu \approx N(0, \sigma/\sqrt{n})$.)
 
+::: {.callout-tip collapse="true"}
+### Solution
+
+## Exercise 1
+```{python}
+supermarket = pd.read_csv("supermarket_sales.csv")
+rng = np.random.default_rng(seed=313)
+
+def bootstrap_means(x, rng, n_reps=1000):
+  """ Bootstrap the means of some data. """
+  n = x.size
+  samples = np.random.choice(x, (n_reps, n))
+  return x.mean() - samples.mean(axis=1)
+  
+sns.histplot(bootstrap_means(supermarket.Quantity, rng), stat = "density")
+sns.histplot(bootstrap_means(supermarket["Unit price"], rng), stat = "density")
+supermarket
+```
+
+## Exercise 2
+```{python}
+import scipy.stats as st
+x = supermarket["Unit price"]
+n = x.size
+plt.clf()
+sns.histplot(bootstrap_means(x, rng), stat = "density")
+z = np.linspace(-3, 3, 100)
+plt.plot(z, st.norm.pdf(z, 0, x.std()/np.sqrt(n)))
+plt.show()
+```
+:::
+
 ### Chapter 17
+Solution proposals in the book.
 * 17.1
 * 17.2
 * 17.4 (use Python to visualize part b)
@@ -112,7 +145,28 @@ for any vector `x`. Apply it to the columns `unit price` and `quantity` of the `
 * 17.10
 * 17.11
 
+::: {.callout-tip collapse="true"}
+## Some solution guide
+### Exercise 17.1 / 17.2
+Look at the mean and spreads.
+
+### Exercise 17.4
+#### (a) 
+The mean. Use wikipedia or the book; also, see the video for lecture 6.
+#### (b) 
+```{python}
+number = np.array([0, 1, 2, 3, 4, 5, 6, 7])
+obs = np.array([229, 211, 93, 35, 7, 0, 0, 1])
+mean = number @ obs / obs.sum()
+plt.clf()
+plt.plot(number, st.poisson.pmf(number, mean))
+plt.bar(number, obs / obs.sum(), color = "orange")
+plt.show()
+```
+:::
+
 ### Chapter 18
+Solution proposals in the book.
 * 18.1 (*Hint*: How many combinations are double counted due to the two 1s?)
 * 18.2 Use exact computations!
 * 18.3 Use exact computations!
@@ -121,3 +175,21 @@ for any vector `x`. Apply it to the columns `unit price` and `quantity` of the `
 * 18.7
 * 18.12
 * 18.13
+
+::: {.callout-tip collapse="true"}
+## Some solution guide
+### Exercise 18-1
+(a) If only distinct n values, n^n. But in this case 1 appears twice, there are only (n-1)^n
+
+(b) No: (1,1,1,1,1,1) is more likely than (2, 2, 2, 2, 2, 2)
+
+## Exercise 18-2
+(a) There are 4^4 possibilities and only one yields (1,1,1,1).  The probabiltiy is 1/4^4.
+
+(b) This happens if 6 is included in the data set. That's 1 - 3^4/4^4
+
+```{python}
+samples = np.random.choice([1,3,4,6], (10000, 4))
+np.mean(samples.max(axis = 1) == 6)
+```
+:::
