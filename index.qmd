@@ -1,7 +1,7 @@
 # Introduction {.unnumbered}
 
 ::: callout-warning
-**Update 31/8.** This webpage is not finished yet! The pages for lecture 1, 2 and 3 are finished, but the rest are still not done. I will attempt to fill in the rest of the pages with the needed lecture notes and exercises as soon as possible!
+**Update 4/10.** Pages up to lecture 7 filled out.
 :::
 
 Welcome to the course [Data Analysis with Programming](https://programmeinfo.bi.no/nb/course/EBA-3500). This page contains the curriculum, exercises, and additional information for the course. If you need to get in contact with me, please send an e-mail to `jonas.moss@bi.no`. I do **not** check It's learning often.
