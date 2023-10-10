@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -188,12 +222,14 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">8.1</span> Curriculum</a>
   <ul class="collapse">
   <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">8.1.1</span> Core readings</a></li>
+  <li><a href="#notes-for-python" id="toc-notes-for-python" class="nav-link" data-scroll-target="#notes-for-python"><span class="header-section-number">8.1.2</span> Notes for Python</a></li>
+  <li><a href="#bootstrap" id="toc-bootstrap" class="nav-link" data-scroll-target="#bootstrap"><span class="header-section-number">8.1.3</span> Bootstrap</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">8.2</span> Exercises</a>
   <ul class="collapse">
   <li><a href="#theory-exercises" id="toc-theory-exercises" class="nav-link" data-scroll-target="#theory-exercises"><span class="header-section-number">8.2.1</span> Theory exercises</a></li>
   <li><a href="#python-exercises" id="toc-python-exercises" class="nav-link" data-scroll-target="#python-exercises"><span class="header-section-number">8.2.2</span> Python exercises</a></li>
-  <li><a href="#simulation-exercises" id="toc-simulation-exercises" class="nav-link" data-scroll-target="#simulation-exercises"><span class="header-section-number">8.2.3</span> Simulation exercises</a></li>
+  <li><a href="#understanding-confidence-intervals" id="toc-understanding-confidence-intervals" class="nav-link" data-scroll-target="#understanding-confidence-intervals"><span class="header-section-number">8.2.3</span> Understanding confidence intervals</a></li>
   </ul></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">8.3</span> Additional resources</a></li>
   </ul>
@@ -219,17 +255,17 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This page is <strong><em>not finished</em></strong>, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.</p>
+<p><strong>Update: 10/10:</strong> Filled in notes and modifed exercises.</p>
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="8.1">
@@ -237,15 +273,125 @@ Important
 <section id="core-readings" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="core-readings"><span class="header-section-number">8.1.1</span> Core readings</h3>
 <p>Dekking et al., Chapter 23: Confidence intervals for the mean</p>
-<p>Dekking et al., Chapter 24: More on confidence intervals</p>
-<section id="scipy-functions" class="level4" data-number="8.1.1.1">
-<h4 data-number="8.1.1.1" class="anchored" data-anchor-id="scipy-functions"><span class="header-section-number">8.1.1.1</span> Scipy functions</h4>
-<ul>
-<li>https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html</li>
-<li>https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.zscore.html</li>
-<li>https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_rel.html</li>
-<li>https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html</li>
-</ul>
+</section>
+<section id="notes-for-python" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="notes-for-python"><span class="header-section-number">8.1.2</span> Notes for Python</h3>
+<p>You should read this after, or in tandem with, the book.</p>
+<p>Table 23.1 (p.347) of the book lists some gross calorific value measurements.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>calories <span class="op">=</span> np.array([<span class="fl">23.870</span>, <span class="fl">23.730</span>, <span class="fl">23.712</span>, <span class="fl">23.760</span>, <span class="fl">23.640</span>, <span class="fl">23.850</span>, <span class="fl">23.840</span>, <span class="fl">23.860</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">23.940</span>, <span class="fl">23.830</span>, <span class="fl">23.877</span>, <span class="fl">23.700</span>, <span class="fl">23.796</span>, <span class="fl">23.727</span>, <span class="fl">23.778</span>, <span class="fl">23.740</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fl">23.890</span>, <span class="fl">23.780</span>, <span class="fl">23.678</span>, <span class="fl">23.771</span>, <span class="fl">23.860</span>, <span class="fl">23.690</span>, <span class="fl">23.800</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The authors proceed to calculate a confidence interval with a known mean for normally distributed data usingthe definition</p>
+<p><span class="math display">\[(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}},
+              \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})\]</span></p>
+<p>Here <span class="math inline">\(z_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span>-quantile of a standard normal. You can calculate such quantiles using <code>norm.ppf</code> from Scipy. For instance, the <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span>, which can be verified as follows.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> st</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>z_half <span class="op">=</span> <span class="kw">lambda</span> alpha: st.norm.ppf(<span class="dv">1</span> <span class="op">-</span> alpha<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>z_half(<span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>1.959963984540054</code></pre>
+</div>
+</div>
+<section id="quick-exercise" class="level4" data-number="8.1.2.1">
+<h4 data-number="8.1.2.1" class="anchored" data-anchor-id="quick-exercise"><span class="header-section-number">8.1.2.1</span> Quick exercise</h4>
+<p>Assume the variance of the <code>calories</code> data is known and equal to <span class="math inline">\(\sigma^2=0.2\)</span>. Compute the <span class="math inline">\(95\%\)</span>-confidence interval (i.e., <span class="math inline">\(\alpha = 0.05\)</span>) of the form <span class="math inline">\((L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Verify that the sample mean of the <code>calories</code> data is approximately <span class="math inline">\(23.788\)</span> and <span class="math inline">\(n=23\)</span>.<br>
+Use the approximation <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span> and plug in <span class="math inline">\(\sigma = \sqrt{24}\)</span>, <span class="math inline">\(\overline{X}_n = 23.788\)</span> into the formula for the confidence interval to obtain: <span class="math display">\[23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})\]</span>. Let’s evaluate it in Python:</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">=</span> calories.mean()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> calories.size</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>(x_bar <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> sd<span class="op">/</span>np.sqrt(n), x_bar <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> sd<span class="op">/</span>np.sqrt(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(23.706044958385274, 23.86952025900602)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The <em>t</em>-confidence interval does not involve the assumption that standard deviation of the data is known. Instead, it increases the length of the confidence interval to make up for the fact that the standard deviation is being estimated. The only difference is the that a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom is being used instead of the normal. (Now might be a good time to look up the Wikipedia article on the <em>t</em>-distribution to see what it looks like.)</p>
+<p><span class="math display">\[(L_n, U_n)=(\overline{X}_n - \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}},
+              \overline{X}_n + \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}}).\]</span></p>
+<p>Such confidence intervals can be calculated using Scipy.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>st.ttest_1samp(calories, <span class="dv">0</span>).confidence_interval(<span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>ConfidenceInterval(low=23.75393390401451, high=23.821631313376784)</code></pre>
+</div>
+</div>
+<p>The <code>confidence_interval(0.95)</code> method was added in version <code>1.10</code>, and you might have to upgrade <code>Scipy</code> using e.g., <code>pip install scipy --upgrade</code>.</p>
+</section>
+</section>
+<section id="bootstrap" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="bootstrap"><span class="header-section-number">8.1.3</span> Bootstrap</h3>
+<p>The bootstrap intervals used in the book are called studentized bootstrap intervals. These are more complicated, but also much better, than most of the boostrap intervals you will see in the wild.</p>
+<p>To calculate studentized bootstrap intervals for the mean of level <span class="math inline">\(\alpha\)</span> you need to follow many steps. But fear not, you only need to program a function for doing this once.</p>
+<ol type="1">
+<li>Simulate bootstrap samples.</li>
+<li>Calculate the mean and standard deviation of each bootstrapped row.</li>
+<li>Calculate the vector <span class="math inline">\(t^\star = \frac{\overline{x}_n^\star - \overline{x}_n}{s_n^\star/\sqrt{n}}\)</span>, where <span class="math inline">\(\overline{x}_n\)</span> are the bootstrapped means, <span class="math inline">\(s_n^\star\)</span> the bootstrapped standard deviations, and <span class="math inline">\(\overline{x}_n\)</span> the sample means.</li>
+<li>Calculate the <span class="math inline">\(\alpha/2, 1-\alpha/2\)</span> sample quantiles of <span class="math inline">\(t^\star\)</span>, named <span class="math inline">\(c_l^\star\)</span> and <span class="math inline">\(c_u^\star\)</span>.</li>
+<li>Return the interval <span class="math inline">\((L,U) = (\overline{x}_n - c_u^\star\frac{s_n}{\sqrt{n}}, \overline{x}_n - c_l^\star\frac{s_n}{\sqrt{n}})\)</span>, where <span class="math inline">\(s_n\)</span> is the sample standard deviation.</li>
+</ol>
+<p>For both the standard deviations, use the option <code>ddof=1</code>. Refer back to lecture 5 if you need to, then solve the following “quick” exercise. Be sure to follow the steps above!</p>
+<section id="quick-exercise-1" class="level4" data-number="8.1.3.1">
+<h4 data-number="8.1.3.1" class="anchored" data-anchor-id="quick-exercise-1"><span class="header-section-number">8.1.3.1</span> Quick exercise</h4>
+<p>Make a <span class="math inline">\(95\%\)</span>-confidence interval for the mean using the bootstrap and the default rng with seed <span class="math inline">\(313\)</span> and <span class="math inline">\(10,000\)</span> repetitions. Compare it to the <span class="math inline">\(t\)</span>-interval above.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>First calculate the <span class="math inline">\(t^\star\)</span>s.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> calories</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> rng.choice(x, (n_reps, n))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> samples.mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>stds <span class="op">=</span> samples.std(axis<span class="op">=</span><span class="dv">1</span>, ddof<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">=</span> x.mean()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>t_stars <span class="op">=</span> (means <span class="op">-</span> x_bar) <span class="op">/</span> (stds <span class="op">/</span> np.sqrt(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Then calculate the quantiles.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>c_l, c_u <span class="op">=</span> np.quantile(t_stars, (<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And finally, calculate the interval itself.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> np.std(x, ddof <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">-</span> c_u <span class="op">*</span> sd <span class="op">/</span> np.sqrt(n), x_bar <span class="op">-</span> c_l <span class="op">*</span> sd <span class="op">/</span> np.sqrt(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(23.753627285216925, 23.82129427047887)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -258,10 +404,24 @@ Important
 <section id="python-exercises" class="level3" data-number="8.2.2">
 <h3 data-number="8.2.2" class="anchored" data-anchor-id="python-exercises"><span class="header-section-number">8.2.2</span> Python exercises</h3>
 <p>Solve the following exercises using Python. In both exercises you are asked to construct a bootstrap interval using the provided data, but you should use the <em>t</em>-test too. Dekking et al., Chapter 23: 23.5(a,b), 23.9</p>
-<p><em>A1:</em> Make your own custom function <code>tinterval(data, alpha)</code> that constructs a confidence interval for the mean with confidence level <span class="math inline">\(1-\alpha\)</span>. Assume the data are normally distributed. <em>A2:</em> Make your own custom function <code>bootinterval(data, alpha, rng)</code> that constructs are bootstrap percentile confidence interval with confidence level <span class="math inline">\(1-\alpha\)</span> based on the random number generator <span class="math inline">\(rng\)</span>.</p>
+<ol type="1">
+<li><p>Make your own custom function <code>zinterval(data, sd, alpha)</code> that constructs a confidence interval for the mean with confidence level <span class="math inline">\(1-\alpha\)</span>. Assume the data are normally distributed and the standard deviation <code>sd</code> is known. Test it on the <code>calories</code> data.</p></li>
+<li><p>Make your own custom function <code>tinterval(data, alpha)</code> that constructs a confidence interval for the mean with confidence level <span class="math inline">\(1-\alpha\)</span>. Assume the data are normally distributed. Test it on the <code>calories</code> data.</p></li>
+<li><p>Make your own custom function <code>bootinterval(data, alpha, rng)</code> that constructs a studentized bootstrap confidence interval with confidence level <span class="math inline">\(1-\alpha\)</span> based on the random number generator <code>rng</code> with <code>n_reps</code> repetitions. Test it on the <code>calories</code> data.</p></li>
+</ol>
 </section>
-<section id="simulation-exercises" class="level3" data-number="8.2.3">
-<h3 data-number="8.2.3" class="anchored" data-anchor-id="simulation-exercises"><span class="header-section-number">8.2.3</span> Simulation exercises</h3>
+<section id="understanding-confidence-intervals" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="understanding-confidence-intervals"><span class="header-section-number">8.2.3</span> Understanding confidence intervals</h3>
+<p>Hoekstra et al (2014) list 6 common errors. Suppose you’re given a confidence interval for the mean equal to [0.4, 0.6]. Which, if any, of the following are true?</p>
+<ol type="1">
+<li>The probability that the true mean is greater than 0 is at least 95 %.</li>
+<li>The probability that the true mean equals 0 is smaller than 5 %.</li>
+<li>The “null hypothesis” that the true mean equals 0 is likely to be incorrect.</li>
+<li>There is a 95 % probability that the true mean lies between 0.1 and 0.4.</li>
+<li>We can be 95 % confident that the true mean lies between 0.1 and 0.4.</li>
+<li>If we were to repeat the experiment over and over, then 95 % of the time the true mean falls between 0.1 and 0.4.</li>
+</ol>
+<p>Interested readers can have a look at this paper. (This is not on the curriculum!) Hoekstra, R., Morey, R. D., Rouder, J. N., &amp; Wagenmakers, E.-J. (2014). Robust misinterpretation of confidence intervals. Psychonomic Bulletin &amp; Review, 21(5), 1157–1164. https://doi.org/10.3758/s13423-013-0572-3</p>
 </section>
 </section>
 <section id="additional-resources" class="level2" data-number="8.3">

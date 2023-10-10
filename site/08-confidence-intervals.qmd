@@ -1,7 +1,7 @@
 # Confidence intervals
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout-note
+**Update: 10/10:** Filled in notes and modifed exercises.
 :::
 
 ## Curriculum
@@ -9,13 +9,107 @@ This page is ***not finished***, but might contain notes from the course develop
 ### Core readings
 Dekking et al., Chapter 23: Confidence intervals for the mean 
 
-Dekking et al., Chapter 24: More on confidence intervals 
+### Notes for Python
+You should read this after, or in tandem with, the book.
 
-#### Scipy functions
-* https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html
-* https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.zscore.html
-* https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_rel.html
-* https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html
+Table 23.1 (p.347) of the book lists some gross calorific value measurements.
+```{python}
+import numpy as np
+calories = np.array([23.870, 23.730, 23.712, 23.760, 23.640, 23.850, 23.840, 23.860,
+23.940, 23.830, 23.877, 23.700, 23.796, 23.727, 23.778, 23.740,
+23.890, 23.780, 23.678, 23.771, 23.860, 23.690, 23.800,])
+```
+
+The authors proceed to calculate a confidence interval with a known mean for normally distributed data usingthe definition
+
+$$(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, 
+              \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})$$
+              
+Here $z_{\alpha/2}$ is the $1-\alpha/2$-quantile of a standard normal. You can
+calculate such quantiles using `norm.ppf` from Scipy. For instance, the $z_{0.05/2}\approx 1.96$, which can be verified as follows.
+
+```{python}
+import scipy.stats as st
+z_half = lambda alpha: st.norm.ppf(1 - alpha/2)
+z_half(0.05)
+```
+#### Quick exercise
+Assume the variance of the `calories` data is known and equal to $\sigma^2=0.2$. Compute the $95\%$-confidence interval (i.e., $\alpha = 0.05$) of the form $(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})$.
+
+::: {.callout-tip collapse="true"}
+#### Solution
+Verify that the sample mean of the `calories` data is approximately $23.788$ and $n=23$.  
+Use the approximation $z_{0.05/2}\approx 1.96$ and plug in $\sigma = \sqrt{24}$, $\overline{X}_n = 23.788$ into the formula for the confidence interval to obtain:
+$$23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})$$.
+Let's evaluate it in Python:
+```{python}
+x_bar = calories.mean()
+n = calories.size
+sd = 0.2
+(x_bar - 1.96 * sd/np.sqrt(n), x_bar + 1.96 * sd/np.sqrt(n))
+```
+:::
+
+The *t*-confidence interval does not involve the assumption that standard deviation of
+the data is known. Instead, it increases the length of the confidence interval to
+make up for the fact that the standard deviation is being estimated. The only difference
+is the that a $t$-distribution with $n-1$ degrees of freedom is being used instead of the 
+normal. (Now might be a good time to look up the Wikipedia article on the *t*-distribution to see what it looks like.)
+
+$$(L_n, U_n)=(\overline{X}_n - \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}}, 
+              \overline{X}_n + \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}}).$$
+              
+Such confidence intervals can be calculated using Scipy.
+```{python}
+st.ttest_1samp(calories, 0).confidence_interval(0.95)
+```
+The `confidence_interval(0.95)` method was added in version `1.10`, and you might have to upgrade `Scipy` using e.g., `pip install scipy --upgrade`.
+
+### Bootstrap
+The bootstrap intervals used in the book are called studentized bootstrap intervals. These are more complicated, but also much better, than most of the boostrap intervals you will see in the wild.
+
+To calculate studentized bootstrap intervals for the mean of level $\alpha$ you need to follow many steps. But fear not, you only need to program a function for doing this once.
+
+1. Simulate bootstrap samples.
+2. Calculate the mean and standard deviation of each bootstrapped row.
+3. Calculate the vector $t^\star = \frac{\overline{x}_n^\star - \overline{x}_n}{s_n^\star/\sqrt{n}}$, where $\overline{x}_n$ are the bootstrapped means, $s_n^\star$ the bootstrapped standard deviations, and $\overline{x}_n$ the sample means.
+4. Calculate the $\alpha/2, 1-\alpha/2$ sample quantiles of $t^\star$, named $c_l^\star$ and $c_u^\star$.
+5. Return the interval $(L,U) = (\overline{x}_n - c_u^\star\frac{s_n}{\sqrt{n}}, \overline{x}_n - c_l^\star\frac{s_n}{\sqrt{n}})$, where $s_n$ is the sample standard deviation.
+
+For both the standard deviations, use the option `ddof=1`. Refer back to lecture 5 if you need to, then solve the following "quick" exercise. Be sure to follow the steps above!
+
+#### Quick exercise
+Make a $95\%$-confidence interval for the mean using the bootstrap and the default rng with seed $313$ and $10,000$ repetitions. Compare it to the $t$-interval above.
+
+::: {.callout-tip collapse="true"}
+#### Solution
+
+First calculate the $t^\star$s.
+```{python}
+x = calories
+n = x.size
+rng = np.random.default_rng(seed=313)
+n_reps = 10000
+samples = rng.choice(x, (n_reps, n))
+means = samples.mean(axis=1)
+stds = samples.std(axis=1, ddof=1)
+x_bar = x.mean()
+t_stars = (means - x_bar) / (stds / np.sqrt(n))
+```
+
+Then calculate the quantiles.
+
+```{python}
+c_l, c_u = np.quantile(t_stars, (0.025, 0.975))
+```
+
+And finally, calculate the interval itself.
+
+```{python}
+sd = np.std(x, ddof = 1)
+x_bar - c_u * sd / np.sqrt(n), x_bar - c_l * sd / np.sqrt(n)
+```
+:::
 
 ## Exercises
 
@@ -26,10 +120,26 @@ Dekking et al., Chapter 23: 23.1, 23.2, 23.3, 23.4, 23.6, 23.11, 23.12
 Solve the following exercises using Python. In both exercises you are asked to construct a bootstrap interval using the provided data, but you should use the *t*-test too.
 Dekking et al., Chapter 23: 23.5(a,b), 23.9
 
-*A1:* Make your own custom function `tinterval(data, alpha)` that constructs a confidence interval for the mean with confidence level $1-\alpha$. Assume the data are normally distributed.
-*A2:* Make your own custom function `bootinterval(data, alpha, rng)` that constructs are bootstrap percentile confidence interval with confidence level $1-\alpha$ based on the random number generator $rng$.
+1. Make your own custom function `zinterval(data, sd, alpha)` that constructs a confidence interval for the mean with confidence level $1-\alpha$. Assume the data are normally distributed and the standard deviation `sd` is known. Test it on the `calories` data.
 
-### Simulation exercises
+2. Make your own custom function `tinterval(data, alpha)` that constructs a confidence interval for the mean with confidence level $1-\alpha$. Assume the data are normally distributed. Test it on the `calories` data.
+
+3. Make your own custom function `bootinterval(data, alpha, rng)` that constructs a studentized bootstrap confidence interval with confidence level $1-\alpha$ based on the random number generator `rng` with `n_reps` repetitions. Test it on the `calories` data.
+
+### Understanding confidence intervals
+Hoekstra et al (2014) list 6 common errors. Suppose you're given a confidence
+interval for the mean equal to [0.4, 0.6]. Which, if any, of the following are true?
+
+1. The probability that the true mean is greater than 0 is at least 95 %.
+2. The probability that the true mean equals 0 is smaller than 5 %.
+3. The “null hypothesis” that the true mean equals 0 is likely to be incorrect.
+4. There is a 95 % probability that the true mean lies between 0.1 and 0.4.
+5. We can be 95 % confident that the true mean lies between 0.1 and 0.4.
+6. If we were to repeat the experiment over and over, then 95 % of the time the 
+    true mean falls between 0.1 and 0.4.
+
+Interested readers can have a look at this paper. (This is not on the curriculum!)
+Hoekstra, R., Morey, R. D., Rouder, J. N., & Wagenmakers, E.-J. (2014). Robust misinterpretation of confidence intervals.  Psychonomic Bulletin & Review, 21(5), 1157–1164. https://doi.org/10.3758/s13423-013-0572-3
 
 ## Additional resources
 Dekking et al., Chapter 24 covers confidence intervals for different quantities than
