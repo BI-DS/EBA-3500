@@ -1,6 +1,7 @@
 # Confidence intervals
 
 ::: callout-note
+**Update: 11/10:** Fixed typo in the *t*-confidence interval.
 **Update: 10/10:** Filled in notes and modifed exercises.
 :::
 
@@ -56,10 +57,10 @@ make up for the fact that the standard deviation is being estimated. The only di
 is the that a $t$-distribution with $n-1$ degrees of freedom is being used instead of the 
 normal. (Now might be a good time to look up the Wikipedia article on the *t*-distribution to see what it looks like.)
 
-$$(L_n, U_n)=(\overline{X}_n - \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}}, 
-              \overline{X}_n + \frac{t_{n-1,\alpha/2}}{\sigma\sqrt{n}}).$$
+$$(L_n, U_n)=(\overline{X}_n - s\frac{t_{n-1,\alpha/2}}{\sqrt{n}}, 
+              \overline{X}_n + s\frac{t_{n-1,\alpha/2}}{\sqrt{n}}),$$
               
-Such confidence intervals can be calculated using Scipy.
+where $s$ is the sample standard deviation. Such confidence intervals can be calculated using Scipy.
 ```{python}
 st.ttest_1samp(calories, 0).confidence_interval(0.95)
 ```
