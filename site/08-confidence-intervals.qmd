@@ -1,7 +1,10 @@
 # Confidence intervals
 
 ::: callout-note
+**Update: 17/10:** Fixed typo in "understanding confidence intervals" exercise.
+
 **Update: 11/10:** Fixed typo in the *t*-confidence interval.
+
 **Update: 10/10:** Filled in notes and modifed exercises.
 :::
 
@@ -129,7 +132,7 @@ Dekking et al., Chapter 23: 23.5(a,b), 23.9
 
 ### Understanding confidence intervals
 Hoekstra et al (2014) list 6 common errors. Suppose you're given a confidence
-interval for the mean equal to [0.4, 0.6]. Which, if any, of the following are true?
+interval for the mean equal to [0.1, 0.4]. Which, if any, of the following are true?
 
 1. The probability that the true mean is greater than 0 is at least 95 %.
 2. The probability that the true mean equals 0 is smaller than 5 %.
