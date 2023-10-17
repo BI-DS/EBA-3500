@@ -314,7 +314,7 @@ Solution
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Verify that the sample mean of the <code>calories</code> data is approximately <span class="math inline">\(23.788\)</span> and <span class="math inline">\(n=23\)</span>.<br>
-Use the approximation <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span> and plug in <span class="math inline">\(\sigma = 2\)</span>, <span class="math inline">\(\overline{X}_n = 23.788\)</span> into the formula for the confidence interval to obtain: <span class="math display">\[23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})\]</span>. Let’s evaluate it in Python:</p>
+Use the approximation <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span> and plug in <span class="math inline">\(\sigma = 0.2\)</span>, <span class="math inline">\(\overline{X}_n = 23.788\)</span> into the formula for the confidence interval to obtain: <span class="math display">\[23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})\]</span>. Let’s evaluate it in Python:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">=</span> calories.mean()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> calories.size</span>
