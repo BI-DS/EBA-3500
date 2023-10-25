@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jonas Moss">
-<meta name="dcterms.date" content="2023-08-31">
 
-<title>Data analysis with Programming</title>
+<title>Data analysis with Programming - 6&nbsp; Unbiased estimators and efficiency</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,19 +23,20 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<link href="./site/00-python-tips.html" rel="next">
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../site/07-constructing-estimators.html" rel="next">
+<link href="../site/05-statistical-models.html" rel="prev">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -66,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Introduction</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../site/06-unbiased-estimators-efficiency.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -78,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Data analysis with Programming</a> 
+      <a href="../">Data analysis with Programming</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bi-ds/EBA-3500/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -88,91 +87,91 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/00-python-tips.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/00-python-tips.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python tips</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/01-scipy-numpy.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/01-scipy-numpy.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>Numpy</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/02-statistical-simulation.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/02-statistical-simulation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical simulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/03-limit-theorems.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/03-limit-theorems.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Limit theorems</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/04-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/04-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory data analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/05-statistical-models.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/05-statistical-models.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/07-constructing-estimators.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/07-constructing-estimators.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Constructing estimators</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/08-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/08-confidence-intervals.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/09-testing-hypotheses.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/09-testing-hypotheses.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Testing hypotheses</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/10-statistical-learning.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/10-statistical-learning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistical learning, machine learning, and statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/12-basics-of-linear-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/12-basics-of-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Basics of multiple linear regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/13-inference-for-linear-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/13-inference-for-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inference for multiple linear regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./site/14-binary-regression.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/14-binary-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Binary regression</span></span></a>
   </div>
 </li>
@@ -186,14 +185,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#on-workload" id="toc-on-workload" class="nav-link" data-scroll-target="#on-workload">On workload</a>
+  <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">6.1</span> Curriculum</a>
   <ul class="collapse">
-  <li><a href="#do-the-work" id="toc-do-the-work" class="nav-link" data-scroll-target="#do-the-work">Do the work!</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">6.1.1</span> Core readings</a></li>
   </ul></li>
-  <li><a href="#on-programming" id="toc-on-programming" class="nav-link" data-scroll-target="#on-programming">On programming</a></li>
-  <li><a href="#about-this-site" id="toc-about-this-site" class="nav-link" data-scroll-target="#about-this-site">About this site</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#chapter-19" id="toc-chapter-19" class="nav-link" data-scroll-target="#chapter-19"><span class="header-section-number">6.2.1</span> Chapter 19</a></li>
+  </ul></li>
+  <li><a href="#chapter-20" id="toc-chapter-20" class="nav-link" data-scroll-target="#chapter-20"><span class="header-section-number">6.3</span> Chapter 20</a></li>
   </ul>
 </nav>
     </div>
@@ -202,26 +202,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data analysis with Programming</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Jonas Moss </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2023</p>
-    </div>
-  </div>
   
     
   </div>
@@ -229,66 +217,49 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="introduction" class="level1 unnumbered">
-<h1 class="unnumbered">Introduction</h1>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Update 4/10.</strong> Pages up to lecture 7 filled out.</p>
+<p><strong>Updated 25/9.</strong> Added exercises.</p>
 </div>
 </div>
-<p>Welcome to the course <a href="https://programmeinfo.bi.no/nb/course/EBA-3500">Data Analysis with Programming</a>. This page contains the curriculum, exercises, and additional information for the course. If you need to get in contact with me, please send an e-mail to <code>jonas.moss@bi.no</code>. I do <strong>not</strong> check It’s learning often.</p>
-<p>The majority of our curriculum is covered by two books.</p>
-<p><strong>Dekking, F. M., Kraaikamp, C., Lopuhaä, H. P., &amp; Meester, L. E. (2005). A Modern Introduction to Probability and Statistics. Springer London. https://doi.org/10.1007/1-84628-168-7</strong></p>
-<p>You should know this book from your previous course in probability. We will follow the book closely.</p>
-<p><strong>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An Introduction to Statistical Learning. Springer US. https://doi.org/10.1007/978-1-0716-1418-1</strong></p>
-<p>This one is available online for free; its webpage is <a href="https://trevorhastie.github.io/ISLR/">here</a>. It is a classic, and you can expect other data scientists to know it well. It is a simplified version Elements of Statistical Learning by Hastie, Tibshirani and Friedman, the best known and most widely referenced book of machine learning. The ambitious student will read Elements of Statistical Learning in addition to Introduction to Statistical Learning, but it is a significantly more difficult book.</p>
-<p>Be warned that Dekking et. al covers no programming at all, and James et al.&nbsp;uses <code>R</code> instead of <code>Python</code>. This will not cause us much difficulty, as <code>R</code> and <code>Python</code> are very similar languages. Supplementary material about <code>Python</code> can be found in the sidebar.</p>
-<p>This course follows no strict schedule, as it is based around video lectures. The topics along with reading materials and associated video lectures can be found on the bar to the left. You will also find exercises there.</p>
-</section>
-<section id="on-workload" class="level1">
-<h1>On workload</h1>
-<section id="do-the-work" class="level2">
-<h2 class="anchored" data-anchor-id="do-the-work">Do the work!</h2>
-<p>This is <strong><em>not a relaxing course</em></strong>. The content is difficult, both in terms of concepts and skills required. Statistics has an unfair and completely untrue reputation as an easy subject. It is not. Those who claim statistics is easy do not know statistics.</p>
-<p>Remember that you are expected to work full days as a student. Since you take four courses and all of them, presumably, have approximately <span class="math inline">\(2\)</span> hours of lectures, that leaves <span class="math inline">\(8\)</span> hours of studying – on your own – each week. I expect you to spend <em>at least</em> <span class="math inline">\(10\)</span> hours with this course per week. But keeping in mind that this course is both significantly more important <em>and</em> significantly harder than your other courses, so you might have to spend even more time on it.</p>
-</section>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
-<p>You should probably use other resources than the lecture videos, the books, and the exercises. That is not because these resources do not cover the curriculum. It is because there are 100s of ways to teach the curriculum, and just as many points of view on the difficult parts. You often need to spend significant amounts of time with a concept, looking at it from different angles, in order to finally <a href="https://www.thefreedictionary.com/grokking">grok</a> it. I did this all the time as a student, and every successful data scientist I know does this.</p>
-<p>You should search the internet for answers early on. Understanding what to search for is an extremely important skill for life in general, but especially for data science, programming, and statistics. The key sites to look at are</p>
-<ul>
-<li><p><a href="https://stackoverflow.com">StackOverflow</a> The primary resource for programming questions. Often covers statistics and data science questions too. Do not be afraid to ask questions there. You might get mean-spirited answers though. (Just accept the mean-spirited answers and move on.)</p></li>
-<li><p><a href="https://stats.stackexchange.com">CrossValidated</a> The most widely used statistics Q&amp;A site. Most answers are trustworthy, but the answers are often of lower quality than the other pages, and sometimes wrong. Ignore answers that look iffy.</p></li>
-<li><p><a href="https://math.stackexchange.com">Mathematics Stack Exchange</a> You use this for math questions. Probably not that useful in this course, but it might come up.</p></li>
-</ul>
-<p>There is no definite 1st course in Python curriculum, which is a big and somewhat unwieldy language. You might not have learned about classes (object-oriented Python) or list comprehensions, or maybe not dictionaries either. I will use these concepts without additional explanation. Hence I would <em>strongly recommend</em> you spend 4 hours or so getting reasonably familiar with object-oriented programming in Python. It is not strictly speaking necessary for this course, as you won’t be asked to write your own classes. But some understanding of classes, methods, and attributes will help you understand what’s going on, perhaps even to a great degree! A reasonable place to start would be the videos of <a href="https://www.youtube.com/watch?v=Ej_02ICOIgs&amp;ab_channel=freeCodeCamp.org">freeCodeCamp</a>.</p>
-</section>
-</section>
-<section id="on-programming" class="level1">
-<h1>On programming</h1>
-<p>This course is partly about programming. Students often find programming hard. <strong>Don’t expect to be able solve every exercise in 5 minutes!</strong> Solving programming exercises often take a long time, and you need to persevere. The only way to become good at programming requires you to invest a lot of time, despite the many empty promises out there. I would recommend you read the short <a href="https://www.norvig.com/21-days.html">Teach Yourself Programming in Ten Years</a> by famous AI researcher Peter Norvig.</p>
-<p>To become a decent programmer it’s a good idea to</p>
+<section id="curriculum" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="curriculum"><span class="header-section-number">6.1</span> Curriculum</h2>
+<section id="core-readings" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="core-readings"><span class="header-section-number">6.1.1</span> Core readings</h3>
 <ol type="1">
-<li>Do a lot of exercises.</li>
-<li>Spend at least 20 minutes on each exercise before you give up. You need <a href="https://www.benkuhn.net/thinkrealhard/">to think really hard</a>. Don’t expect to be able to solve the problem without making an effort.</li>
-<li>Do the exercise yourself after you have looked at the solution! Close the window and do it from memory. It’s also a good idea to revisit the same exercise later on, e.g.&nbsp;the next day, to make sure you’re able to do it.</li>
-<li>Tinker around, either modifying exercises yourself, or with your own ideas. If your tinkering leads to something cool, tell me! Use <a href="https://www.kaggle.com/">Kaggle</a> to download data sets to tinker with and <a href="https://mockaroo.com/">Mockaroo</a> to generate fake but plausible-looking data sets.</li>
+<li>Dekking et al., Chapter 19: Unbiased estimators</li>
+<li>Dekking et al., Chapter 20: Efficiency and mean squared error</li>
 </ol>
-<p>Do not to spend an inordinate amount of time on an exercise before you check the solution. If you have spent 1 hour on an exercise and haven’t gotten anywhere, it might be smart to save yourself some time and look at the solution. As I said, you can always come back to it later.</p>
-<p>Moreover, be aware that programming is often <em>extremely frustrating</em>. It’s like talking to someone who just simply refuses to understand what you’re saying, no matter how many times you repeat yourself. <strong>It’s normal and expected to feel frustrated</strong>!</p>
-<p>There are many tips online about learning to program, e.g., <a href="https://www.codingdojo.com/blog/7-tips-learn-programming-faster">this collection of tips</a>. But it mostly boils down to spending a lot of time solving problems.</p>
 </section>
-<section id="about-this-site" class="level1">
-<h1>About this site</h1>
-<p>Curious how this site was made? It is written using <a href="https://quarto.org/docs/books">Quarto books</a>.</p>
+</section>
+<section id="exercises" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.2</span> Exercises</h2>
+<section id="chapter-19" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="chapter-19"><span class="header-section-number">6.2.1</span> Chapter 19</h3>
+<ul>
+<li>19.1a: You need to integrate the uniform distribution.</li>
+<li>19.2: Do this with pen and paper!</li>
+<li>19.3</li>
+<li>19.4a: Use simulations for this. Recall that an unbiased estimator has to be unbiased for all <span class="math inline">\(n\)</span>.</li>
+<li>19.5: You need to figure out the expectation of <span class="math inline">\(M_n\)</span>.</li>
+</ul>
+</section>
+</section>
+<section id="chapter-20" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="chapter-20"><span class="header-section-number">6.3</span> Chapter 20</h2>
+<ul>
+<li>20.5</li>
+<li>20.8 Calculate the variance of <span class="math inline">\(T\)</span>!</li>
+<li>20.10</li>
+</ul>
 
 
 </section>
@@ -529,10 +500,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../site/05-statistical-models.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./site/00-python-tips.html" class="pagination-link">
-        <span class="nav-page-text">Python tips</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../site/07-constructing-estimators.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Constructing estimators</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -22,7 +22,7 @@ book:
     - site/07-constructing-estimators.qmd
     - site/08-confidence-intervals.qmd
     - site/09-testing-hypotheses.qmd
-    - site/11-statistical-learning.qmd
+    - site/10-statistical-learning.qmd
     - site/12-basics-of-linear-regression.qmd
     - site/13-inference-for-linear-regression.qmd
     - site/14-binary-regression.qmd
