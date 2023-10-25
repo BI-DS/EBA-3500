@@ -27,6 +27,7 @@ Here `c` is the concatenation operator, which combines several elements into a v
 * `rnorm` is equivalent to `rng.normal`,
 * `set.seed` is equivalent to `np.random_default_rng`,
 * `dev.off` is equivalent to `plt.clf`.
+* `summary(x)`, where `x` is a data frame, is roughly equivalent to `x.describe()` when `x` is a `Pandas` data frame. 
 
 In later chapters the book will use Python functions we haven't covered yet. I will introduce the Python equivalents when they show up.
 
