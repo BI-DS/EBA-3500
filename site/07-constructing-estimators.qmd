@@ -1,6 +1,6 @@
 # Constructing estimators
 
-::: callout-important
+::: callout-note
 **Update: 4/10:** Removed some exercises.
 :::
 
