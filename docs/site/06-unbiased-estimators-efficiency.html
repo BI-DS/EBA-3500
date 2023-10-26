@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data analysis with Programming - Python tips</title>
+<title>Data analysis with Programming - 6&nbsp; Unbiased estimators and efficiency</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,8 +25,8 @@ ul.task-list li input[type="checkbox"] {
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<link href="../site/01-scipy-numpy.html" rel="next">
-<link href="../index.html" rel="prev">
+<link href="../site/07-constructing-estimators.html" rel="next">
+<link href="../site/05-statistical-models.html" rel="prev">
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../site/00-python-tips.html">Python tips</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../site/06-unbiased-estimators-efficiency.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../site/00-python-tips.html" class="sidebar-item-text sidebar-link active">
+  <a href="../site/00-python-tips.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python tips</span></a>
   </div>
 </li>
@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></span></a>
   </div>
 </li>
@@ -185,14 +185,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#professional-programming" id="toc-professional-programming" class="nav-link active" data-scroll-target="#professional-programming">Professional programming</a>
+  <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">6.1</span> Curriculum</a>
   <ul class="collapse">
-  <li><a href="#how" id="toc-how" class="nav-link" data-scroll-target="#how">How?</a></li>
+  <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">6.1.1</span> Core readings</a></li>
   </ul></li>
-  <li><a href="#better-programming" id="toc-better-programming" class="nav-link" data-scroll-target="#better-programming">Better programming</a>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.2</span> Exercises</a>
   <ul class="collapse">
-  <li><a href="#how-1" id="toc-how-1" class="nav-link" data-scroll-target="#how-1">How?</a></li>
+  <li><a href="#chapter-19" id="toc-chapter-19" class="nav-link" data-scroll-target="#chapter-19"><span class="header-section-number">6.2.1</span> Chapter 19</a></li>
   </ul></li>
+  <li><a href="#chapter-20" id="toc-chapter-20" class="nav-link" data-scroll-target="#chapter-20"><span class="header-section-number">6.3</span> Chapter 20</a></li>
   </ul>
 </nav>
     </div>
@@ -201,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Python tips</h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></h1>
 </div>
 
 
@@ -216,64 +217,51 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>You should probably learn more Python. Just like any art, the only way to get better is to practice while learning from the masters. Be aware of quick fixes; these are impossible.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Updated 25/9.</strong> Added exercises.</p>
+</div>
+</div>
+<section id="curriculum" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="curriculum"><span class="header-section-number">6.1</span> Curriculum</h2>
+<section id="core-readings" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="core-readings"><span class="header-section-number">6.1.1</span> Core readings</h3>
+<ol type="1">
+<li>Dekking et al., Chapter 19: Unbiased estimators</li>
+<li>Dekking et al., Chapter 20: Efficiency and mean squared error</li>
+</ol>
+</section>
+</section>
+<section id="exercises" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.2</span> Exercises</h2>
+<section id="chapter-19" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="chapter-19"><span class="header-section-number">6.2.1</span> Chapter 19</h3>
 <ul>
-<li>This document is part of the curriculum in EBA3500, but the links are not. You’re free to do with these resources as you like.</li>
-<li>The recommendations in this document might look overwhelming. But don’t worry about that. The purpose of this document is to give you pointers to how to become better at Python.</li>
-<li>Be prepared to spend a lot of time learning how to program. You can’t teach yourself how to program in 24 hours. <a href="https://www.norvig.com/21-days.html">You’ll have to spend 10 year instead!</a></li>
-<li>You have two goals.
-<ul>
-<li><strong>Professional programming.</strong> You need your code to look professional, using the right tools, the right vocabulary, and so on. Do not look like a noob!</li>
-<li><strong>Better programming.</strong> You need to be able to write and understand more programs.</li>
-</ul></li>
-<li><a href="https://towardsdatascience.com/how-to-write-high-quality-python-as-a-data-scientist-cde99f582675">This</a> is a decent document covering points similar to this one. For general tutorials on Python I find <a href="https://realpython.com">RealPython</a> to have consistently high quality, but always try to read the <a href="https://docs.python.org/3/">documentation</a> first.</li>
-</ul>
-<section id="professional-programming" class="level2">
-<h2 class="anchored" data-anchor-id="professional-programming">Professional programming</h2>
-<ul>
-<li>Follow the style guide <a href="https://peps.python.org/pep-0008/">PEP</a>.</li>
-<li>Use automatic formatters. I would recommend <a href="https://medium.com/@evaGachirwa/improving-python-code-quality-using-pylint-and-black-5094dbebc1b2">black</a>, as it doesn’t give you any options.</li>
-<li>Document your functions using <code>docstrings</code>.
-<ul>
-<li>Follow the <a href="https://peps.python.org/pep-0257/">Python conventions</a>. You may also want to follow more detailed guidelines such as the <a href="https://google.github.io/styleguide/pyguide.html">Google style guide</a>.</li>
-<li>At some point you want to learn about <a href="https://realpython.com/lessons/type-hinting/">type hints</a>. These make your code easier to understand and debug.</li>
-</ul></li>
-<li>Try to look into <a href="https://realpython.com/python-testing/">testing frameworks</a>.</li>
-<li>Use <a href="https://realpython.com/python-modules-packages/">modules</a> to organize your work.</li>
-<li>Learn to use <a href="https://docs.github.com/en/education/explore-the-benefits-of-teaching-and-learning-with-github-education/use-github-for-your-schoolwork/apply-for-a-student-developer-pack">Github (with their student pack)</a>. You want to use Github due to its versions control and since it allows you to collaborate easily.</li>
-</ul>
-<section id="how" class="level3">
-<h3 class="anchored" data-anchor-id="how">How?</h3>
-<ul>
-<li>You should try to apply your recently learned knowledge as often as possible. Have an assignment to write a Python function? Format it using <code>black</code>, write a docstring for it, use typehints, put it into an appropriate module (such as an EBA3500 module), give it a proper name, and publish it on your Github page. You can also practice some of these skills using gamified sites such as <a href="https://www.codewars.com/dashboard">Codewars</a>.</li>
-<li>Another option is to work on random small projects, clean them up, and publish them on Github. Perhaps together with some of your costudents?</li>
+<li>19.1a: You need to integrate the uniform distribution.</li>
+<li>19.2: Do this with pen and paper!</li>
+<li>19.3</li>
+<li>19.4a: Use simulations for this. Recall that an unbiased estimator has to be unbiased for all <span class="math inline">\(n\)</span>.</li>
+<li>19.5: You need to figure out the expectation of <span class="math inline">\(M_n\)</span>.</li>
 </ul>
 </section>
 </section>
-<section id="better-programming" class="level2">
-<h2 class="anchored" data-anchor-id="better-programming">Better programming</h2>
+<section id="chapter-20" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="chapter-20"><span class="header-section-number">6.3</span> Chapter 20</h2>
 <ul>
-<li><strong>Object-oriented programming and classes.</strong> The first priority is to learn about classes and object-oriented programming. Most Python libraries for statistics (<a href="https://www.statsmodels.org/stable/index.html">statsmodels</a>) and machine learning (<a href="https://scikit-learn.org/stable/">scikit-learn</a>, <a href="https://pytorch.org">PyTorch</a>, <a href="https://keras.io">Keras</a>) Python are built around classes.</li>
-<li><strong>Learn the features of the language.</strong>
-<ul>
-<li>Make sure you know the <a href="https://docs.python.org/3/tutorial/datastructures.html">basic data structures</a> of the language.</li>
-<li>Skim the <a href="https://docs.python.org/3/library/">standard library</a> and become familiar with the, for us at least, most important parts; <a href="https://docs.python.org/3/library/collections.html"><code>collections</code></a>, <a href="https://docs.python.org/3/library/itertools.html"><code>itertools</code></a>, (and, perhaps <a href="https://docs.python.org/3/library/string.html"><code>string</code></a>). There are many exercises on e.g.&nbsp;<a href="https://www.codewars.com/dashboard">Codewars</a> (exercises ranked as 7kyu and 8kyu) that will help you with this.</li>
-<li>Learn more advanced language features, such as <a href="https://realpython.com/introduction-to-python-generators/">generators</a>, the pattern matching operator <code>match</code>, context managers for handling files and connections (using the <code>with</code> statement), and nested list comprehensions.</li>
-<li>Learn about common pitfalls. For instance, <a href="https://towardsdatascience.com/3-rookie-mistakes-to-avoid-with-python-lists-625c0e8e57df">be careful when removing elements from a list in a <code>for</code> loop,</a> and be aware that <a href="https://www.dataquest.io/blog/tutorial-functions-modify-lists-dictionaries-python/">functions can modify their input.</a></li>
-</ul></li>
-<li><strong>Algorithms and data structures.</strong> Algorithms and data structures are about understanding how much time and memory programs require. This is a big field, but some reasonable goals is to
-<ul>
-<li>Understand the difference between <span class="math inline">\(O(n)\)</span>, <span class="math inline">\(O(n^2)\)</span>, and <span class="math inline">\(O(n\log n)\)</span> algorithms. In addition, understand what an exponential time algorithm is and why it’s important to avoid them as much as you can. Also learn about why the dictionary is <em>far</em> faster than a list when doing lookups.</li>
-<li>The highly competetive US job interviews at top tech companies such as Facebook, Google, Apple, Microsoft and Amazon are based on algorithms and data structures. This has created an enormous market for algorithms and data structure resources online, both free and paid. <a href="https://www.algoexpert.io/product">Algoexpert</a> is an example of a partly free site with excellent resources.</li>
-<li>Exercises at <a href="https://www.codewars.com/dashboard">Codewars</a> at rank about 5kyu and 6kyu cover intermediate algorithmic thinking.</li>
-</ul></li>
+<li>20.5</li>
+<li>20.8 Calculate the variance of <span class="math inline">\(T\)</span>!</li>
+<li>20.10</li>
 </ul>
-<section id="how-1" class="level3">
-<h3 class="anchored" data-anchor-id="how-1">How?</h3>
-<p>Getting good at programming requires time, hard work, and perseverance. First, <a href="https://www.google.com/search?q=deliberate+practice+programming&amp;sourceid=chrome&amp;ie=UTF-8">deliberate practice:</a> You need to practice consistently and for non-trivial amounts of time, e.g.&nbsp;30 minutes per day. You might even want to join the <a href="https://www.100daysofcode.com">100DaysOfCode</a> challenge! Second, do <em>more</em> than required on assignments. Play around! Perhaps your assignment could be solved with <a href="https://docs.python.org/3/tutorial/datastructures.html#sets">sets</a> instead of lists? Try it! Finally, read and try to answer Stack Overflow questions.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -512,13 +500,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
+      <a href="../site/05-statistical-models.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../site/01-scipy-numpy.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>Numpy</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../site/07-constructing-estimators.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Constructing estimators</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

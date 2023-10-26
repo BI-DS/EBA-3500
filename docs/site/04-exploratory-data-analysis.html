@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<head>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
 
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.3.353" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data analysis with Programming – 4  Exploratory data analysis</title>
+<title>Data analysis with Programming - 4&nbsp; Exploratory data analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,7 +56,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../site/05-statistical-models.html" rel="next">
+<link href="../site/03-limit-theorems.html" rel="prev">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -81,22 +93,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn"
-      data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <h1 class="quarto-secondary-nav-title"></h1>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../site/04-exploratory-data-analysis.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory data analysis</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
   </nav>
@@ -107,9 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="/">
-      Data analysis with Programming
-      </a> 
+      <a href="../">Data analysis with Programming</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/bi-ds/EBA-3500/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -119,108 +124,124 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/00-python-tips.html" class="sidebar-item-text sidebar-link">
+  <a href="../site/00-python-tips.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python tips</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/01-scipy-numpy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction to `Numpy`</span></span></a>
+  <a href="../site/01-scipy-numpy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>Numpy</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/02-statistical-simulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical simulation</span></span></a>
+  <a href="../site/02-statistical-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical simulation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/03-limit-theorems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>3</span>  <span class='chapter-title'>Limit theorems</span></span></a>
+  <a href="../site/03-limit-theorems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Limit theorems</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/04-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class='chapter-number'>4</span>  <span class='chapter-title'>Exploratory data analysis</span></span></a>
+  <a href="../site/04-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory data analysis</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/05-statistical-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>5</span>  <span class='chapter-title'>Basic statistical models and the bootstrap</span></span></a>
+  <a href="../site/05-statistical-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>6</span>  <span class='chapter-title'>Unbiased estimators and efficiency</span></span></a>
+  <a href="../site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/07-constructing-estimators.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>7</span>  <span class='chapter-title'>Constructing estimators</span></span></a>
+  <a href="../site/07-constructing-estimators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Constructing estimators</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/08-confidence-intervals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>8</span>  <span class='chapter-title'>Confidence intervals</span></span></a>
+  <a href="../site/08-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/09-testing-hypotheses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>9</span>  <span class='chapter-title'>Testing hypotheses</span></span></a>
+  <a href="../site/09-testing-hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Testing hypotheses</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/11-statistical-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>10</span>  <span class='chapter-title'>Statistical learning, machine learning, and statistics</span></span></a>
+  <a href="../site/10-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistical learning, machine learning, and statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/12-basics-of-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>11</span>  <span class='chapter-title'>Basics of multiple linear regression</span></span></a>
+  <a href="../site/12-basics-of-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Basics of multiple linear regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/13-inference-for-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>12</span>  <span class='chapter-title'>Inference for multiple linear regression</span></span></a>
+  <a href="../site/13-inference-for-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inference for multiple linear regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/site/14-binary-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class='chapter-number'>13</span>  <span class='chapter-title'>Binary regression</span></span></a>
+  <a href="../site/14-binary-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Binary regression</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" ></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <div id="quarto-toc-target"></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">4.1</span> Curriculum</a>
+  <ul class="collapse">
+  <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">4.1.1</span> Core readings</a></li>
+  <li><a href="#python" id="toc-python" class="nav-link" data-scroll-target="#python"><span class="header-section-number">4.1.2</span> Python</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">4.2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#python-exercises" id="toc-python-exercises" class="nav-link" data-scroll-target="#python-exercises"><span class="header-section-number">4.2.1</span> Python exercises</a></li>
+  <li><a href="#chapter-15" id="toc-chapter-15" class="nav-link" data-scroll-target="#chapter-15"><span class="header-section-number">4.2.6</span> Chapter 15</a></li>
+  <li><a href="#chapter-16" id="toc-chapter-16" class="nav-link" data-scroll-target="#chapter-16"><span class="header-section-number">4.2.7</span> Chapter 16</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory data analysis</span></h1>
 </div>
 
 
@@ -234,27 +255,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 </header>
-<nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#curriculum" id="toc-curriculum"><span class="header-section-number">4.1</span> Curriculum</a>
-  <ul>
-  <li><a href="#core-readings" id="toc-core-readings"><span class="header-section-number">4.1.1</span> Core readings</a></li>
-  <li><a href="#python" id="toc-python"><span class="header-section-number">4.1.2</span> Python</a></li>
-  </ul></li>
-  <li><a href="#exercises" id="toc-exercises"><span class="header-section-number">4.2</span> Exercises</a>
-  <ul>
-  <li><a href="#python-exercises" id="toc-python-exercises"><span class="header-section-number">4.2.1</span> Python exercises</a></li>
-  <li><a href="#chapter-15" id="toc-chapter-15"><span class="header-section-number">4.2.6</span> Chapter 15</a></li>
-  <li><a href="#chapter-16" id="toc-chapter-16"><span class="header-section-number">4.2.7</span> Chapter 16</a></li>
-  </ul></li>
-  </ul>
-</nav>
+
 <div class="callout callout-style-simple callout-none no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class='callout-icon no-icon'></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
 <p><strong>Update 19/9:</strong> Removed two exercises.</p>
@@ -262,77 +267,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <section id="curriculum" class="level2" data-number="4.1">
-<h2 data-number="4.1"><span class="header-section-number">4.1</span> Curriculum</h2>
+<h2 data-number="4.1" class="anchored" data-anchor-id="curriculum"><span class="header-section-number">4.1</span> Curriculum</h2>
 <ol type="1">
 <li>The core readings of Dekking et al.</li>
 <li>Python notes about <code>seaborn</code>, <code>Numpy</code>, and <code>scipy</code>.</li>
 </ol>
 <section id="core-readings" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1"><span class="header-section-number">4.1.1</span> Core readings</h3>
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="core-readings"><span class="header-section-number">4.1.1</span> Core readings</h3>
 <ol type="1">
 <li>Dekking et al., Chapter 15: Exploratory data analysis: graphical summaries</li>
 <li>Dekking et al., Chapter 16: Exploratory data analysis: numerical summaries</li>
 </ol>
 </section>
 <section id="python" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2"><span class="header-section-number">4.1.2</span> Python</h3>
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="python"><span class="header-section-number">4.1.2</span> Python</h3>
 <section id="using-seaborn-for-graphical-summaries" class="level4" data-number="4.1.2.1">
-<h4 data-number="4.1.2.1"><span class="header-section-number">4.1.2.1</span> Using <code>seaborn</code> for graphical summaries</h4>
+<h4 data-number="4.1.2.1" class="anchored" data-anchor-id="using-seaborn-for-graphical-summaries"><span class="header-section-number">4.1.2.1</span> Using <code>seaborn</code> for graphical summaries</h4>
 <section id="the-pairplot" class="level5" data-number="4.1.2.1.1">
-<h5 data-number="4.1.2.1.1"><span class="header-section-number">4.1.2.1.1</span> The <code>pairplot</code></h5>
+<h5 data-number="4.1.2.1.1" class="anchored" data-anchor-id="the-pairplot"><span class="header-section-number">4.1.2.1.1</span> The <code>pairplot</code></h5>
 <p>We have covered how to use the <code>sns.histplot</code> already, with the key point being that you have to use <code>stat="density"</code> to make it plot a <em>density</em> instead of just counts. There are several plotting methods in <code>seaborn</code> that are useful, but for exploratory data analysis the <code>sns.pairplot</code> is especially important.</p>
 <p>To illustrate the <code>sns.pairplot</code> function, we will first load some data. The <code>seaborn</code> package comes equipped with several nice data sets, which we will use for illustrations.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sns.get_dataset_names()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sns.get_dataset_names()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>[&#39;anagrams&#39;,
- &#39;anscombe&#39;,
- &#39;attention&#39;,
- &#39;brain_networks&#39;,
- &#39;car_crashes&#39;,
- &#39;diamonds&#39;,
- &#39;dots&#39;,
- &#39;dowjones&#39;,
- &#39;exercise&#39;,
- &#39;flights&#39;,
- &#39;fmri&#39;,
- &#39;geyser&#39;,
- &#39;glue&#39;,
- &#39;healthexp&#39;,
- &#39;iris&#39;,
- &#39;mpg&#39;,
- &#39;penguins&#39;,
- &#39;planets&#39;,
- &#39;seaice&#39;,
- &#39;taxis&#39;,
- &#39;tips&#39;,
- &#39;titanic&#39;]</code></pre>
+<pre><code>['anagrams',
+ 'anscombe',
+ 'attention',
+ 'brain_networks',
+ 'car_crashes',
+ 'diamonds',
+ 'dots',
+ 'dowjones',
+ 'exercise',
+ 'flights',
+ 'fmri',
+ 'geyser',
+ 'glue',
+ 'healthexp',
+ 'iris',
+ 'mpg',
+ 'penguins',
+ 'planets',
+ 'seaice',
+ 'taxis',
+ 'tips',
+ 'titanic']</code></pre>
 </div>
 </div>
 <p>Here we have a list of available data sets. Let’s load the <code>mpg</code> data set, which contains information about the miles per gallon (mpg) for various car makes, along with other information.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> sns.load_dataset(<span class="st">&quot;mpg&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mpg.head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="op">=</span> sns.load_dataset(<span class="st">"mpg"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mpg.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
-<tr class="header" style="text-align: right;">
+<tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">mpg</th>
 <th data-quarto-table-cell-role="th">cylinders</th>
@@ -414,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can investigate the data types of this data frame,</p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mpg.dtypes</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mpg.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>mpg             float64
 cylinders         int64
@@ -431,66 +424,54 @@ dtype: object</code></pre>
 <p>The last two columns are of data type <code>object</code>, which is a placeholder for non-numeric types. <code>float64</code> are decimal numbers and <code>int64</code> are integers.</p>
 <p>Using <code>sns.pairplot</code> we get a convenient graphical representation of the numeric types.</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="04-exploratory-data-analysis_files/figure-html/cell-5-output-1.png" width="1652" height="1652" /></p>
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-5-output-1.png" width="1652" height="1652"></p>
 </div>
 </div>
 <p>Observe that the diagonal contains the histograms of each column and the off-diagonal elements the scatter plot of each combination of columns. From this plot we can immediately read that, e.g., the model year is approximately uniformly distributed and that the mpg is positively associated with the model year. (You might need to use the scroll bar to see this.) This shouldn’t be surprising, given continual developments in car technology.</p>
 <p>Observe that you can use the kernel density estimator here as well, on the diagonal, by specifying <code>diag_kind="kde"</code>. Kernel density estimators should generally be prefered when interacting with people with some statistical background, as they usually give a better indication of the population density than a histogram.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, diag_kind<span class="op">=</span><span class="st">&quot;kde&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(mpg, diag_kind<span class="op">=</span><span class="st">"kde"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;Figure size 672x480 with 0 Axes&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="04-exploratory-data-analysis_files/figure-html/cell-6-output-2.png" width="1652" height="1652" /></p>
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-6-output-2.png" width="1652" height="1652"></p>
 </div>
 </div>
 <p>There are several other options in <code>pairplot</code>; feel free to play around with them to find the best-looking plot! If you work as a data analyst, preparing nice-looking and informative plots is one of the most important parts of the job, but we won’t test you on your graphical design skills in this course.</p>
 </section>
 <section id="count-plots" class="level5" data-number="4.1.2.1.2">
-<h5 data-number="4.1.2.1.2"><span class="header-section-number">4.1.2.1.2</span> Count plots</h5>
+<h5 data-number="4.1.2.1.2" class="anchored" data-anchor-id="count-plots"><span class="header-section-number">4.1.2.1.2</span> Count plots</h5>
 <p>Recall the difference between discrete and continuous random variables. Continuous random variables are defined for decimal numbers and have a probability density function (PDF). That is, <span class="math inline">\(f(x)\)</span> is a probability density of a random variable if and and only if <span class="math inline">\(f(x)\geq 0\)</span> and its integral is <span class="math inline">\(\int f(x) dx = 1\)</span>. Continuous random variables can be modeled with histograms and kernel density estimators, and the result is a density in itself.</p>
 <p>On the other hand, discrete random variables (defined on a set of integers or categorical values) have a probability mass function (PMF), a function <span class="math inline">\(p(x)\geq0\)</span> that sums to <span class="math inline">\(1\)</span>, i.e., <span class="math inline">\(\sum p(x) = 1\)</span>. These should ideally not be modeled using histograms, but with count plots (bar plots). For instance, the <code>model_year</code> column of the <code>mpg</code> data set have data type <code>int64</code>, a discrete data type. The result is a is almost a probability mass function, provided it is normalized by <span class="math inline">\(n\)</span>. (The countplot function has, sadly, no option of returning a probability mass function instead of just counts.)</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode" id="cb9"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span><span class="st">&quot;model_year&quot;</span>, data<span class="op">=</span>mpg)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span><span class="st">"model_year"</span>, data<span class="op">=</span>mpg)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="04-exploratory-data-analysis_files/figure-html/cell-7-output-1.png" width="585" height="429" /></p>
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-7-output-1.png" width="585" height="429"></p>
 </div>
 </div>
 </section>
 </section>
 <section id="numerical-summaries" class="level4" data-number="4.1.2.2">
-<h4 data-number="4.1.2.2"><span class="header-section-number">4.1.2.2</span> Numerical summaries</h4>
+<h4 data-number="4.1.2.2" class="anchored" data-anchor-id="numerical-summaries"><span class="header-section-number">4.1.2.2</span> Numerical summaries</h4>
 <p>A convenient way to quickly obtain numerical summaries is the <code>.describe</code> method.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode" id="cb10"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mpg.describe()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mpg.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-
-<table class="dataframe" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
-<tr class="header" style="text-align: right;">
+<tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">mpg</th>
 <th data-quarto-table-cell-role="th">cylinders</th>
@@ -599,9 +580,9 @@ dtype: object</code></pre>
 </section>
 </section>
 <section id="exercises" class="level2" data-number="4.2">
-<h2 data-number="4.2"><span class="header-section-number">4.2</span> Exercises</h2>
+<h2 data-number="4.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">4.2</span> Exercises</h2>
 <section id="python-exercises" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1"><span class="header-section-number">4.2.1</span> Python exercises</h3>
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="python-exercises"><span class="header-section-number">4.2.1</span> Python exercises</h3>
 <ol type="1">
 <li>Make a Python function <code>mad</code> that calculates the median absolute deviation of a numeric array.</li>
 <li>Generalize the function <code>mad</code> to work with columns of a data frame, such as e.g. <code>mpg.mean()</code>.</li>
@@ -611,44 +592,44 @@ dtype: object</code></pre>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class='callout-icon'></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Solutions
 </div>
-<div class='callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end'><i class='callout-toggle'></i></div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <section id="exercise-1" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2"><span class="header-section-number">4.2.2</span> Exercise 1</h3>
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">4.2.2</span> Exercise 1</h3>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode" id="cb11"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mad1(x):</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Calculate mad for a single array.&quot;&quot;&quot;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.median(np.<span class="bu">abs</span>(x <span class="op">-</span> np.median(x)))</span></code></pre></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mad for a single array."""</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.median(np.<span class="bu">abs</span>(x <span class="op">-</span> np.median(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-2" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3"><span class="header-section-number">4.2.3</span> Exercise 2</h3>
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">4.2.3</span> Exercise 2</h3>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode" id="cb12"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mad2(x, axis<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Calculate mad with axis argument (only 0 or 1).&quot;&quot;&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mad with axis argument (only 0 or 1)."""</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> mad1(x)</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="op">==</span> <span class="dv">0</span>:</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [mad1(y) <span class="cf">for</span> y <span class="kw">in</span> x.T]</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> axis <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [mad1(y) <span class="cf">for</span> y <span class="kw">in</span> x]</span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [mad1(y) <span class="cf">for</span> y <span class="kw">in</span> x]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-3" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4"><span class="header-section-number">4.2.4</span> Exercise 3</h3>
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">4.2.4</span> Exercise 3</h3>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode" id="cb13"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ecdf(x):</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Make an empirical CDF.&quot;&quot;&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Make an empirical CDF."""</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fun(y):</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(x <span class="op">&lt;=</span> y)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -677,22 +658,22 @@ Solutions
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(x<span class="op">=</span>x[<span class="dv">0</span>, :])</span>
 <span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sort(x[<span class="dv">0</span>, :])</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.step(y, [ecdf_fun(z) <span class="cf">for</span> z <span class="kw">in</span> y], where<span class="op">=</span><span class="st">&quot;post&quot;</span>)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>plt.step(y, [ecdf_fun(z) <span class="cf">for</span> z <span class="kw">in</span> y], where<span class="op">=</span><span class="st">"post"</span>)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-1.png" width="589" height="416" /></p>
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-1.png" width="589" height="416"></p>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-2.png" width="589" height="416" /></p>
+<p><img src="04-exploratory-data-analysis_files/figure-html/cell-11-output-2.png" width="589" height="416"></p>
 </div>
 </div>
 </section>
 <section id="exercise-4" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5"><span class="header-section-number">4.2.5</span> Exercise 4</h3>
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">4.2.5</span> Exercise 4</h3>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode" id="cb14"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ecdf3(x):</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">&quot;&quot;&quot; Returns the ECDF for the data x. The output function works for all vectors.&quot;&quot;&quot;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">""" Returns the ECDF for the data x. The output function works for all vectors."""</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  x_sorted <span class="op">=</span> np.sort(x)  </span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> fun(y):</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    indices <span class="op">=</span> np.argsort(y)</span>
@@ -702,7 +683,7 @@ Solutions
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> np.cumsum(counts[<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>]) <span class="op">/</span> x.size</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> means[indices]</span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> fun</span></code></pre></div>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> fun</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </div>
@@ -710,23 +691,19 @@ Solutions
 </div>
 </section>
 <section id="chapter-15" class="level3" data-number="4.2.6">
-<h3 data-number="4.2.6"><span class="header-section-number">4.2.6</span> Chapter 15</h3>
-<p>See p. 440 of the book for solution proposals. * 15.2. Copy the data into Numpy and make a histogram; you don’t have to compute the histogram by hand (and don’t bother with making the bin widths 5!). Experiment with the <code>bins</code> and <code>binwidth</code> parameters to find a good histogram. * 15.11. * 15.12.</p>
+<h3 data-number="4.2.6" class="anchored" data-anchor-id="chapter-15"><span class="header-section-number">4.2.6</span> Chapter 15</h3>
+<p>See p.&nbsp;440 of the book for solution proposals. * 15.2. Copy the data into Numpy and make a histogram; you don’t have to compute the histogram by hand (and don’t bother with making the bin widths 5!). Experiment with the <code>bins</code> and <code>binwidth</code> parameters to find a good histogram. * 15.11. * 15.12.</p>
 </section>
 <section id="chapter-16" class="level3" data-number="4.2.7">
-<h3 data-number="4.2.7"><span class="header-section-number">4.2.7</span> Chapter 16</h3>
-<p>See p. 441 of the book for solution proposals. * 16.1. * 16.6. * 16.7. * 16.3. * 16.4. * 16.10. * 16.11.</p>
-<div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Data analysis with Programming</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Data analysis with Programming</span> <span class="hidden" data-render-id="quarto-int-next"><span class="chapter-number">5</span>  <span class="chapter-title">Basic statistical models and the bootstrap</span></span> <span class="hidden" data-render-id="quarto-int-prev"><span class="chapter-number">3</span>  <span class="chapter-title">Limit theorems</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/index.html">Introduction</span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/00-python-tips.html">Python tips</span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/01-scipy-numpy.html"><span class="chapter-number">1</span>  <span class="chapter-title">Introduction to <code>Numpy</code></span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/02-statistical-simulation.html"><span class="chapter-number">2</span>  <span class="chapter-title">Statistical simulation</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/03-limit-theorems.html"><span class="chapter-number">3</span>  <span class="chapter-title">Limit theorems</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/04-exploratory-data-analysis.html"><span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/05-statistical-models.html"><span class="chapter-number">5</span>  <span class="chapter-title">Basic statistical models and the bootstrap</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/06-unbiased-estimators-efficiency.html"><span class="chapter-number">6</span>  <span class="chapter-title">Unbiased estimators and efficiency</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/07-constructing-estimators.html"><span class="chapter-number">7</span>  <span class="chapter-title">Constructing estimators</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/08-confidence-intervals.html"><span class="chapter-number">8</span>  <span class="chapter-title">Confidence intervals</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/09-testing-hypotheses.html"><span class="chapter-number">9</span>  <span class="chapter-title">Testing hypotheses</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/11-statistical-learning.html"><span class="chapter-number">10</span>  <span class="chapter-title">Statistical learning, machine learning, and statistics</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/12-basics-of-linear-regression.html"><span class="chapter-number">11</span>  <span class="chapter-title">Basics of multiple linear regression</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/13-inference-for-linear-regression.html"><span class="chapter-number">12</span>  <span class="chapter-title">Inference for multiple linear regression</span></span> <span class="hidden" data-render-id="quarto-int-sidebar:/site/14-binary-regression.html"><span class="chapter-number">13</span>  <span class="chapter-title">Binary regression</span></span> <span class="hidden" data-render-id="quarto-breadcrumbs-f6e11250810ca8cf7f47c730cf4f04a7"><span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></span></p>
-</div>
-<div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Data analysis with Programming - <span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></span> <span class="hidden" data-render-id="quarto-twittercardtitle">Data analysis with Programming - <span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></span> <span class="hidden" data-render-id="quarto-ogcardtitle">Data analysis with Programming - <span class="chapter-number">4</span>  <span class="chapter-title">Exploratory data analysis</span></span> <span class="hidden" data-render-id="quarto-metasitename">Data analysis with Programming</span> <span class="hidden" data-render-id="quarto-twittercarddesc"></span> <span class="hidden" data-render-id="quarto-ogcardddesc"></span></p>
-</div>
+<h3 data-number="4.2.7" class="anchored" data-anchor-id="chapter-16"><span class="header-section-number">4.2.7</span> Chapter 16</h3>
+<p>See p.&nbsp;441 of the book for solution proposals. * 16.1. * 16.6. * 16.7. * 16.3. * 16.4. * 16.10. * 16.11.</p>
+
+
 </section>
 </section>
 
 </main> <!-- /main -->
-<script id = "quarto-html-after-body" type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -961,18 +938,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a  href="/site/03-limit-theorems.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class='chapter-number'>3</span>  <span class='chapter-title'>Limit theorems</span></span>
+      <a href="../site/03-limit-theorems.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Limit theorems</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a  href="/site/05-statistical-models.html" class="pagination-link">
-        <span class="nav-page-text"><span class='chapter-number'>5</span>  <span class='chapter-title'>Basic statistical models and the bootstrap</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../site/05-statistical-models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
 
-</body>
 
-</html>
+
+</body></html>

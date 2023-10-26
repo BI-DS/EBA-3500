@@ -1,0 +1,30 @@
+# Statistical learning, machine learning, and statistics
+
+::: callout-note
+**Update:** 26/10: Removed everything about `R` since there is a Python version of the book!
+
+**Update:** 25/10: More about `R`.
+
+:::
+
+## Curriculum
+
+The book can be found [here](https://www.statlearning.com); be sure to choose the one using Python!
+
+* James et al., Chapter 1: Introduction
+* James et al., Chapter 2: Statistical learning
+
+
+## Exercises
+Exercises from James et. al. Chapter 2.
+
+### Applied
+- 2.4.8 Link to the book website can be found above.
+- 2.4.9 This is highly exam relevant. We'll go through this exercise in the exercise session.
+
+### Conceptual
+- 2.4.1.
+- 2.4.5.
+- 2.4.2.
+- 2.4.3. Do it on pen and paper; use the internet if needed
+- 2.4.4.
