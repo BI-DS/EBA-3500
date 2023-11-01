@@ -1,7 +1,7 @@
 # Introduction {.unnumbered}
 
 ::: callout-warning
-**Update 26/10.** Pages up to lecture 11 filled out.
+**Update 1/11.** Pages up to lecture 12 filled out.
 :::
 
 Welcome to the course [Data Analysis with Programming](https://programmeinfo.bi.no/nb/course/EBA-3500). This page contains the curriculum, exercises, and additional information for the course. If you need to get in contact with me, please send an e-mail to `jonas.moss@bi.no`. I do **not** check It's learning often.

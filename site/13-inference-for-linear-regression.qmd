@@ -7,5 +7,6 @@ This page is ***not finished***, but might contain notes from the course develop
 ## Curriculum
 
 ## Exercises
+#### Conceptual
 
-## Recommended resources
+#### Applied
