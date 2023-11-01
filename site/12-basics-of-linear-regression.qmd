@@ -1,18 +1,20 @@
 # Basics of multiple linear regression
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout-note
+**Update 1/11** Removed some exercises and modified the extent of the curriculum.
 :::
 
 ## Curriculum
 
-* James et al., Chapter 3: Statistical learning
+* James et al., Chapter 3.1-3.2, 3.6.
+* Chapters 3.1-3.2 are about theory, 3.6 about how to estimate models in Python
+using `statsmodels`. There is a lot to read this week, but the content is slightly easier than before.
 
 ## Exercises
-All exercises in Chapter 3 are recommended.
+All exercises in Chapter 3 are recommended!
+
 #### Conceptual
 - 3.7.1
-- 3.7.2
 - 3.7.3
 - 3.7.4 Verify your answers using a suitable Python simulation.
 - 3.7.5
@@ -20,6 +22,6 @@ All exercises in Chapter 3 are recommended.
 
 #### Applied
 - 3.7.8
-- 3.7.9-3.7.12
-
-## Recommended resources
+- 3.7.9
+- 3.7.10
+- 3.7.12
