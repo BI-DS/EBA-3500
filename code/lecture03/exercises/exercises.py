@@ -67,3 +67,26 @@ x.mean()
 y = rng.uniform(a, b, (144, 100000))
 sums = y.sum(axis=0)
 (sums > 144).mean()
+
+
+import numpy as np
+import matplotlib.pylab as plt
+rng = np.random.default_rng(seed=313)
+x = rng.exponential(size=100)
+eps = rng.normal(size=100)
+y = 1 + 2 * x**(1/2) + eps
+plt.scatter(x, y)
+x.sort()
+plt.plot(x, 1 + 2 * x**(1/2), color = "red")
+plt.show()
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(-np.pi, np.pi, 50)
+y = x.copy()
+X, Y = np.meshgrid(x, y)
+f = np.cos(Y) / (1 + X ** 2)
+plt.contour(X, Y, f)
+plt.contour(X, Y, f)
+plt.show()

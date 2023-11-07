@@ -1,19 +1,29 @@
 import numpy as np
 
-a = np.random.randint(1, 10, 9).reshape(3, 3)
-a = a + a.T
+def circ(a, b, n):
+    return(np.tensordot(a, b, n))
 
-tens = np.tensordot(a, a, 0)
-tens = tens.transpose(0, 2, 1, 3)
-tens = tens + tens.transpose(1, 0, 2, 3)
+rng = np.random.default_rng(seed=313)
+a = rng.integers(0, 10, 3**4).reshape(3, 3, 3, 3)
+b = rng.integers(0, 10, 3**4).reshape(3, 3, 3, 3)
 
-tens[0, 2, 2, 1]
-tens[0, 2, 1, 2]
-tens[2, 0, 1, 2]
-tens[0, 1, 2, 2]
-tens[1, 0, 2, 2]
-tens[1, 2, 0, 2]
-tens[1, 2, 2, 0]
+circ(a, b, 4)
+y = circ(a, b, 2)
 
-# The tensor is input-symmetric and output-symmetric. This is correct,
-# as we don't need or want general symmetry.
+zum = 0
+for i in range(3):
+    for j in range(3):
+        zum += y[i, j, i, j]
+        zum += y[i, i, j, j]
+        zum += 2*y[i, j, j, i]
+
+zum/4
+
+a = np.eye(2*3*4)
+a.shape = (2*3, 4, 2, 3, 4)
+b = np.random.randn(2*3, 4)
+x = np.linalg.tensorsolve(a, b)
+x.shape
+np.allclose(np.tensordot(a, x, axes=3), b)
+
+

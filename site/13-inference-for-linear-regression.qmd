@@ -8,5 +8,7 @@ This page is ***not finished***, but might contain notes from the course develop
 
 ## Exercises
 #### Conceptual
+- 3.7.4 Verify your answers using a suitable Python simulation.
+- 3.7.5
 
 #### Applied
