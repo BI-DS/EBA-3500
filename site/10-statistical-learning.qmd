@@ -1,6 +1,8 @@
 # Statistical learning, machine learning, and statistics
 
 ::: callout-note
+
+**Update:** 9/11: Solution sketches to some exercises.
 **Update:** 26/10: Removed everything about `R` since there is a Python version of the book!
 
 **Update:** 25/10: More about `R`.
@@ -28,3 +30,90 @@ Exercises from James et. al. Chapter 2.
 - 2.4.2.
 - 2.4.3. Do it on pen and paper; use the internet if needed
 - 2.4.4.
+
+### Some solutions
+
+#### 2.4.1
+* (a) The large sample size combined with few allows to you estimate a flexible model without overfitting. So you should at least try a flexible model. But inflexible models are easier to interpret, so you should try them to. In general, you should always at least *compare* the results of flexible and inflexible models. 
+* (b) This happens e.g. in genetic studies, where you have thousands of genes to study and a small number of participants. Here you absolutely need to use an inflexible model, way more inflexible than the linear regression model. (Search the book for "LASSO" for more information.)
+* (c) When the true functional relationship is highly non-linear, inflexible models are unlikely to perform well. But you still have to take into account the number of observations and number of predictors. If the number of observations is large vs. the number of predictors, definitely go inflexible.
+* (d) If the variance of the error term is high *relative to the scale of the data*, then flexible models are likely to overfit, since they will misinterpret the noise in the data. A high error variance in itself does not mean anything though.
+
+### 2.4.2
+* (a) Regression; inference; $n=500$, $p=3$. 
+* (b) Classification; prediction; $n=20$, $p=13$.
+* (c) Regression; prediction; $n=52$ weeks, $p=3$.
+
+### 2.4.9
+First you important the data 
+
+```{python}
+auto = pd.read_csv("Auto.csv", na_values="?")
+auto = auto.dropna()
+```
+
+Here the `na_values="?"` transforms instances of `?` into NAs (not a number). We
+do this to force the `horsepower` covariate to be numeric, which it has to be. The `dropna()` method
+removes all rows containing at least one `NA` from the data frame.
+
+#### (a)
+```{python}
+auto.info()
+```
+We see that every variable is numeric except the `name` covariate, which is the
+name of the car model. Most of the variables are self-explanatory except `origin`.
+
+### (b)
+```{python}
+auto.min()
+auto.max()
+```
+
+### (c)
+```{python}
+auto.drop("name", axis=1).mean()
+auto.drop("name", axis=1).std()
+```
+
+### (d)
+We need to reset the index of the data frame since we have removed the NAs.
+```{python}
+auto_new = auto.reset_index()
+del auto_new['index']
+auto_new = auto_new.drop(list(range(10, 86)))
+```
+
+Now you can call `.mean()`, and so on, on `auto_new`.
+
+### (e)
+
+**Use `pairplot` and a correlation matrix!**
+The most important graph is the `pairplot` from Seaborn. Here you can see univariate scatterplots for every combination of values; moreover, you can see the histograms for each variable.
+```{python}
+import seaborn as sns
+sns.pairplot(auto)
+plt.show()
+```
+Now we look at the correlation matrix. This displays the pairwise correlation
+for all combinations of variables. Recall that the correlation measures the
+degree of linear relationship between two variables, with $1$ being perfect positive
+relationship and $-1$ being perfect negative relationship. You're interested in
+pairs with a high correlation magnitude.
+```{python}
+auto.drop("name", axis=1).corr()
+```
+The whole correlation matrix isn't shown. To fix this, use e.g.
+```{python}
+import pandas as pd
+pd.set_option('display.height', 1000)
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+auto.drop("name", axis=1).corr()
+```
+
+### (e)
+The variables `weight`, `cylindeer`, and `displacement` are very strongly related, and
+it probably suffices to choose one of them to predict `mpg`. All of them are highly correlated with `mpg`, 
+but `weight` has the strongest relationship.
+The variables `year` and `origin` and `acceleration` are also strongly related to `mpg`, but not as strongly related to `cylinder` and `displacement` as weight is, and are not correlated with each other. 

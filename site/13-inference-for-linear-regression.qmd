@@ -1,14 +1,26 @@
-# Inference for multiple linear regression
+# More linear regression
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
+::: callout-note
+**Update 9/11.** Added exercises and curriculum.
 :::
 
 ## Curriculum
+* James et al., Chapter 3.4 - 3.5
+
+The methods used in Chapter 3.4 are implemented in [here](https://www.statsmodels.org/stable/examples/notebooks/generated/linear_regression_diagnostics_plots.html).
+You need to code for the class `LinearRegDiagnostic` into `Python` and run it. Make sure to important statsmodels using `import statsmodels` first. If you don't, it won't work. 
+
+You may want to take a look at the "official" slides for the chapter, found [here](https://www.statlearning.com/resources-python).
 
 ## Exercises
-#### Conceptual
+The exercises this week overlap with last week, since the chapter is so large.
+All exercises (except those about KNN) are relevant and recommended.
+
+#### Conceptual 
 - 3.7.4 Verify your answers using a suitable Python simulation.
 - 3.7.5
 
 #### Applied
+- 3.15
+- 3.13
+- 3.12
