@@ -1,11 +1,11 @@
 # Confidence intervals
 
 ::: callout-note
-**Update: 17/10:** Fixed typo in understanding confidence intervals exercise.
+**Update: 17/10:** Fixed typo in "understanding confidence intervals" exercise; fixed typo in quick exercise.
 
 **Update: 11/10:** Fixed typo in the *t*-confidence interval.
 
-**Update: 10/10:** Filled in notes and modified exercises.
+**Update: 10/10:** Filled in notes and modifed exercises.
 :::
 
 ## Curriculum
@@ -38,12 +38,12 @@ z_half = lambda alpha: st.norm.ppf(1 - alpha/2)
 z_half(0.05)
 ```
 #### Quick exercise
-Assume the variance of the `calories` data is known and equal to $\sigma^2=0.2$. Compute the $95\%$-confidence interval (i.e., $\alpha = 0.05$) of the form $(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})$.
+Assume the standard deviation of the `calories` data is known and equal to $\sigma=0.2$. Compute the $95\%$-confidence interval (i.e., $\alpha = 0.05$) of the form $(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}}, \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})$.
 
 ::: {.callout-tip collapse="true"}
 #### Solution
 Verify that the sample mean of the `calories` data is approximately $23.788$ and $n=23$.  
-Use the approximation $z_{0.05/2}\approx 1.96$ and plug in $\sigma = \sqrt{24}$, $\overline{X}_n = 23.788$ into the formula for the confidence interval to obtain:
+Use the approximation $z_{0.05/2}\approx 1.96$ and plug in $\sigma = 0.2$, $\overline{X}_n = 23.788$ into the formula for the confidence interval to obtain:
 $$23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})$$.
 Let's evaluate it in Python:
 ```{python}
@@ -132,15 +132,15 @@ Dekking et al., Chapter 23: 23.5(a,b), 23.9
 
 ### Understanding confidence intervals
 Hoekstra et al (2014) list 6 common errors. Suppose you're given a confidence
-interval for the mean equal to [0.4, 0.6]. Which, if any, of the following are true?
+interval for the mean equal to [0.1, 0.4]. Which, if any, of the following are true?
 
 1. The probability that the true mean is greater than 0 is at least 95 %.
 2. The probability that the true mean equals 0 is smaller than 5 %.
 3. The “null hypothesis” that the true mean equals 0 is likely to be incorrect.
-4. There is a 95 % probability that the true mean lies between 0.4 and 0.6.
-5. We can be 95 % confident that the true mean lies between 0.4 and 0.6.
+4. There is a 95 % probability that the true mean lies between 0.1 and 0.4.
+5. We can be 95 % confident that the true mean lies between 0.1 and 0.4.
 6. If we were to repeat the experiment over and over, then 95 % of the time the 
-    true mean falls between 0.4 and 0.6.
+    true mean falls between 0.1 and 0.4.
 
 Interested readers can have a look at this paper. (This is not on the curriculum!)
 Hoekstra, R., Morey, R. D., Rouder, J. N., & Wagenmakers, E.-J. (2014). Robust misinterpretation of confidence intervals.  Psychonomic Bulletin & Review, 21(5), 1157–1164. https://doi.org/10.3758/s13423-013-0572-3
