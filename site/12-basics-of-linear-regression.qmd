@@ -23,3 +23,118 @@ All exercises in Chapter 3 are recommended!
 - 3.7.9 (a, b, c)
 - 3.7.10 (a - e)
 - 3.7.12
+
+## Some solution sketches
+
+### 3.7.3
+
+We are dealing with the model
+$$Y = \beta_0 + \beta_1\cdot GPA + \beta_2 \cdot IQ + \beta_3 * Level + \beta_4 \cdot GPA \cdot IQ + \beta_5 \cdot GPA \cdot Level +\epsilon.$$
+
+Plugging in the estimated coefficients, we have
+
+$$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level.$$
+
+#### (a)
+First let $Level = 1$, i.e., we have college education. The equation becomes:
+
+$$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35+ 0.01 \cdot GPA \cdot IQ -10 \cdot GPA.$$
+Which simplied equals:
+$$\hat{y} = 85 + 10 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.$$
+Now consider $Level=0$. The equation becomes:
+$$\hat{y}' = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.$$
+Then $$\hat{y}-\hat{y}'=35 - 10\cdot GPA.$$
+Recall that $0 \leq GPA\leq 4$. Hence the maximal value of $\hat{y}-\hat{y}'$ is $25$ when GPA is $1$, which means the college graduate earns $25$k more than the high school graduate. The minimal value is $-5$ when the GPA is $4$, meaning that the college graduate earn *less* on average when the GPA is high enough. 
+
+Thus the correct choice is (iii). Note that this is unlikely to be true in reality!
+
+#### (b)
+Use the equation $$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level,$$
+we find that $$\hat{y} = 50 + 20 \cdot 4 + 0.07\cdot 110 + 35 + 0.01\cdot 4 \cdot 110 -10\cdot 4.$$
+We can calculate this:
+
+```{python}
+50 + 20 * 4 + 0.07 * 110 + 35 + 0.01*4*110 -10*4
+```
+
+#### (c)
+This can only be judged by looking at the *p*-value for the coefficient. We don't know the sample size,
+and have limited information about the variance of the IQ, so we cannot say for certain. The effect, however,
+is likely to be very small.
+
+### 3.7.8
+```{python}
+import pandas as pd
+import statsmodels.formula.api as smf
+auto = pd.read_csv("Auto.csv", na_values="?")
+auto = auto.dropna()
+auto.info()
+```
+
+### (a)
+Now we fit the model.
+```{python}
+fit = smf.ols("mpg ~ horsepower", data = auto).fit()
+fit.summary()
+```
+
+(i) Yes, since the $R^2$ adjusted is high.
+(ii) Very strong, judged by the $R^2$ adjusted.
+(iii) Negative.
+(iv) 
+```{python}
+fit.conf_int()
+```
+
+### (b)
+
+```{python}
+import matplotlib.pyplot as plt
+plt.clf()
+plt.scatter(auto.horsepower, auto.mpg)
+params = smf.ols("mpg ~ horsepower", data = auto).fit().params
+plt.plot(auto.horsepower, auto.horsepower * params[1] + params[0])
+plt.show()
+```
+
+### 9
+```{python}
+import pandas as pd
+import statsmodels.formula.api as smf
+auto = pd.read_csv("Auto.csv", na_values="?")
+auto = auto.dropna()
+```
+
+#### (a)
+```{python}
+import seaborn as sns
+sns.pairplot(auto)
+```
+
+#### (b)
+```{python}
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+auto.drop("name", axis=1).corr()
+```
+
+#### (c)
+First, make a formula including all relevant variables. Try to understand the code below 
+using the documentation of `join` if needed.
+
+```{python}
+formula = "mpg" + "~" + "+".join(auto.columns.difference(["name", "mpg"]))
+formula
+```
+
+Now we fit the model.
+```{python}
+fit = smf.ols(formula, auto).fit()
+fit.summary()
+```
+
+##### Answers
+(i) Yes, there is a relationsship, we see that due to $R^2$. Using the anova function is not needed here.
+(ii) Poorly phrased question. The question should be "which predictors HAVE a statistically significant relationship [...]". Look at the table above and pick those with a p-value less than 0.05.
+(iii) There is a positive relationship between year and miles-per-gallon. This can be explained by evolution in technology.

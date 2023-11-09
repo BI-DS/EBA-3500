@@ -280,7 +280,7 @@ Note
 <h3 data-number="8.1.2" class="anchored" data-anchor-id="notes-for-python"><span class="header-section-number">8.1.2</span> Notes for Python</h3>
 <p>You should read this after, or in tandem with, the book.</p>
 <p>Table 23.1 (p.347) of the book lists some gross calorific value measurements.</p>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>calories <span class="op">=</span> np.array([<span class="fl">23.870</span>, <span class="fl">23.730</span>, <span class="fl">23.712</span>, <span class="fl">23.760</span>, <span class="fl">23.640</span>, <span class="fl">23.850</span>, <span class="fl">23.840</span>, <span class="fl">23.860</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fl">23.940</span>, <span class="fl">23.830</span>, <span class="fl">23.877</span>, <span class="fl">23.700</span>, <span class="fl">23.796</span>, <span class="fl">23.727</span>, <span class="fl">23.778</span>, <span class="fl">23.740</span>,</span>
@@ -290,7 +290,7 @@ Note
 <p><span class="math display">\[(L_n, U_n)=(\overline{X}_n - z_{\alpha/2}\frac{\sigma}{\sqrt{n}},
               \overline{X}_n + z_{\alpha/2}\frac{\sigma}{\sqrt{n}})\]</span></p>
 <p>Here <span class="math inline">\(z_{\alpha/2}\)</span> is the <span class="math inline">\(1-\alpha/2\)</span>-quantile of a standard normal. You can calculate such quantiles using <code>norm.ppf</code> from Scipy. For instance, the <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span>, which can be verified as follows.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> st</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>z_half <span class="op">=</span> <span class="kw">lambda</span> alpha: st.norm.ppf(<span class="dv">1</span> <span class="op">-</span> alpha<span class="op">/</span><span class="dv">2</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>z_half(<span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -315,7 +315,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Verify that the sample mean of the <code>calories</code> data is approximately <span class="math inline">\(23.788\)</span> and <span class="math inline">\(n=23\)</span>.<br>
 Use the approximation <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span> and plug in <span class="math inline">\(\sigma = 0.2\)</span>, <span class="math inline">\(\overline{X}_n = 23.788\)</span> into the formula for the confidence interval to obtain: <span class="math display">\[23.788 - 1.96\frac{0.2}{\sqrt{23}}, 23.788 + 1.96\frac{0.2}{\sqrt{23}})\]</span>. Let’s evaluate it in Python:</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">=</span> calories.mean()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> calories.size</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> <span class="fl">0.2</span></span>
@@ -331,7 +331,7 @@ Use the approximation <span class="math inline">\(z_{0.05/2}\approx 1.96\)</span
 <p><span class="math display">\[(L_n, U_n)=(\overline{X}_n - s\frac{t_{n-1,\alpha/2}}{\sqrt{n}},
               \overline{X}_n + s\frac{t_{n-1,\alpha/2}}{\sqrt{n}}),\]</span></p>
 <p>where <span class="math inline">\(s\)</span> is the sample standard deviation. Such confidence intervals can be calculated using Scipy.</p>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>st.ttest_1samp(calories, <span class="dv">0</span>).confidence_interval(<span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>ConfidenceInterval(low=23.75393390401451, high=23.821631313376784)</code></pre>
@@ -368,7 +368,7 @@ Solution
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>First calculate the <span class="math inline">\(t^\star\)</span>s.</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> calories</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> x.size</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
@@ -380,11 +380,11 @@ Solution
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>t_stars <span class="op">=</span> (means <span class="op">-</span> x_bar) <span class="op">/</span> (stds <span class="op">/</span> np.sqrt(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Then calculate the quantiles.</p>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>c_l, c_u <span class="op">=</span> np.quantile(t_stars, (<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And finally, calculate the interval itself.</p>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sd <span class="op">=</span> np.std(x, ddof <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x_bar <span class="op">-</span> c_u <span class="op">*</span> sd <span class="op">/</span> np.sqrt(n), x_bar <span class="op">-</span> c_l <span class="op">*</span> sd <span class="op">/</span> np.sqrt(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">

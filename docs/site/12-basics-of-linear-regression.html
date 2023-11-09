@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -50,7 +84,12 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -185,6 +224,14 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">11.1</span> Curriculum</a></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">11.2</span> Exercises</a></li>
+  <li><a href="#some-solution-sketches" id="toc-some-solution-sketches" class="nav-link" data-scroll-target="#some-solution-sketches"><span class="header-section-number">11.3</span> Some solution sketches</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">11.3.1</span> 3.7.3</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">11.3.2</span> 3.7.8</a></li>
+  <li><a href="#a-1" id="toc-a-1" class="nav-link" data-scroll-target="#a-1"><span class="header-section-number">11.3.3</span> (a)</a></li>
+  <li><a href="#b-1" id="toc-b-1" class="nav-link" data-scroll-target="#b-1"><span class="header-section-number">11.3.4</span> (b)</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">11.3.5</span> 9</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -247,8 +294,584 @@ Note
 <li>3.7.10 (a - e)</li>
 <li>3.7.12</li>
 </ul>
+</section>
+</section>
+<section id="some-solution-sketches" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="some-solution-sketches"><span class="header-section-number">11.3</span> Some solution sketches</h2>
+<section id="section" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">11.3.1</span> 3.7.3</h3>
+<p>We are dealing with the model <span class="math display">\[Y = \beta_0 + \beta_1\cdot GPA + \beta_2 \cdot IQ + \beta_3 * Level + \beta_4 \cdot GPA \cdot IQ + \beta_5 \cdot GPA \cdot Level +\epsilon.\]</span></p>
+<p>Plugging in the estimated coefficients, we have</p>
+<p><span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level.\]</span></p>
+<section id="a" class="level4" data-number="11.3.1.1">
+<h4 data-number="11.3.1.1" class="anchored" data-anchor-id="a"><span class="header-section-number">11.3.1.1</span> (a)</h4>
+<p>First let <span class="math inline">\(Level = 1\)</span>, i.e., we have college education. The equation becomes:</p>
+<p><span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35+ 0.01 \cdot GPA \cdot IQ -10 \cdot GPA.\]</span> Which simplied equals: <span class="math display">\[\hat{y} = 85 + 10 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.\]</span> Now consider <span class="math inline">\(Level=0\)</span>. The equation becomes: <span class="math display">\[\hat{y}' = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.\]</span> Then <span class="math display">\[\hat{y}-\hat{y}'=35 - 10\cdot GPA.\]</span> Recall that <span class="math inline">\(0 \leq GPA\leq 4\)</span>. Hence the maximal value of <span class="math inline">\(\hat{y}-\hat{y}'\)</span> is <span class="math inline">\(25\)</span> when GPA is <span class="math inline">\(1\)</span>, which means the college graduate earns <span class="math inline">\(25\)</span>k more than the high school graduate. The minimal value is <span class="math inline">\(-5\)</span> when the GPA is <span class="math inline">\(4\)</span>, meaning that the college graduate earn <em>less</em> on average when the GPA is high enough.</p>
+<p>Thus the correct choice is (iii). Note that this is unlikely to be true in reality!</p>
+</section>
+<section id="b" class="level4" data-number="11.3.1.2">
+<h4 data-number="11.3.1.2" class="anchored" data-anchor-id="b"><span class="header-section-number">11.3.1.2</span> (b)</h4>
+<p>Use the equation <span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level,\]</span> we find that <span class="math display">\[\hat{y} = 50 + 20 \cdot 4 + 0.07\cdot 110 + 35 + 0.01\cdot 4 \cdot 110 -10\cdot 4.\]</span> We can calculate this:</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span> <span class="op">+</span> <span class="dv">20</span> <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">0.07</span> <span class="op">*</span> <span class="dv">110</span> <span class="op">+</span> <span class="dv">35</span> <span class="op">+</span> <span class="fl">0.01</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">110</span> <span class="op">-</span><span class="dv">10</span><span class="op">*</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>137.1</code></pre>
+</div>
+</div>
+</section>
+<section id="c" class="level4" data-number="11.3.1.3">
+<h4 data-number="11.3.1.3" class="anchored" data-anchor-id="c"><span class="header-section-number">11.3.1.3</span> (c)</h4>
+<p>This can only be judged by looking at the <em>p</em>-value for the coefficient. We don’t know the sample size, and have limited information about the variance of the IQ, so we cannot say for certain. The effect, however, is likely to be very small.</p>
+</section>
+</section>
+<section id="section-1" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">11.3.2</span> 3.7.8</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> pd.read_csv(<span class="st">"Auto.csv"</span>, na_values<span class="op">=</span><span class="st">"?"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> auto.dropna()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>auto.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 392 entries, 0 to 396
+Data columns (total 9 columns):
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   mpg           392 non-null    float64
+ 1   cylinders     392 non-null    int64  
+ 2   displacement  392 non-null    float64
+ 3   horsepower    392 non-null    float64
+ 4   weight        392 non-null    int64  
+ 5   acceleration  392 non-null    float64
+ 6   year          392 non-null    int64  
+ 7   origin        392 non-null    int64  
+ 8   name          392 non-null    object 
+dtypes: float64(4), int64(4), object(1)
+memory usage: 30.6+ KB</code></pre>
+</div>
+</div>
+</section>
+<section id="a-1" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="a-1"><span class="header-section-number">11.3.3</span> (a)</h3>
+<p>Now we fit the model.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower"</span>, data <span class="op">=</span> auto).fit()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fit.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>mpg</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.606</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.605</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>599.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Thu, 09 Nov 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>7.03e-81</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>19:04:24</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-1178.7</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>392</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>2361.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>390</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>2369.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>1</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>39.9359</td>
+<td>0.717</td>
+<td>55.660</td>
+<td>0.000</td>
+<td>38.525</td>
+<td>41.347</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">horsepower</td>
+<td>-0.1578</td>
+<td>0.006</td>
+<td>-24.489</td>
+<td>0.000</td>
+<td>-0.171</td>
+<td>-0.145</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>16.432</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>0.920</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>17.305</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.492</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>0.000175</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>3.299</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>322.</td>
+</tr>
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</div>
+</div>
+<ol type="i">
+<li>Yes, since the <span class="math inline">\(R^2\)</span> adjusted is high.</li>
+<li>Very strong, judged by the <span class="math inline">\(R^2\)</span> adjusted.</li>
+<li>Negative.</li>
+<li></li>
+</ol>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit.conf_int()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>38.525212</td>
+<td>41.346510</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">horsepower</td>
+<td>-0.170517</td>
+<td>-0.145172</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="b-1" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="b-1"><span class="header-section-number">11.3.4</span> (b)</h3>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(auto.horsepower, auto.mpg)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower"</span>, data <span class="op">=</span> auto).fit().params</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.plot(auto.horsepower, auto.horsepower <span class="op">*</span> params[<span class="dv">1</span>] <span class="op">+</span> params[<span class="dv">0</span>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="12-basics-of-linear-regression_files/figure-html/cell-6-output-1.png" width="566" height="411"></p>
+</div>
+</div>
+</section>
+<section id="section-2" class="level3" data-number="11.3.5">
+<h3 data-number="11.3.5" class="anchored" data-anchor-id="section-2"><span class="header-section-number">11.3.5</span> 9</h3>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> pd.read_csv(<span class="st">"Auto.csv"</span>, na_values<span class="op">=</span><span class="st">"?"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> auto.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="a-2" class="level4" data-number="11.3.5.1">
+<h4 data-number="11.3.5.1" class="anchored" data-anchor-id="a-2"><span class="header-section-number">11.3.5.1</span> (a)</h4>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="12-basics-of-linear-regression_files/figure-html/cell-8-output-1.png" width="1887" height="1887"></p>
+</div>
+</div>
+</section>
+<section id="b-2" class="level4" data-number="11.3.5.2">
+<h4 data-number="11.3.5.2" class="anchored" data-anchor-id="b-2"><span class="header-section-number">11.3.5.2</span> (b)</h4>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">500</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="dv">500</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="dv">1000</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>auto.drop(<span class="st">"name"</span>, axis<span class="op">=</span><span class="dv">1</span>).corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mpg</th>
+<th data-quarto-table-cell-role="th">cylinders</th>
+<th data-quarto-table-cell-role="th">displacement</th>
+<th data-quarto-table-cell-role="th">horsepower</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">acceleration</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">origin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">mpg</td>
+<td>1.000000</td>
+<td>-0.777618</td>
+<td>-0.805127</td>
+<td>-0.778427</td>
+<td>-0.832244</td>
+<td>0.423329</td>
+<td>0.580541</td>
+<td>0.565209</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">cylinders</td>
+<td>-0.777618</td>
+<td>1.000000</td>
+<td>0.950823</td>
+<td>0.842983</td>
+<td>0.897527</td>
+<td>-0.504683</td>
+<td>-0.345647</td>
+<td>-0.568932</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">displacement</td>
+<td>-0.805127</td>
+<td>0.950823</td>
+<td>1.000000</td>
+<td>0.897257</td>
+<td>0.932994</td>
+<td>-0.543800</td>
+<td>-0.369855</td>
+<td>-0.614535</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">horsepower</td>
+<td>-0.778427</td>
+<td>0.842983</td>
+<td>0.897257</td>
+<td>1.000000</td>
+<td>0.864538</td>
+<td>-0.689196</td>
+<td>-0.416361</td>
+<td>-0.455171</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">weight</td>
+<td>-0.832244</td>
+<td>0.897527</td>
+<td>0.932994</td>
+<td>0.864538</td>
+<td>1.000000</td>
+<td>-0.416839</td>
+<td>-0.309120</td>
+<td>-0.585005</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">acceleration</td>
+<td>0.423329</td>
+<td>-0.504683</td>
+<td>-0.543800</td>
+<td>-0.689196</td>
+<td>-0.416839</td>
+<td>1.000000</td>
+<td>0.290316</td>
+<td>0.212746</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">year</td>
+<td>0.580541</td>
+<td>-0.345647</td>
+<td>-0.369855</td>
+<td>-0.416361</td>
+<td>-0.309120</td>
+<td>0.290316</td>
+<td>1.000000</td>
+<td>0.181528</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">origin</td>
+<td>0.565209</td>
+<td>-0.568932</td>
+<td>-0.614535</td>
+<td>-0.455171</td>
+<td>-0.585005</td>
+<td>0.212746</td>
+<td>0.181528</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="c-1" class="level4" data-number="11.3.5.3">
+<h4 data-number="11.3.5.3" class="anchored" data-anchor-id="c-1"><span class="header-section-number">11.3.5.3</span> (c)</h4>
+<p>First, make a formula including all relevant variables. Try to understand the code below using the documentation of <code>join</code> if needed.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> <span class="st">"mpg"</span> <span class="op">+</span> <span class="st">"~"</span> <span class="op">+</span> <span class="st">"+"</span>.join(auto.columns.difference([<span class="st">"name"</span>, <span class="st">"mpg"</span>]))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>formula</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>'mpg~acceleration+cylinders+displacement+horsepower+origin+weight+year'</code></pre>
+</div>
+</div>
+<p>Now we fit the model.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> smf.ols(formula, auto).fit()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>mpg</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.821</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.818</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>252.4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Thu, 09 Nov 2023</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>2.04e-139</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>19:04:30</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-1023.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>392</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>2063.</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>384</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>2095.</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>7</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>-17.2184</td>
+<td>4.644</td>
+<td>-3.707</td>
+<td>0.000</td>
+<td>-26.350</td>
+<td>-8.087</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">acceleration</td>
+<td>0.0806</td>
+<td>0.099</td>
+<td>0.815</td>
+<td>0.415</td>
+<td>-0.114</td>
+<td>0.275</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">cylinders</td>
+<td>-0.4934</td>
+<td>0.323</td>
+<td>-1.526</td>
+<td>0.128</td>
+<td>-1.129</td>
+<td>0.142</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">displacement</td>
+<td>0.0199</td>
+<td>0.008</td>
+<td>2.647</td>
+<td>0.008</td>
+<td>0.005</td>
+<td>0.035</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">horsepower</td>
+<td>-0.0170</td>
+<td>0.014</td>
+<td>-1.230</td>
+<td>0.220</td>
+<td>-0.044</td>
+<td>0.010</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">origin</td>
+<td>1.4261</td>
+<td>0.278</td>
+<td>5.127</td>
+<td>0.000</td>
+<td>0.879</td>
+<td>1.973</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">weight</td>
+<td>-0.0065</td>
+<td>0.001</td>
+<td>-9.929</td>
+<td>0.000</td>
+<td>-0.008</td>
+<td>-0.005</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">year</td>
+<td>0.7508</td>
+<td>0.051</td>
+<td>14.729</td>
+<td>0.000</td>
+<td>0.651</td>
+<td>0.851</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>31.906</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>1.309</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>53.100</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.529</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>2.95e-12</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>4.460</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>8.59e+04</td>
+</tr>
+</tbody>
+</table>
+<br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 8.59e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
+</div>
+</div>
+<section id="answers" class="level5" data-number="11.3.5.3.1">
+<h5 data-number="11.3.5.3.1" class="anchored" data-anchor-id="answers"><span class="header-section-number">11.3.5.3.1</span> Answers</h5>
+<ol type="i">
+<li>Yes, there is a relationsship, we see that due to <span class="math inline">\(R^2\)</span>. Using the anova function is not needed here.</li>
+<li>Poorly phrased question. The question should be “which predictors HAVE a statistically significant relationship […]”. Look at the table above and pick those with a p-value less than 0.05.</li>
+<li>There is a positive relationship between year and miles-per-gallon. This can be explained by evolution in technology.</li>
+</ol>
+
+
+</section>
+</section>
 </section>
 </section>
 
