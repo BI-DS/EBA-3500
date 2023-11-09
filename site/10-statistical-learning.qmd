@@ -48,6 +48,7 @@ Exercises from James et. al. Chapter 2.
 First you important the data 
 
 ```{python}
+import pandas as pd
 auto = pd.read_csv("Auto.csv", na_values="?")
 auto = auto.dropna()
 ```
@@ -91,6 +92,7 @@ Now you can call `.mean()`, and so on, on `auto_new`.
 The most important graph is the `pairplot` from Seaborn. Here you can see univariate scatterplots for every combination of values; moreover, you can see the histograms for each variable.
 ```{python}
 import seaborn as sns
+import matplotlib.pylab as plt
 sns.pairplot(auto)
 plt.show()
 ```
@@ -105,7 +107,6 @@ auto.drop("name", axis=1).corr()
 The whole correlation matrix isn't shown. To fix this, use e.g.
 ```{python}
 import pandas as pd
-pd.set_option('display.height', 1000)
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
