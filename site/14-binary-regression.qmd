@@ -5,11 +5,30 @@ This page is ***not finished***, but might contain notes from the course develop
 :::
 
 ## Curriculum
-* James et al., Chapters 4.1 - 4.3, 4.7.1 - 4.7.7
+* James et al., Chapters 4.1 - 4.3, 4.7.1 - 4.7.2
 
 ## Exercises
 ### Conceptual exercises
+* 4.8.1, 4.8.6, 4.8.9
 
 ### Applied exercises
 
-## Recommended resources
+#### From the book
+* 3.8.15, 3.8.16 (use only logistic regression)
+
+#### Exercise
+##### Download data
+
+Load the data set at `https://userpage.fu-berlin.de/soga/200/2010_data_sets/hurricanes.xlsx` into a data frame `hurricanes`. Make a `sns.pairplot` and look at the correlation matrix. For more information about the data, look at the link. Some of the correlations are extremely high. Why? (*Hint*: Be sure to remove columns that aren't numeric using [`drop`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop.html). You can use `df.corr()` to calculate the correlation matrix.)
+
+##### Correlation plot
+
+The correlation matrix is hard to read. Modify the code from [here](https://seaborn.pydata.org/examples/many_pairwise_correlations.html) or [here](https://medium.com/@szabo.bibor/how-to-create-a-seaborn-correlation-heatmap-in-python-834c0686b88e) to make it readable. (*Hint:* Start out with `sns.heatmap(dataframe.corr())`.)
+
+##### Fitting a logistic regression
+
+Make a new column in `hurricanes` called `Type.new`. A value in this column equals $0$ if `Type == 0` and $1$ otherwise. Use `sns.lmplot` to plot a logistic regression `"Type_new ~ FirstLat"`. (*Hint:* First make a column `c` that is $1$ if `Type == 0` and $0$ otherwise. Then modify it to be $0$ if `Type == 0` and $1$ otherwise using `1 - c`, or `(1 - 1 * (hurricanes["Type"] == 0))`.)
+
+##### Finding other predictors
+
+Using the `Type.new` variable as a response, find other reasonable predictors and plot them. (*Hint:* Can you use `hurricanes.corr()` for this?)
