@@ -24,3 +24,167 @@ All exercises (except those about KNN) are relevant and recommended.
 - 3.15
 - 3.13
 - 3.12
+
+### Solution to 3.15
+We import the usual stuff.
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+```
+
+In addition, we will important `pprint`, which allows us to visualize lists
+and dictionaries easier.
+
+```{python}
+import pprint
+```
+
+Import the data:
+```{python}
+boston = pd.read_csv("Boston.csv", na_values="?")
+boston.drop(boston.columns[0], axis = 1, inplace = True)
+```
+
+And have a short look at it.
+```{python}
+boston.info()
+boston.describe()
+```
+
+#### (a)
+We need to fit one regression model for each covariates. One way to do this is 
+as follows: You first make a set of all the covariates in the data, then use 
+a dictionary comprehension to fit models for every single formula.
+```{python}
+covariates = set(boston.columns.values.tolist()) - set(["crim"])
+fits = {cov: smf.ols("crim ~ " + cov, data = boston).fit() for cov in covariates}
+```
+
+It's advisable to use `pprint` to display this data, as it makes it easier on the eyes.
+
+Here we take a look at the p-values and $R^2$s for each fit.
+```{python}
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint([(key, value.rsquared.round(2), value.pvalues[1].round(3)) for key, value in fits.items()])
+```
+It's clear that all p-values except `chas` are 0, thus almost every covariate has some relationship with `crim`. The highest $R^2$ belong to `tax` and `rad`.
+
+```{python}
+plt.clf()
+plt.scatter(boston.rad, boston.crim)
+plt.plot(boston.rad, fits["rad"].params[0] + fits["rad"].params[1] * boston.rad)
+plt.show()
+```
+
+```{python}
+plt.clf()
+plt.scatter(boston.tax, boston.crim)
+plt.plot(boston.tax, fits["tax"].params[0] + fits["tax"].params[1] * boston.tax)
+plt.plot(boston.tax, fits["tax"].predict())
+plt.show()
+```
+
+Observe that these plots are nearly identical. Moreover, the relationship is
+evidently not linear. It rather seems like there are two distinct clusters of
+observations. One could plausibly model this sort of scenario using decision 
+trees, which is a subject of your next course.
+
+When two variables look very similar when plotted in this way, it is reasonable 
+to calculate their correlation and make a plot of them to see if they measure
+essentially different things.
+
+```{python}
+plt.clf()
+plt.scatter(boston.tax, boston.rad)
+plt.show()
+np.corrcoef(boston.tax, boston.rad)
+```
+
+It's hard to see from this plot why the correlation is so large. The reason is
+repeated observations. In particular, the number of observations for the point (24,666) is 132, which causes the high correlation. On way to show this is by using the `Counter` function.
+
+```{python}
+from collections import Counter
+pp.pprint(Counter(zip(boston.rad, boston.tax)))
+
+```
+
+# (b) 
+We must join together `crim` with all covariates in the table except `crim`.
+```{python}
+formula = "crim" + "~" + "+".join(boston.columns.difference(["crim"]))
+fit = smf.ols(formula, boston).fit()
+fit.summary()
+```
+Note that many covariates are not significant anymore. In particular, `tax` is not
+significant! Try to understand why; the reason is explained in the previous exercise.
+
+# (c)
+
+We need to sort the univariate results from exercise (a) before plotting, as
+the covariates in exercise (b) are already sorted. To do this, we extract the
+relevant parameters. These are the slope parameters.
+
+```{python}
+uni_ = sorted([(cov, fit.params[1]) for cov, fit in fits.items()])
+pp.pprint(uni_)
+```
+To plot the parameter values we must remove the covariate names from the list. (Or turn our data into a data frame; there are many ways to solve this exercise.)
+
+```{python}
+uni = [x for i,x in uni_]
+```
+
+The $y$-axis are the non-intercept parameters from `fit`.
+```{python}
+multi = fit.params[1:]
+```
+
+```{python}
+plt.clf()
+plt.scatter(uni, multi)
+plt.show()
+```
+
+The parameters are widely different. This is to be expected. In general, whenever you add
+or remove parameters from a regression model, the parameters may fluctuate!
+
+The most extreme change occurs at the lower-right corner. Which covariate is this?
+One way to find out is to do the following:
+
+```{python}
+pp.pprint({cov: (x, y) for (cov, x), y in zip(uni_, multi)})
+
+```
+
+The variable with the largest change is `nox`.
+
+#### (d) 
+
+This is a somewhat strange question. You know there is no-linearity from exercise (a). However, running a cubic regression can detect non-linearity in the following sense: If the data is non-linear (and $n$ is high enough), it is likely that a cubic regression will fit better than a non-linear regression AND that either the quadratic coefficient or the cubic coefficient will be significant. 
+
+To fit the cubic regression we should use f-strings. Look them up if you haven't seen them, they are very useful. 
+
+We make the fits as we did in exercise (a).
+```{python}
+formula = lambda x: f"crim ~ {x} + I({x}**2) + I({x}**3)"
+fits_cubic = {cov: smf.ols(formula(cov), boston).fit() for cov in covariates}
+```
+
+Now we print the p-values for the quadratic and cubic coeffients:
+```{python}
+pp.pprint([(cov, fit.pvalues[2].round(3), fit.pvalues[3].round(3)) for cov, fit in fits_cubic.items()])
+```
+
+Observe that most covariates have significant quadratic or cubic coefficients. However, `tax` and `rad` do not. This demonstrates that the method of using cubic regression is not sufficient to uncover non-linearity.
+
+Which of the models would benefit from using cubic regressions? One way to find out is to compare the $R^2$s of both models. 
+
+```{python}
+pp.pprint({cov: (fit.rsquared_adj - fit_c.rsquared_adj).round(3) for (cov, fit), fit_c in zip(fits.items(), fits_cubic.values())})
+```
+
+The difference is negative if the cubic is best, positive if not. Now we find that the cubic model works better for every model except `chas`, though only marginally so (the only covariates with a decent difference are `dis`, `medv`, and `nox`).

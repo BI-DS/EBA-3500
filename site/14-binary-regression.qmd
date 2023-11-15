@@ -16,7 +16,7 @@ This page is ***not finished***, but might contain notes from the course develop
 #### From the book
 * 3.8.15, 3.8.16 (use only logistic regression)
 
-#### Exercise
+#### Exercise 1
 ##### Download data
 
 Load the data set at `https://userpage.fu-berlin.de/soga/200/2010_data_sets/hurricanes.xlsx` into a data frame `hurricanes`. Make a `sns.pairplot` and look at the correlation matrix. For more information about the data, look at the link. Some of the correlations are extremely high. Why? (*Hint*: Be sure to remove columns that aren't numeric using [`drop`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop.html). You can use `df.corr()` to calculate the correlation matrix.)
@@ -32,3 +32,20 @@ Make a new column in `hurricanes` called `Type.new`. A value in this column equa
 ##### Finding other predictors
 
 Using the `Type.new` variable as a response, find other reasonable predictors and plot them. (*Hint:* Can you use `hurricanes.corr()` for this?)
+
+#### Exercise 2
+
+```{python}
+import pandas as pd
+url = "https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv"
+bank = pd.read_csv(url)
+bank.head()
+```
+
+> The dataset comes from the UCI Machine Learning repository, and it is related to direct marketing campaigns (phone calls) of a Portuguese banking institution. The classification goal is to predict whether the client will subscribe (1/0) to a term deposit (variable y). The dataset can be downloaded from here. [*Source*](https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8).
+
+See the linked page for a description of the data set. We are interested in prediction the value `y`.
+
+1.  Fit the model `"y ~ job + marital"` to the data using the logistic model. How can you interpret the parameters?
+2.  Fit the models `"y ~ job"` and `"y ~ job + marital"`. Which do you prefer?
+3.  Fit at least 5 other models and select the best one. M
