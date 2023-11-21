@@ -5,13 +5,14 @@ project:
 book:
   title: "Data analysis with Programming"
   author: "Jonas Moss"
-  date: "8.31.2023"
+  date: "21.11.2023"
   search: false
   repo-url: https://github.com/bi-ds/EBA-3500/
   sidebar:
     style: floating
   chapters:
     - index.qmd
+    - site/00-videos.qmd
     - site/00-python-tips.qmd
     - site/01-scipy-numpy.qmd
     - site/02-statistical-simulation.qmd
