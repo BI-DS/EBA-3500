@@ -1,0 +1,27 @@
+# Links to videos {.unnumbered}
+
+[Lecture 1: Numpy](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%222de3ac64-7936-4821-9512-b064009a6e12%22)
+
+[Lecture 2: Random numbers](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2266475eb0-54ce-4bac-8800-b06b00e10a39%22)
+
+[Lecture 3: Partial means](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2272f25650-8673-4394-89d8-b0750152d729%22)
+
+[Lecture 4: Exploratory data analysis](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2213de677f-ead6-481d-bc5a-b07c0146ca66%22)
+
+[Lecture 5: Statistical models](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%22b4041d68-5a05-4fb4-85c3-b0840099d669%22)
+
+[Lecture 6: Mean squared error](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%22e16fd38f-5866-4ad9-a822-b08b00b1447a%22)
+
+[Lecture 7: Maximum likelihood](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%22c3bfbf10-ae3f-49d2-b49f-b092011128d2%22&view=1)
+
+[Lecture 8: Confidence intervals](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%224a576b6d-a240-4952-a869-b09900ac0be4%22)
+
+[Lecture 9: Hypothesis tests](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2287fb7494-3001-47ae-901e-b0a000c555fd%22)
+
+[Lecture 10: Statistical learning](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%221bb504f8-87f2-4692-a466-b0a700c7180a%22)
+
+[Lecture 11: Regression](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%22dc04574c-8093-4971-8860-b0ae00f42801%22)
+
+[Lecture 12: More regression](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2291a3dc8a-21dc-47c3-b204-b0b500ce676d%22)
+
+[Lecture 13: Binary regression](https://bi.cloud.panopto.eu/Panopto/Pages/Sessions/List.aspx#folderID=%2277a9b80e-54c5-40f4-b168-b0bc00e81557%22)

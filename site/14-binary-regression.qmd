@@ -1,9 +1,5 @@
 # Binary regression
 
-::: callout-important
-This page is ***not finished***, but might contain notes from the course developers. The curriculum, exercises, and recommended resources listed on this page is subject to change.
-:::
-
 ## Curriculum
 * James et al., Chapters 4.1 - 4.3, 4.7.1 - 4.7.2
 
@@ -48,4 +44,4 @@ See the linked page for a description of the data set. We are interested in pred
 
 1.  Fit the model `"y ~ job + marital"` to the data using the logistic model. How can you interpret the parameters?
 2.  Fit the models `"y ~ job"` and `"y ~ job + marital"`. Which do you prefer?
-3.  Fit at least 5 other models and select the best one. M
+3.  Fit at least 5 other models and select the best one.
