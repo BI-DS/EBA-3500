@@ -18,7 +18,33 @@
 * 19.4a: Use simulations for this. Recall that an unbiased estimator has to be unbiased for all $n$.
 * 19.5: You need to figure out the expectation of $M_n$.
 
-## Chapter 20
+### Chapter 20
 * 20.5
 * 20.8 Calculate the variance of $T$!
 * 20.10
+
+## Some solutions
+### 19.4a
+We must use the geometric distribution here; we will check $p=0.3,0.9$ below, with $100000$ repetitions and $n=10$. You can find the distribution in the Numpy documentation.
+
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+means09 = rng.geometric(0.9, (100000, 10)).mean(axis=1)
+means03 = rng.geometric(0.3, (100000, 10)).mean(axis=1)
+(1/means09).mean()
+(1/means03).mean()
+```
+
+These estimators should be closer to their true values if the estimators are unbiased. It's especially clear when $p=0.3$.
+
+### 20.5
+Both estimators have the same variance, hence $$\textrm{Cor}(U,V) = \frac{\textrm(Cov)(U,V)}{\textrm{sd}(U)\textrm{sd}V} = \frac{\textrm(Cov)(U,V)}{\textrm{Var}(U)}.$$
+Moreover, the variance of a sum equals $\textrm{Var}(U+V) = \textrm{Var}(U) + \textrm{Var}(V) + 2\textrm{Cov}(U,V)$. It follows from $\textrm{Var}(aX) = a^2\textrm{Var}(X)$ and equality of variances that
+$$\textrm{Var}(0.5(U+V)) = 0.5\textrm{Var}(U) +0.5\textrm{Cov}(U,V).$$
+
+Divide both sides by $\Var{U}$ to get the desired result.
+
+Why does the correlation equality imply that $U+V$ is better than $U$ and $V$? Because they are unbiased, the mean squared error depends only on the variances, thus $U+V$ is better than $U$ (and $V$) if and only if its variance is smaller than the $\textrm{Var}(U)$. But that happens if and only if the ratio $\frac{\textrm{Var}(U+V)}{\textrm{Var}(U)$ is less than one!
+
+The correlation is always between $-1$ and $1$, hence the right-hand side of the correlation equation in the book is always less than or equal to $1$, being equal to $1$ iff $U$ and $V$ have correlation equal to $1$ (which, since they are unbiased, means that they are equal). The best case scenario happens when their correlation is $-1$, where $U+V$ is infinitely better than $U$. 

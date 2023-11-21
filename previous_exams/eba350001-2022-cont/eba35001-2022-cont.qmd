@@ -1,0 +1,577 @@
+---
+title: "EBA35001 Fall 2022"
+subtitle: Take home exam
+author: Jonas Moss
+format:
+  pdf:
+    colorlinks: true
+editor: visual
+---
+
+# Introduction
+
+1.  Only show output that supports your argument. If you use Jupyter Notebooks, you may hide the output of a cell using a semi-colon `;`. We will deduct points from shoddily written reports plagued by noisy outputs.
+
+2.  Make your plots look nice. Add appropriate axis labels, legends and so on.
+
+3.  *"Brevity is the soul of wit."* Strive not to write too much. We prefer pithy to lengthy expositions.
+
+4.  The exercises are equally weighted. Every subexercise is equally scored, with a minimum score of 0 and a maximum of 2. Since there are 30 subexercises in total, you can get a maximum of 60 points.
+
+```{python}
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import statsmodels as sm
+import statsmodels.formula.api as smf
+```
+
+# 1 Binary regression
+
+We're using the [Wine quality](https://www.kaggle.com/datasets/rajyellow46/wine-quality) data set in this exercise. Take a look at the page for more information.
+
+## (a)
+
+### (i)
+
+Import the data set `winequalityN.csv` as `wine`. We want to use the data to deduce if a wine is acceptable, with acceptable defined as `quality > 5`. Define a column `acceptable` that contains `True`s when `quality > 5` and `False`s otherwise. We won't use `quality` anymore, so drop it from the table. Finally, drop all rows containing `NA`s.
+
+#### Solution
+
+```{python}
+wine = pd.read_csv("winequalityN.csv")
+wine["acceptable"] = wine.quality > 5
+wine = wine.drop(columns = "quality")
+wine = wine.dropna()
+```
+
+### (ii)
+
+Make a `pairplot` of the data. Take note of any patterns. (*Hint*: If `pairplot` is slow, you can use the `sample` method to reduce the data strain.)
+
+#### Solution
+
+```{python}
+#sns.pairplot(wine.sample(1000), hue = "acceptable", kind = "kde")
+#plt.show()
+```
+
+There are no bivariate patterns discernible from the data, but at least one univariate pattern, namely that the acceptable wines tend to have lower alcohol content. They also have higher "density".
+
+### (iii)
+
+Display the correlation matrix between the numerical values in the data. Then find the columns where the difference between the correlations for the bad wines and good wines is greater than $0.15$, along with both correlations. (*Hint:* You may need to iterate over all the column names and use a `set`.)
+
+#### Solution
+
+```{python}
+#wine.corr(numeric_only = True)
+```
+
+For the second part, first define
+
+```{python}
+good = wine[wine.acceptable].corr(numeric_only = True)
+bad = wine[wine.acceptable == False].corr(numeric_only = True)
+```
+
+Then find the indices where the difference is greater than $0.15$.
+
+```{python}
+indices = (good - bad).abs() > 0.15 
+
+names = wine.columns[range(1, 12)]
+
+```
+
+```{python}
+combs = set()
+names = wine.columns[range(1, 12)]
+for name1 in names:
+  index = 0
+  for name2 in names:
+    if indices[name1][index]:
+      combs.add((name1, name2, good[name1][index], bad[name1][index]))
+    index += 1
+combs
+```
+
+## (b)
+
+### (i)
+
+Run logistic regression model on all covariates with `acceptable` as response variable. Make a `significant` array containing all covariates that are significant at the $0.05$ level (along with their *p*-values) and a `not_significant` array containing the rest. Print those two arrays.
+
+#### Solution
+
+```{python}
+model = smf.logit("I(acceptable*1) ~ Q('fixed acidity') + Q('volatile acidity') + Q('citric acid') + Q('residual sugar') + chlorides + Q('free sulfur dioxide') + Q('total sulfur dioxide') + density + pH + sulphates + alcohol", data = wine).fit()
+```
+
+```{python}
+pvalues = model.pvalues
+significant = pvalues[pvalues <= 0.05]
+not_significant = pvalues[pvalues > 0.05]
+significant
+not_significant
+```
+
+### (ii)
+
+Fit a new regression model with the non-significant covariates removed, but keeping the intercept. Which model do you prefer?
+
+#### Solution
+
+We fit the model and look at the AIC.
+
+```{python}
+model2 = smf.logit("I(acceptable*1) ~ Q('volatile acidity') + Q('citric acid') + Q('residual sugar') + Q('free sulfur dioxide') + Q('total sulfur dioxide') + pH + sulphates + alcohol", data = wine).fit()
+model.aic
+model2.aic
+```
+
+The AIC of the second model is lower, so I prefer it.
+
+### (iii)
+
+Using the same two models as in (i) and (ii), change the link function from the logistic link to the Probit link, Cauchit link, and cloglog link. Report the AICs of the models in a table like this:
+
+|         | Logistic | Probit | Cauchit | Cloglog |
+|---------|----------|--------|---------|---------|
+| Model 1 |          |        |         |         |
+| Model 2 |          |        |         |         |
+
+(*Hint*: You need to take a good look at the documentation of the `glm` function of statsmodels. Also see the lecture notes.)
+
+#### Solution
+
+Skipped.
+
+## (c)
+
+### (i)
+
+The alcohol covariate appears to have a stronger influence than the other covariates. Fit three models using: (a) `log(alcohol + 1)`, (b) `alcohol**2`, (c) `log(alcohol + 1) + alcohol^2`, and report their AICs. Is any of the new models performing better than the others?
+
+#### Solution
+
+```{python}
+model3 = smf.logit("I(acceptable*1) ~ Q('volatile acidity') + Q('citric acid') + Q('residual sugar') + Q('free sulfur dioxide') + Q('total sulfur dioxide') + pH + sulphates + alcohol + I(np.log(1 + alcohol))", data = wine).fit()
+model4 = smf.logit("I(acceptable*1) ~ Q('volatile acidity') + Q('citric acid') + Q('residual sugar') + Q('free sulfur dioxide') + Q('total sulfur dioxide') + pH + sulphates + alcohol + I(alcohol**2)", data = wine).fit()
+model5 = smf.logit("I(acceptable*1) ~ Q('volatile acidity') + Q('citric acid') + Q('residual sugar') + Q('free sulfur dioxide') + Q('total sulfur dioxide') + pH + sulphates + alcohol+ I(np.log(1 + alcohol)) + I(alcohol**2)", data = wine).fit()
+model.aic
+model2.aic
+model3.aic
+model4.aic
+model5.aic
+```
+
+We see that the model with both the log term and the quadratic term performs better.
+
+### (ii)
+
+Fit at least five additional models and report their results in a table containing the formula and the resulting AIC, plus potentially more information. Pick your favorite among these.
+
+#### Solution
+
+Skipped.
+
+### (iii)
+
+Make a receiver operating characterstic curve for your favorite model. Explain what it means.
+
+#### Solution
+
+```{python}
+from sklearn import metrics
+
+fpr, tpr, _ = metrics.roc_curve(wine.acceptable,  model5.predict(wine))
+plt.clf()
+plt.plot(fpr,tpr)
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.show()
+```
+
+### (iv)
+
+Calculate the AUC for the models you tested in exercise (iii).
+
+#### Solution
+
+Skipped.
+
+# 2 Linear regression
+
+We use the [student performance prediction](https://www.kaggle.com/datasets/rkiattisak/student-performance-in-mathematics), available in the `exams.csv` file. See the page for more information about this data set.
+
+## (a)
+
+### (i)
+
+Import the exams file into the variable `exams`. It is well-known that general intelligence encompasses both math skill and literary skill. Display the correlation matrix between math skill, literary skill, and writing skill.
+
+#### Solution
+
+```{python}
+exams.corr()
+```
+
+### (ii)
+
+Are the correlations in the previous exercise individually significantly different from $0$? You can use any valid method to figure this out, but you might want to use linear regression. Don't use the summary method to display the *p*-values, as it takes too much space. (*Hint:* Remember to use the `Q` function to access columns with spaces inside.)
+
+#### Solution
+
+Use linear regression as follows:
+
+```{python}
+smf.ols("Q('math score') ~ Q('writing score')", data = exams).fit().pvalues[1]
+```
+
+```{python}
+smf.ols("Q('math score') ~ Q('reading score')", data = exams).fit().pvalues[1]
+```
+
+```{python}
+smf.ols("Q('reading score') ~ Q('writing score')", data = exams).fit().pvalues[1]
+```
+
+### (iii)
+
+Find the optimal linear combination of `writing score` and `reading score` to predict `math score`. What is the correlation between `math score` and this optimal linear combination? Recall that a linear combination is on the form `a + b * writing score + c * reading score`.
+
+#### Solution
+
+Make a fit model.
+
+```{python}
+fit = smf.ols("Q('math score') ~ Q('writing score') + Q('reading score')", data = exams).fit()
+```
+
+The parameters of this optimal combination are
+
+```{python}
+fit.params
+```
+
+And the correlation is the square root of the $R^2$, i.e.,
+
+```{python}
+np.sqrt(fit.rsquared)
+```
+
+The correlation is positive since the coefficients of `writing score` and `reading score` as positive.
+
+## (b)
+
+### (i)
+
+Display the distinct categories in every column that contains only categorical values.
+
+#### Solution
+
+```{python}
+exams.gender.unique()
+exams["race/ethnicity"].unique()
+exams["parental level of education"].unique()
+exams["test preparation course"].unique()
+```
+
+### (ii)
+
+Fit a regression model on `math score` using all covariates except `writing skill` and `reading skill`. Show its summary table. Should you report the adjusted $R^2$ or the ordinary $R^2$ for this model?
+
+#### Solution
+
+You should report the adjusted $R^2$, as the model contains many covariates.
+
+```{python}
+smf.ols("Q('math score') ~ gender + Q('race/ethnicity') + Q('parental level of education') + Q('test preparation course')", data = exams).fit().summary()
+```
+
+### (iii)
+
+From the output above it looks like the results are roughly linear in level of education of the parents. Add a new column (called `education numeric`) to the data where the level of education is numeric, i.e., `some high school` is mapped to $1$, `high school` to $2$, and so on. (*Hint*: Google `pandas replace`.) Run a linear regression using `education numeric` instead of `parental level of education`. Would you prefer to use this model or the last model?
+
+#### Solution
+
+Use `replace` to make a new column.
+
+```{python}
+exams['education numeric'] = exams['parental level of education'].replace(['some high school', 'high school', 'some college', "associate's degree","bachelor's degree", "master's degree"],[1, 2, 3, 4, 5, 6])
+```
+
+Then run a linear regression.
+
+```{python}
+smf.ols("Q('math score') ~ gender + Q('race/ethnicity') + Q('education numeric') + Q('test preparation course')", data = exams).fit().summary()
+```
+
+I would prefer to use this model, as the adjusted $R^2$s are equal, and this one is simpler. But any reasonable answer is OK here.
+
+## (c)
+
+### (i)
+
+Run the model `Q('writing score') ~ gender + Q('race/ethnicity')` and display its parameter estimates. What is the interpretation of `gender[T.male]` and `Q('race/ethnicity')[T.group E]`?
+
+#### Solution
+
+```{python}
+fit = smf.ols("Q('writing score') ~ gender + Q('race/ethnicity')", data = exams).fit()
+```
+
+### (ii)
+
+Referring to the model in (i), we would like to check if it is possible to do a similar trick as we did for level of education, linearizing the categories. Plot the estimated values for `Q('race/ethnicity')` (in the appropriate order) against `[0, 1, 2, 3, 4]` and see if there is a pattern.
+
+#### Solution
+
+```{python}
+x = [0] + fit.params[[2, 3, 4, 5]].tolist()
+plt.clf()
+plt.plot([0, 1, 2, 3, 4], x)
+plt.show()
+```
+
+### (iii)
+
+Fit a suitable function to the data obtained in the previous exercise. Make the plot of the function and evaluate its fit to the data.
+
+#### Solution
+
+We use a quadratic function.
+
+```{python}
+dat = pd.DataFrame({"y": x, "x": [0, 1, 2, 3, 4]})
+mod = smf.ols("y ~ x + I(x**2)", data = dat).fit()
+```
+
+We can plot it as follows:
+
+```{python}
+z = np.linspace(0, 4, 100)
+x = [0] + fit.params[[2, 3, 4, 5]].tolist()
+plt.clf()
+plt.plot([0, 1, 2, 3, 4], x)
+plt.plot(z, mod.predict(pd.DataFrame({"x": z})))
+plt.show()
+```
+
+This looks like a very decent fit.
+
+### (iv)
+
+Replace the categorical values of `race/ethnicity` with the predicted values in a column `race numeric` (use the values found in the previous exercise).Run the regression in (i) again, but with `race numeric` instead of `race/ethnicity`. Which model do you prefer?
+
+#### Solution
+
+And replace the values
+
+```{python}
+exams["race numeric"] = exams["race/ethnicity"].replace(["group A", "group B", "group C", "group D", "group E"],[0,1,2,3,4])
+exams
+```
+
+We can run the regressions:
+
+```{python}
+fit1 = smf.ols("Q('writing score') ~ gender + Q('race/ethnicity')", data = exams).fit()
+fit2 = smf.ols("Q('writing score') ~ gender + Q('race numeric')", data = exams).fit()
+fit1.aic
+fit2.aic
+
+```
+
+The AIC is much lower for the first model, so I prefer that one. \# 3 Simulations
+
+# 3 Simulations
+
+## (a)
+
+The central limit theorem states that $\sqrt{n}(\overline{X}_n - \mu) / \sigma \to N(0,1)$ when $X_1,X_2,\ldots,X_n$ are iid with mean $\mu$ and standard deviation $\sigma$, and the empirical mean is $\overline{X}_n = (\sum_{i=1}^n X_i) / n$ and $N(0,1)$ is the standard normal. It's often interesting to see how quick the convergence is; we'll explore that in this problem.
+
+### (i)
+
+Make a function `simmean(n, model, n_reps = 10000)`. It simulates `n_reps` times $n$ observations from the random number generator `model` and calculates its empirical mean and empirical standard deviation. Make a histogram (with densities, not counts) of the simulations when the model is the function `np.random.default_rng(seed = 313).exponential(1, dim)`
+
+#### Solution
+
+```{python}
+def simmean(n, model, n_reps = 10000):
+  x = model((n, n_reps))
+  return x.mean(axis = 0)
+
+plt.clf()
+plt.hist(simmean(100, lambda dim: np.random.default_rng(seed = 313).exponential(1, dim)), density = True)
+plt.show()
+```
+
+### (ii)
+
+Make a function `simclt` that extends to function above with `mu` and `sigma`, and returns samples from $\sqrt{n}(\overline{X}_n - \mu) / \sigma$. Make a (density) histogram for the same input as above, and overlay a standard normal on top of the plot.
+
+#### Solution
+
+```{python}
+from scipy.stats import norm
+def simclt(n, model, mu, sigma, n_reps = 10000):
+  x = model((n, n_reps))
+  return (x.mean(axis = 0) - mu) * np.sqrt(n) / sigma
+
+plt.clf()
+plt.hist(simclt(100, lambda dim: np.random.default_rng(seed = 313).exponential(1, dim), mu = 1, sigma = 1), density = True)
+x = np.linspace(-4, 4, 100)
+plt.plot(x, norm.pdf(x, 0, 1))
+plt.show()
+
+```
+
+### (iii)
+
+Make similar plots for the Pareto distribution with parameter $b=3$ (following the Scipy convention) for $n=10, n=100, n=1000$, and extend the exponential analysis to $n=10$ and $n=1000$. Comment on the results. You need to figure out the mean and standard deviation for the Pareto yourself. (*Hint:* See the Scipy documentation and wikipedia. Observe that `Numpy` shifts the Pareto distribution towards `0`; see the Numpy docs for details.)
+
+#### Solution
+
+We see that the CLT kick in slower for Pareto than the exponential.
+
+```{python}
+plt.clf()
+plt.hist(simclt(10, lambda dim: np.random.default_rng(seed = 313).exponential(1, dim), mu = 1, sigma = 1), density = True)
+plt.hist(simclt(100, lambda dim: np.random.default_rng(seed = 313).exponential(1, dim), mu = 1, sigma = 1), density = True)
+plt.hist(simclt(1000, lambda dim: np.random.default_rng(seed = 313).exponential(1, dim), mu = 1, sigma = 1), density = True)
+x = np.linspace(-4, 4, 100)
+plt.plot(x, norm.pdf(x, 0, 1))
+plt.show()
+
+from scipy.stats import pareto
+b = 3
+mu = b / (b - 1) - 1
+sigma = np.sqrt(b / ((b - 1)**2 * (b - 2)))
+
+
+plt.clf()
+rng = np.random.default_rng(seed = 313)
+plt.hist(simclt(10, lambda dim: rng.pareto(b, dim), mu = mu, sigma = sigma), density = True)
+plt.hist(simclt(100, lambda dim: rng.pareto(b, dim), mu = mu, sigma = sigma), density = True)
+plt.hist(simclt(1000, lambda dim: rng.pareto(b, dim), mu = mu, sigma = sigma), density = True)
+x = np.linspace(-4, 4, 100)
+plt.plot(x, norm.pdf(x, 0, 1))
+plt.show()
+
+```
+
+## (b)
+
+### (i)
+
+Make a function `simmax` that simulates $n$ observations from a standard exponential distribution and finds the maximum of the observations. It must take an `rng` as input. Use it to simulate the maximum of $n = 1000$ exponentials when `rng = np.random.default_rng(seed = 313)`.
+
+#### Solution
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+def simmax(n, rng):
+  return rng.exponential(1, 1000).max()
+
+simmax(1000, rng)
+```
+
+### (ii)
+
+Extend the function above to `simmaxs`, a function that take an `n_reps = 10,000` argument in addition to `n` and `rng`. It should return a Numpy array with `n_reps` independent simulations of the maximum. Make a histogram of "maxima-$\log(n)$", where $n = 100$ and `n_reps = 10,000`. Make sure the histogram displays the density of the maxima, not the frequency count.
+
+#### Solution
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+def simmaxs(n, rng, n_reps = 10000):
+  return rng.exponential(1, (n_reps, n)).max(axis = 1)
+
+plt.clf()
+plt.hist(simmaxs(100, rng) - np.log(100), density = True)
+plt.show()
+```
+
+### (iii)
+
+Plot the standard Gumbel distribution on top of the histogram. It is part of Scipy, called `gumbel_r`. Make similar plots for $n=1000$ and $n=10000$. What do you see?
+
+#### Solution
+
+```{python}
+import scipy.stats as stats
+x = np.linspace(-10, 20, 100)
+plt.plot(x, stats.gumbel_r.pdf(x))
+plt.hist(simmaxs(1000, rng) - np.log(1000), density = True )
+plt.hist(simmaxs(10000, rng) - np.log(10000), density = True )
+plt.show()
+
+```
+
+It appears that the maxima converges to a standard Gumbel as $n\to\infty$.
+
+## (c)
+
+### (i)
+
+For a total of `n_reps = 10,000` times, draw $n=100$ samples from the standard Cauchy distribution (`standard_t` with degrees of freedom equal to $1$) and calculate the mean over these $100$ values. Then make a histogram of its mean. Make sure the histogram shows a density, not the frequency of counts, give it `100` bins, and restrict it to the range `(-50, 50)`.
+
+#### Solution
+
+```{python}
+n = 100
+n_reps = 10000
+rng = np.random.default_rng(seed = 313)
+x = rng.standard_t(1, (n_reps, n))
+sims = x.mean(axis = 1)
+plt.clf()
+plt.hist(sims, range = (-50, 50), bins = 100, density = True)
+plt.show()
+sims
+```
+
+### (ii)
+
+Generalize the previous exercise by making a function taking `n` and `n_reps = 10000` as arguments, returning the simulated values. Make three histograms for `n=10`, `n=100` and `n=10,000`. What do you see?
+
+#### Solution
+
+```{python}
+rng = np.random.default_rng(seed = 313)
+def simfun(n, rng, n_reps = 10000):
+  x = rng.standard_t(1, (n_reps, n))
+  return x.mean(axis = 1)
+
+plt.clf()
+plt.hist(simfun(10, rng), range = (-50, 50), bins = 100, density = True)
+plt.hist(simfun(100, rng), range = (-50, 50), bins = 100, density = True)
+plt.hist(simfun(1000, rng), range = (-50, 50), bins = 100, density = True)
+plt.show()
+sims
+```
+
+All histograms are roughly equal!
+
+### (iii)
+
+Add a curve for the standard Cauchy distribution to the histograms of the last exercise. What do you see? (*Hint:* Use `Scipy`.)
+
+#### Solution
+
+```{python}
+from scipy.stats import cauchy
+x = np.linspace(-50, 50, 1000)
+plt.plot(x, cauchy.pdf(x))
+plt.show()
+```
+
+### (iv)
+
+Does the central limit theorem hold for a sequence of iid Cauchy random variables? Why or why not? Demonstrate using a suitable simulation.
+
+#### Solution
+
+No, it does not hold. You can see that by observing the previous simulation "stabilized" when dividing by `n`. If you divide by $\sqrt{n}$, the histogram will explode, taking on larger and larger values as $n$ increases.

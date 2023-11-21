@@ -5,7 +5,7 @@ project:
 book:
   title: "Data analysis with Programming"
   author: "Jonas Moss"
-  date: "21.11.2023"
+  date: "11.21.2023"
   search: false
   repo-url: https://github.com/bi-ds/EBA-3500/
   sidebar:

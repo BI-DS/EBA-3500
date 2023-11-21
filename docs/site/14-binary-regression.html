@@ -233,6 +233,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#conceptual-exercises" id="toc-conceptual-exercises" class="nav-link" data-scroll-target="#conceptual-exercises"><span class="header-section-number">13.2.1</span> Conceptual exercises</a></li>
   <li><a href="#applied-exercises" id="toc-applied-exercises" class="nav-link" data-scroll-target="#applied-exercises"><span class="header-section-number">13.2.2</span> Applied exercises</a></li>
   </ul></li>
+  <li><a href="#solution-sketches-to-some-exercises" id="toc-solution-sketches-to-some-exercises" class="nav-link" data-scroll-target="#solution-sketches-to-some-exercises"><span class="header-section-number">13.3</span> Solution sketches to some exercises</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">13.3.1</span> 4.4.6</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">13.3.2</span> 4.4.6</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">13.3.3</span> 4.4.16</a></li>
+  <li><a href="#exercise-1-1" id="toc-exercise-1-1" class="nav-link" data-scroll-target="#exercise-1-1"><span class="header-section-number">13.3.4</span> Exercise 1</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -275,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="from-the-book" class="level4" data-number="13.2.2.1">
 <h4 data-number="13.2.2.1" class="anchored" data-anchor-id="from-the-book"><span class="header-section-number">13.2.2.1</span> From the book</h4>
 <ul>
-<li>3.8.15, 3.8.16 (use only logistic regression)</li>
+<li>4.8.15, 4.8.16 (use only logistic regression)</li>
 </ul>
 </section>
 <section id="exercise-1" class="level4" data-number="13.2.2.2">
@@ -299,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exercise-2" class="level4" data-number="13.2.2.3">
 <h4 data-number="13.2.2.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">13.2.2.3</span> Exercise 2</h4>
-<div class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bank <span class="op">=</span> pd.read_csv(url)</span>
@@ -472,9 +479,417 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Fit the models <code>"y ~ job"</code> and <code>"y ~ job + marital"</code>. Which do you prefer?</li>
 <li>Fit at least 5 other models and select the best one.</li>
 </ol>
-
-
 </section>
+</section>
+</section>
+<section id="solution-sketches-to-some-exercises" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="solution-sketches-to-some-exercises"><span class="header-section-number">13.3</span> Solution sketches to some exercises</h2>
+<section id="section" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">13.3.1</span> 4.4.6</h3>
+<ol type="a">
+<li>Use the function <span class="math inline">\(f(x) = \frac{e^{\beta^Tx}}{1+e^{\beta^Tx}}\)</span> and plug in the values of <span class="math inline">\(\beta\)</span>.</li>
+</ol>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>betas <span class="op">=</span> [<span class="op">-</span><span class="dv">6</span>, <span class="fl">0.05</span>, <span class="dv">1</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.exp(betas[<span class="dv">0</span>] <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">*</span> betas[<span class="dv">1</span>] <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">*</span> betas[<span class="dv">2</span>]) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(betas[<span class="dv">0</span>] <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">*</span> betas[<span class="dv">1</span>] <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">*</span> betas[<span class="dv">2</span>]))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>f([<span class="dv">40</span>, <span class="fl">3.5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>0.37754066879814546</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Use the expression <span class="math inline">\(\log(p/(1-p)) = \beta^Tx\)</span>, where <span class="math inline">\(p=P(Y=1\mid beta)\)</span>. We know the values of <span class="math inline">\(\beta\)</span>, <span class="math inline">\(p=0.5\)</span> and <span class="math inline">\(x_2 = 3.5\)</span>. Since <span class="math inline">\(\log(0.5/0.5) = 0\)</span>, we get <span class="math display">\[0 = -6 + 0.05 x_1 + 3.5\]</span>. Solving for <span class="math inline">\(x_1\)</span>, we find <span class="math inline">\(x_1 = (6-3.5)/0.05 = 50\)</span>.</li>
+</ol>
+</section>
+<section id="section-1" class="level3" data-number="13.3.2">
+<h3 data-number="13.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">13.3.2</span> 4.4.6</h3>
+<ol type="a">
+<li><p>Remember that <span class="math inline">\(odds=p/(1-p)\)</span>. Solving for odds, we find that <span class="math inline">\(odds(1-p) = p\)</span> which implies <span class="math inline">\(odds = (1+odds)p\)</span>, hence <span class="math inline">\(p=odds/(1+odds)\)</span>.</p></li>
+<li><p>The probability can be plugged directly into the expression <span class="math inline">\(odds = p/(1-p)\)</span>.</p></li>
+</ol>
+</section>
+<section id="section-2" class="level3" data-number="13.3.3">
+<h3 data-number="13.3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">13.3.3</span> 4.4.16</h3>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>boston <span class="op">=</span> pd.read_csv(<span class="st">"Boston.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>boston.info()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>boston[<span class="st">"crime_new"</span>] <span class="op">=</span> <span class="dv">1</span> <span class="op">*</span> (boston.crim <span class="op">&gt;=</span> np.median(boston.crim))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>boston.corr().crime_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 506 entries, 0 to 505
+Data columns (total 14 columns):
+ #   Column      Non-Null Count  Dtype  
+---  ------      --------------  -----  
+ 0   Unnamed: 0  506 non-null    int64  
+ 1   crim        506 non-null    float64
+ 2   zn          506 non-null    float64
+ 3   indus       506 non-null    float64
+ 4   chas        506 non-null    int64  
+ 5   nox         506 non-null    float64
+ 6   rm          506 non-null    float64
+ 7   age         506 non-null    float64
+ 8   dis         506 non-null    float64
+ 9   rad         506 non-null    int64  
+ 10  tax         506 non-null    int64  
+ 11  ptratio     506 non-null    float64
+ 12  lstat       506 non-null    float64
+ 13  medv        506 non-null    float64
+dtypes: float64(10), int64(4)
+memory usage: 55.5 KB</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>Unnamed: 0    0.369430
+crim          0.409395
+zn           -0.436151
+indus         0.603260
+chas          0.070097
+nox           0.723235
+rm           -0.156372
+age           0.613940
+dis          -0.616342
+rad           0.619786
+tax           0.608741
+ptratio       0.253568
+lstat         0.453263
+medv         -0.263017
+crime_new     1.000000
+Name: crime_new, dtype: float64</code></pre>
+</div>
+</div>
+<p>Observe which variables are highly correlation with crime_new. Let’s try four of the highest.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + dis + tax + indus"</span>, data <span class="op">=</span> boston).fit().summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.302879
+         Iterations 8</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Logit Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>crime_new</td>
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>506</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>Logit</td>
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>501</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>MLE</td>
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 21 Nov 2023</td>
+<td data-quarto-table-cell-role="th">Pseudo R-squ.:</td>
+<td>0.5630</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>13:48:41</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-153.26</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">converged:</td>
+<td>True</td>
+<td data-quarto-table-cell-role="th">LL-Null:</td>
+<td>-350.73</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th">LLR p-value:</td>
+<td>3.429e-84</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">z</td>
+<td data-quarto-table-cell-role="th">P&gt;|z|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>-19.9814</td>
+<td>2.810</td>
+<td>-7.112</td>
+<td>0.000</td>
+<td>-25.488</td>
+<td>-14.475</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">nox</td>
+<td>36.0183</td>
+<td>5.110</td>
+<td>7.049</td>
+<td>0.000</td>
+<td>26.003</td>
+<td>46.033</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">dis</td>
+<td>0.1090</td>
+<td>0.130</td>
+<td>0.837</td>
+<td>0.402</td>
+<td>-0.146</td>
+<td>0.364</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">tax</td>
+<td>0.0037</td>
+<td>0.001</td>
+<td>2.692</td>
+<td>0.007</td>
+<td>0.001</td>
+<td>0.006</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">indus</td>
+<td>-0.1046</td>
+<td>0.038</td>
+<td>-2.785</td>
+<td>0.005</td>
+<td>-0.178</td>
+<td>-0.031</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Observe that <code>dis</code> is not significant, so let’s try to fit a model without it and choose using the AIC (remember that the smaller the AIC the better).</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + dis + tax + indus"</span>, data <span class="op">=</span> boston).fit().aic</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + tax + indus"</span>, data <span class="op">=</span> boston).fit().aic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.302879
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.303562
+         Iterations 8</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>315.20515267105964</code></pre>
+</div>
+</div>
+<p>The model without <code>dis</code> has a smaller AIC and is prefered.</p>
+</section>
+<section id="exercise-1-1" class="level3" data-number="13.3.4">
+<h3 data-number="13.3.4" class="anchored" data-anchor-id="exercise-1-1"><span class="header-section-number">13.3.4</span> Exercise 1</h3>
+<p>The following code</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load the data set, but remove unwanted covariates.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hurr <span class="op">=</span> pd.read_excel(<span class="st">"hurricanes.xlsx"</span>).drop([<span class="st">"RowNames"</span>, <span class="st">"Number"</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Change some Pandas settings for visualization purposes; you can also make heat maps.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">500</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="dv">500</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="dv">1000</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>hurr.drop(<span class="st">"Name"</span>, axis <span class="op">=</span> <span class="dv">1</span>).corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">FirstLat</th>
+<th data-quarto-table-cell-role="th">FirstLon</th>
+<th data-quarto-table-cell-role="th">MaxLat</th>
+<th data-quarto-table-cell-role="th">MaxLon</th>
+<th data-quarto-table-cell-role="th">LastLat</th>
+<th data-quarto-table-cell-role="th">LastLon</th>
+<th data-quarto-table-cell-role="th">MaxInt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Year</td>
+<td>1.000000</td>
+<td>0.194502</td>
+<td>0.061686</td>
+<td>0.146470</td>
+<td>0.036905</td>
+<td>0.203846</td>
+<td>0.023999</td>
+<td>0.112338</td>
+<td>-0.108181</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Type</td>
+<td>0.194502</td>
+<td>1.000000</td>
+<td>0.662654</td>
+<td>-0.067350</td>
+<td>0.525167</td>
+<td>0.154305</td>
+<td>0.159709</td>
+<td>0.153903</td>
+<td>-0.413241</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">FirstLat</td>
+<td>0.061686</td>
+<td>0.662654</td>
+<td>1.000000</td>
+<td>-0.136393</td>
+<td>0.854849</td>
+<td>0.163005</td>
+<td>0.369432</td>
+<td>0.216586</td>
+<td>-0.530203</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">FirstLon</td>
+<td>0.146470</td>
+<td>-0.067350</td>
+<td>-0.136393</td>
+<td>1.000000</td>
+<td>0.018821</td>
+<td>0.849398</td>
+<td>0.450712</td>
+<td>0.712697</td>
+<td>0.133285</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MaxLat</td>
+<td>0.036905</td>
+<td>0.525167</td>
+<td>0.854849</td>
+<td>0.018821</td>
+<td>1.000000</td>
+<td>0.223451</td>
+<td>0.604356</td>
+<td>0.351265</td>
+<td>-0.295264</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MaxLon</td>
+<td>0.203846</td>
+<td>0.154305</td>
+<td>0.163005</td>
+<td>0.849398</td>
+<td>0.223451</td>
+<td>1.000000</td>
+<td>0.477417</td>
+<td>0.849161</td>
+<td>-0.158521</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">LastLat</td>
+<td>0.023999</td>
+<td>0.159709</td>
+<td>0.369432</td>
+<td>0.450712</td>
+<td>0.604356</td>
+<td>0.477417</td>
+<td>1.000000</td>
+<td>0.669348</td>
+<td>0.071727</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">LastLon</td>
+<td>0.112338</td>
+<td>0.153903</td>
+<td>0.216586</td>
+<td>0.712697</td>
+<td>0.351265</td>
+<td>0.849161</td>
+<td>0.669348</td>
+<td>1.000000</td>
+<td>-0.156770</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MaxInt</td>
+<td>-0.108181</td>
+<td>-0.413241</td>
+<td>-0.530203</td>
+<td>0.133285</td>
+<td>-0.295264</td>
+<td>-0.158521</td>
+<td>0.071727</td>
+<td>-0.156770</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The <code>lmplot</code> function is handy for quick plotting of linear regression and logistic regression functions.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hurr[<span class="st">"Type_new"</span>] <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">*</span> (hurr[<span class="st">"Type"</span>] <span class="op">==</span> <span class="dv">0</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(hurr, x <span class="op">=</span> <span class="st">"FirstLat"</span>, y <span class="op">=</span> <span class="st">"Type_new"</span>, logistic <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="14-binary-regression_files/figure-html/cell-10-output-1.png" width="470" height="470"></p>
+</div>
+</div>
+<p>Fit some models and look at the AIC. Remember, the lower the AIC the better.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>smf.probit(<span class="st">"Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>smf.probit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.328329
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.336899
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.307908
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.307705
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.307814
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.308249
+         Iterations 7</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>219.75953818954733</code></pre>
+</div>
+</div>
+
+
 </section>
 </section>
 

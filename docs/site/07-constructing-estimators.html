@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -51,6 +85,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -193,7 +229,16 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#core-readings" id="toc-core-readings" class="nav-link" data-scroll-target="#core-readings"><span class="header-section-number">7.1.1</span> Core readings</a></li>
   </ul></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.2</span> Exercises</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">7.2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#maximum-likelihood." id="toc-maximum-likelihood." class="nav-link" data-scroll-target="#maximum-likelihood."><span class="header-section-number">7.2.1</span> Maximum likelihood.</a></li>
+  <li><a href="#least-squares." id="toc-least-squares." class="nav-link" data-scroll-target="#least-squares."><span class="header-section-number">7.2.2</span> Least squares.</a></li>
+  </ul></li>
+  <li><a href="#some-solutions" id="toc-some-solutions" class="nav-link" data-scroll-target="#some-solutions"><span class="header-section-number">7.3</span> Some solutions</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">7.3.1</span> 21.4</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">7.3.2</span> 21.6</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -242,8 +287,8 @@ Note
 </section>
 <section id="exercises" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">7.2</span> Exercises</h2>
-<section id="maximum-likelihood." class="level4" data-number="7.2.0.1">
-<h4 data-number="7.2.0.1" class="anchored" data-anchor-id="maximum-likelihood."><span class="header-section-number">7.2.0.1</span> Maximum likelihood.</h4>
+<section id="maximum-likelihood." class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="maximum-likelihood."><span class="header-section-number">7.2.1</span> Maximum likelihood.</h3>
 <ul>
 <li>21.4</li>
 <li>21.6</li>
@@ -252,14 +297,42 @@ Note
 <li>21.14</li>
 </ul>
 </section>
-<section id="least-squares." class="level4" data-number="7.2.0.2">
-<h4 data-number="7.2.0.2" class="anchored" data-anchor-id="least-squares."><span class="header-section-number">7.2.0.2</span> Least squares.</h4>
+<section id="least-squares." class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="least-squares."><span class="header-section-number">7.2.2</span> Least squares.</h3>
 <ul>
 <li>22.1</li>
 <li>22.2</li>
 <li>22.8</li>
 <li>22.12</li>
 </ul>
+</section>
+</section>
+<section id="some-solutions" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="some-solutions"><span class="header-section-number">7.3</span> Some solutions</h2>
+<section id="section" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">7.3.1</span> 21.4</h3>
+<ol type="a">
+<li><p>The PDF of the Poisson distribution is <span class="math inline">\(f(x;\mu) = e^\mu/x!\mu^x\)</span>. The product of <span class="math inline">\(n\)</span> such PDFs form the likelihood, which equals <span class="math display">\[\prod_{i=1}^n \frac{e^\mu}{x_i!}\mu^{x_i}=\frac{e^\mu}{x_1!x_2!\cdots x_n!}\mu^{x_1+x_2+\cdots+x_n}\]</span> by standard math rules.</p></li>
+<li><p>Take the logarithm and compute <span class="math display">\[l(\mu) = -n\mu - \log(x_1!x_2!\cdots x_n!) + \log(\mu)(x_1+x_2+\cdots+x_n).\]</span></p></li>
+<li><p>The maximum likelihood estimator of <span class="math inline">\(\mu\)</span> can be found by differentiation, <span class="math display">\[\frac{d}{d\mu}l(\mu) = -n - 1/\mu\cdot(x_1+x_2+\cdots+x_n).\]</span> Set the derivative to <span class="math inline">\(0\)</span> and solve to find <span class="math inline">\(\mu=\overline{x}\)</span>, the sample mean of the data. Then use the invariance principle, which says that the maximum likelihood estimator of <span class="math inline">\(g(\mu)\)</span> equals <span class="math inline">\(g(\hat{\mu}_{ML})\)</span> to find the maximum likelihood estimator of <span class="math inline">\(e^{-\mu} = e^{-\hat{\mu}_{ML}}\)</span>.</p></li>
+</ol>
+</section>
+<section id="section-1" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">7.3.2</span> 21.6</h3>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="fl">1.1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>,])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>delta <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>likelihood <span class="op">=</span> [(np.exp(<span class="op">-</span>(x<span class="op">-</span>d)) <span class="op">*</span> (d <span class="op">&lt;=</span> x)).prod() <span class="cf">for</span> d <span class="kw">in</span> delta]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>plt.plot(delta, likelihood)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="07-constructing-estimators_files/figure-html/cell-2-output-1.png" width="571" height="425"></p>
+</div>
+</div>
+<p>The peak of the likelihood is at <span class="math inline">\(1 = \min x\)</span>, which is the maximum likelihood estimator of <span class="math inline">\(\delta\)</span>. The derivation is similar to the derivation for the uniform distribution. The likelihood increases with <span class="math inline">\(\delta\)</span> until it heats the minimum, because <span class="math inline">\(\exp(-x\delta)\)</span> is increasing in <span class="math inline">\(\delta\)</span>. Once it crosses the minimum though, the component of the product corresponding to the minimum will be equal to <span class="math inline">\(0\)</span>, hence the likelihood is <span class="math inline">\(0\)</span> to the right of this point.</p>
 
 
 </section>

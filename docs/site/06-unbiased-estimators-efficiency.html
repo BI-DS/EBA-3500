@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -198,8 +232,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.2</span> Exercises</a>
   <ul class="collapse">
   <li><a href="#chapter-19" id="toc-chapter-19" class="nav-link" data-scroll-target="#chapter-19"><span class="header-section-number">6.2.1</span> Chapter 19</a></li>
+  <li><a href="#chapter-20" id="toc-chapter-20" class="nav-link" data-scroll-target="#chapter-20"><span class="header-section-number">6.2.2</span> Chapter 20</a></li>
   </ul></li>
-  <li><a href="#chapter-20" id="toc-chapter-20" class="nav-link" data-scroll-target="#chapter-20"><span class="header-section-number">6.3</span> Chapter 20</a></li>
+  <li><a href="#some-solutions" id="toc-some-solutions" class="nav-link" data-scroll-target="#some-solutions"><span class="header-section-number">6.3</span> Some solutions</a>
+  <ul class="collapse">
+  <li><a href="#a" id="toc-a" class="nav-link" data-scroll-target="#a"><span class="header-section-number">6.3.1</span> 19.4a</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">6.3.2</span> 20.5</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -258,16 +297,42 @@ Note
 <li>19.5: You need to figure out the expectation of <span class="math inline">\(M_n\)</span>.</li>
 </ul>
 </section>
-</section>
-<section id="chapter-20" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="chapter-20"><span class="header-section-number">6.3</span> Chapter 20</h2>
+<section id="chapter-20" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="chapter-20"><span class="header-section-number">6.2.2</span> Chapter 20</h3>
 <ul>
 <li>20.5</li>
 <li>20.8 Calculate the variance of <span class="math inline">\(T\)</span>!</li>
 <li>20.10</li>
 </ul>
+</section>
+</section>
+<section id="some-solutions" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="some-solutions"><span class="header-section-number">6.3</span> Some solutions</h2>
+<section id="a" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="a"><span class="header-section-number">6.3.1</span> 19.4a</h3>
+<p>We must use the geometric distribution here; we will check <span class="math inline">\(p=0.3,0.9\)</span> below, with <span class="math inline">\(100000\)</span> repetitions and <span class="math inline">\(n=10\)</span>. You can find the distribution in the Numpy documentation.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(seed<span class="op">=</span><span class="dv">313</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>means09 <span class="op">=</span> rng.geometric(<span class="fl">0.9</span>, (<span class="dv">100000</span>, <span class="dv">10</span>)).mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>means03 <span class="op">=</span> rng.geometric(<span class="fl">0.3</span>, (<span class="dv">100000</span>, <span class="dv">10</span>)).mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="op">/</span>means09).mean()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="op">/</span>means03).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>0.3217426510047664</code></pre>
+</div>
+</div>
+<p>These estimators should be closer to their true values if the estimators are unbiased. It’s especially clear when <span class="math inline">\(p=0.3\)</span>.</p>
+</section>
+<section id="section" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="section"><span class="header-section-number">6.3.2</span> 20.5</h3>
+<p>Both estimators have the same variance, hence <span class="math display">\[\textrm{Cor}(U,V) = \frac{\textrm(Cov)(U,V)}{\textrm{sd}(U)\textrm{sd}V} = \frac{\textrm(Cov)(U,V)}{\textrm{Var}(U)}.\]</span> Moreover, the variance of a sum equals <span class="math inline">\(\textrm{Var}(U+V) = \textrm{Var}(U) + \textrm{Var}(V) + 2\textrm{Cov}(U,V)\)</span>. It follows from <span class="math inline">\(\textrm{Var}(aX) = a^2\textrm{Var}(X)\)</span> and equality of variances that <span class="math display">\[\textrm{Var}(0.5(U+V)) = 0.5\textrm{Var}(U) +0.5\textrm{Cov}(U,V).\]</span></p>
+<p>Divide both sides by <span class="math inline">\(\Var{U}\)</span> to get the desired result.</p>
+<p>Why does the correlation equality imply that <span class="math inline">\(U+V\)</span> is better than <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span>? Because they are unbiased, the mean squared error depends only on the variances, thus <span class="math inline">\(U+V\)</span> is better than <span class="math inline">\(U\)</span> (and <span class="math inline">\(V\)</span>) if and only if its variance is smaller than the <span class="math inline">\(\textrm{Var}(U)\)</span>. But that happens if and only if the ratio <span class="math inline">\(\frac{\textrm{Var}(U+V)}{\textrm{Var}(U)\)</span> is less than one!</p>
+<p>The correlation is always between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>, hence the right-hand side of the correlation equation in the book is always less than or equal to <span class="math inline">\(1\)</span>, being equal to <span class="math inline">\(1\)</span> iff <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> have correlation equal to <span class="math inline">\(1\)</span> (which, since they are unbiased, means that they are equal). The best case scenario happens when their correlation is <span class="math inline">\(-1\)</span>, where <span class="math inline">\(U+V\)</span> is infinitely better than <span class="math inline">\(U\)</span>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -148,3 +148,40 @@ Hoekstra, R., Morey, R. D., Rouder, J. N., & Wagenmakers, E.-J. (2014). Robust m
 ## Additional resources
 Dekking et al., Chapter 24 covers confidence intervals for different quantities than
 the mean. This chapter is not part of the curriculum but is still worth reading.
+
+
+## Some solutions
+###  23.1
+Use the formula for the $Z$-interval since the data is normal with known standard deviation
+```{python}
+x_bar = 753
+n = 16
+sd = 5
+(x_bar - 1.96 * sd/np.sqrt(n), x_bar + 1.96 * sd/np.sqrt(n))
+```
+
+### 23.2
+Here the standard deviation is unknown, so we must use the *t*-interval. It's not guaranteed to work very well, since we don't know if the data is normal. Since it is a $98\%$ confidence interval, we need a limit of $1-0.02/2=0.99$.
+```{python}
+import scipy.stats as st
+x_bar = 3.54
+n = 34
+s = 0.13
+tt = st.t.ppf(0.99, df = 34-1)
+(x_bar - s * tt/np.sqrt(n), x_bar + tt*s/np.sqrt(n))
+```
+
+### 23.11
+(a) No, since the construct interval can be of an entirely different kind, such as a bootstrap interval. If the interval is a *t*-interval or *Z*-interval, then the answer is yes, which can be verified by inspecting the formulas for these intervals.
+
+(b) No, as the bootstrap interval is random.
+
+(c) No. For instance, if the data is normal with mean 0 and standard deviation 1, the confidence interval will contain $0$ only $95\%$ of the time.
+
+### Understanding confidence intervals
+1. This interpretation is incorrect. The population mean is not random, so you cannot make probabilistic judgements about it.
+2. Incorrect for the same reason.
+3. Since "likely" has no technical definition, this is OK.
+4. Incorrect, for the same reason as 1 and 2.
+5. Yes! This is correct.
+6. Yes! This is the formal defintion of a confidence interval.

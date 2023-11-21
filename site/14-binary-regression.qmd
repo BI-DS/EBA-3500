@@ -10,7 +10,7 @@
 ### Applied exercises
 
 #### From the book
-* 3.8.15, 3.8.16 (use only logistic regression)
+* 4.8.15, 4.8.16 (use only logistic regression)
 
 #### Exercise 1
 ##### Download data
@@ -45,3 +45,91 @@ See the linked page for a description of the data set. We are interested in pred
 1.  Fit the model `"y ~ job + marital"` to the data using the logistic model. How can you interpret the parameters?
 2.  Fit the models `"y ~ job"` and `"y ~ job + marital"`. Which do you prefer?
 3.  Fit at least 5 other models and select the best one.
+
+## Solution sketches to some exercises
+
+### 4.4.6
+(a) Use the function $f(x) = \frac{e^{\beta^Tx}}{1+e^{\beta^Tx}}$ and plug in the values
+of $\beta$.
+
+```{python}
+import numpy as np
+betas = [-6, 0.05, 1]
+f = lambda x: np.exp(betas[0] + x[0] * betas[1] + x[1] * betas[2]) / (1 + np.exp(betas[0] + x[0] * betas[1] + x[1] * betas[2]))
+f([40, 3.5])
+```
+
+(b) Use the expression $\log(p/(1-p)) = \beta^Tx$, where $p=P(Y=1\mid beta)$. We know the values of $\beta$, $p=0.5$ and $x_2 = 3.5$. Since $\log(0.5/0.5) = 0$, we get
+$$0 = -6 + 0.05 x_1 + 3.5$$. Solving for $x_1$, we find $x_1 = (6-3.5)/0.05 = 50$.
+
+### 4.4.6
+(a) Remember that $odds=p/(1-p)$. Solving for odds, we find that $odds(1-p) = p$ which implies $odds = (1+odds)p$, hence $p=odds/(1+odds)$.
+
+(b) The probability can be plugged directly into the expression $odds = p/(1-p)$.
+
+### 4.4.16
+
+```{python}
+boston = pd.read_csv("Boston.csv")
+boston.info()
+boston["crime_new"] = 1 * (boston.crim >= np.median(boston.crim))
+boston.corr().crime_new
+```
+Observe which variables are highly correlation with crime_new. Let's try four of the highest.
+
+```{python}
+import statsmodels.formula.api as smf
+smf.logit("crime_new ~ nox + dis + tax + indus", data = boston).fit().summary()
+```
+
+Observe that `dis` is not significant, so let's try to fit a model without it and choose
+using the AIC (remember that the smaller the AIC the better).
+
+```{python}
+smf.logit("crime_new ~ nox + dis + tax + indus", data = boston).fit().aic
+smf.logit("crime_new ~ nox + tax + indus", data = boston).fit().aic
+```
+
+The model without `dis` has a smaller AIC and is prefered.
+
+### Exercise 1
+The following code 
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pylab as plt
+```
+
+Load the data set, but remove unwanted covariates.
+```{python}
+hurr = pd.read_excel("hurricanes.xlsx").drop(["RowNames", "Number"], axis = 1)
+```
+
+Change some Pandas settings for visualization purposes; you can also make heat maps.
+
+```{python}
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+hurr.drop("Name", axis = 1).corr()
+```
+
+The `lmplot` function is handy for quick plotting of linear regression and logistic regression functions.
+```{python}
+hurr["Type_new"] = (1 - 1 * (hurr["Type"] == 0))
+sns.lmplot(hurr, x = "FirstLat", y = "Type_new", logistic = True)
+plt.show()
+```
+
+Fit some models and look at the AIC. Remember, the lower the AIC the better.
+
+```{python}
+import statsmodels.formula.api as smf
+
+smf.logit("Type_new ~ FirstLat + MaxLat+ LastLon + MaxInt", data = hurr).fit().aic
+smf.logit("Type_new ~ FirstLat + LastLon + MaxInt", data = hurr).fit().aic
+smf.logit("Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt", data = hurr).fit().aic
+smf.logit("Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt", data = hurr).fit().aic
+smf.probit("Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt", data = hurr).fit().aic
+smf.probit("Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt", data = hurr).fit().aic
+```

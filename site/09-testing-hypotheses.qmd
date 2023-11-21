@@ -16,3 +16,39 @@
 ## Additional resources
 There are many videos and popular articles about how the allies estimated the
 number of german tanks during World War II. [Here is one](https://www.youtube.com/watch?v=ruNdmCE0aLY&ab_channel=ritvikmath).
+
+## Some solutions
+
+### 25.1
+The alternative hypothesis should be that the busy trains have higher variance than
+the quiet ones. Since $\sigma_1$ belong to the busy trains, our alternative hypothesis is that $\sigma_1 > sigma_2$.
+
+### 25.2
+There is a larger number of births in September 1977 than other Septembers. We want to check if this is true, so the alternative hypothesis is $\mu > 1472$.
+
+### 26.7
+
+We can approximate the critical value using Python as follows.
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+n_reps = 1000000
+n = 2
+x = rng.uniform(size=(n_reps, n)).sum(axis=1)
+# These are the candidate cutoffs.
+cc = np.linspace(0, 2, 1000)
+
+# The approximate probability that X_1 + X_2 <= c for all candidate cutoffs.
+probs = np.array([(x <= c).mean() for c in cc])
+
+# Finds the index of optimal cutoff from our simulation
+index = (np.abs(probs - 0.05)).argmin()
+
+(cc[index], (x<=cc[index]).mean())
+```
+
+We can also calculate this by hand using the "convolution of two uniforms", which
+is triangularly distributed on $[0,2]$ under the null-hypothesis; see Wikipedia for
+details. The density is linearly (with a straight line) increasing from $0$ to $1$, and back to $0$ again. The probability we are looking for is less than $0.05$ is on the left hand side of the triangle, where the CDF equals $0.5x^2$. Hence we need to solve $0.5x^2=0.05$, which has solution $\sqrt{0.10} \approx 0.316$.
+
+```{python}
