@@ -1,30 +1,59 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
 # Basics of multiple linear regression
 
 ::: callout-note
-**Update 1/11** Removed some exercises and modified the extent of the curriculum.
+**Update 1/11** Removed some exercises and modified the extent of the
+curriculum.
 :::
 
 ## Curriculum
 
-* James et al., Chapter 3.1-3.2, 3.6.
-* Chapters 3.1-3.2 are about theory, 3.6 about how to estimate models in Python
-using `statsmodels`. There is a lot to read this week, but the content is slightly easier than before.
+-   James et al., Chapter 3.1-3.2, 3.6.
+-   Chapters 3.1-3.2 are about theory, 3.6 about how to estimate models
+    in Python using `statsmodels`. There is a lot to read this week, but
+    the content is slightly easier than before.
 
 ## Exercises
+
 All exercises in Chapter 3 are recommended!
 
 #### Conceptual
-- 3.7.1
-- 3.7.3
-- 3.7.6 Verify it graphically in Python using a suitable simulation.
+
+-   3.7.1
+-   3.7.3
+-   3.7.6 Verify it graphically in Python using a suitable simulation.
 
 #### Applied
-- 3.7.8 (a - b)
-- 3.7.9 (a, b, c)
-- 3.7.10 (a - e)
-- 3.7.12
+
+-   3.7.8 (a - b)
+-   3.7.9 (a, b, c)
+-   3.7.10 (a - e)
+-   3.7.12
 
 ## Some solution sketches
+
+### 3.7.1
+
+!["For the Advertising data, least squares coefficient estimates of the
+multiple linear regression of number of units sold on TV, radio, and
+newspaper advertising budgets." (Source:
+ITSS)](/code/lecture12-regression/reg.png){fig-align="center"}
+
+Recall that a coefficient has *p*-value less than $0.05$ if the
+coefficient is significantly less than $0$. If you do not want to talk
+directly about coefficients, talk about linear relationships instead.
+The *p*-value for TV is significant, hence there is a significant linear
+relationship between sales and TV when correcting for radio and
+newspaper. Likewise, there is a significant linear relationship between
+radio and sales when correcting for the other variables, but no
+relationship between newspaper and sales when correcting. (You do not
+need to comment on the significance of the intercept; a significant
+intercept is expected.)
 
 ### 3.7.3
 
@@ -36,21 +65,31 @@ Plugging in the estimated coefficients, we have
 $$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level.$$
 
 #### (a)
-First let $Level = 1$, i.e., we have college education. The equation becomes:
+
+First let $Level = 1$, i.e., we have college education. The equation
+becomes:
 
 $$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35+ 0.01 \cdot GPA \cdot IQ -10 \cdot GPA.$$
 Which simplied equals:
 $$\hat{y} = 85 + 10 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.$$
 Now consider $Level=0$. The equation becomes:
 $$\hat{y}' = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.$$
-Then $$\hat{y}-\hat{y}'=35 - 10\cdot GPA.$$
-Recall that $0 \leq GPA\leq 4$. Hence the maximal value of $\hat{y}-\hat{y}'$ is $25$ when GPA is $1$, which means the college graduate earns $25$k more than the high school graduate. The minimal value is $-5$ when the GPA is $4$, meaning that the college graduate earn *less* on average when the GPA is high enough. 
+Then $$\hat{y}-\hat{y}'=35 - 10\cdot GPA.$$ Recall that
+$0 \leq GPA\leq 4$. Hence the maximal value of $\hat{y}-\hat{y}'$ is
+$25$ when GPA is $1$, which means the college graduate earns $25$k more
+than the high school graduate. The minimal value is $-5$ when the GPA is
+$4$, meaning that the college graduate earn *less* on average when the
+GPA is high enough.
 
-Thus the correct choice is (iii). Note that this is unlikely to be true in reality!
+Thus the correct choice is (iii). Note that this is unlikely to be true
+in reality!
 
 #### (b)
-Use the equation $$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level,$$
-we find that $$\hat{y} = 50 + 20 \cdot 4 + 0.07\cdot 110 + 35 + 0.01\cdot 4 \cdot 110 -10\cdot 4.$$
+
+Use the equation
+$$\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level,$$
+we find that
+$$\hat{y} = 50 + 20 \cdot 4 + 0.07\cdot 110 + 35 + 0.01\cdot 4 \cdot 110 -10\cdot 4.$$
 We can calculate this:
 
 ```{python}
@@ -58,11 +97,14 @@ We can calculate this:
 ```
 
 #### (c)
-This can only be judged by looking at the *p*-value for the coefficient. We don't know the sample size,
-and have limited information about the variance of the IQ, so we cannot say for certain. The effect, however,
+
+This can only be judged by looking at the *p*-value for the coefficient.
+We don't know the sample size, and have limited information about the
+variance of the IQ, so we cannot say for certain. The effect, however,
 is likely to be very small.
 
 ### 3.7.8
+
 ```{python}
 import pandas as pd
 import statsmodels.formula.api as smf
@@ -71,8 +113,10 @@ auto = auto.dropna()
 auto.info()
 ```
 
-### (a)
+#### (a)
+
 Now we fit the model.
+
 ```{python}
 fit = smf.ols("mpg ~ horsepower", data = auto).fit()
 fit.summary()
@@ -82,11 +126,12 @@ fit.summary()
 (ii) Very strong, judged by the $R^2$ adjusted.
 (iii) Negative.
 (iv) 
+
 ```{python}
 fit.conf_int()
 ```
 
-### (b)
+#### (b)
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -97,7 +142,8 @@ plt.plot(auto.horsepower, auto.horsepower * params[1] + params[0])
 plt.show()
 ```
 
-### 9
+### 3.7.9
+
 ```{python}
 import pandas as pd
 import statsmodels.formula.api as smf
@@ -106,12 +152,14 @@ auto = auto.dropna()
 ```
 
 #### (a)
+
 ```{python}
 import seaborn as sns
 sns.pairplot(auto)
 ```
 
 #### (b)
+
 ```{python}
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
@@ -120,8 +168,9 @@ auto.drop("name", axis=1).corr()
 ```
 
 #### (c)
-First, make a formula including all relevant variables. Try to understand the code below 
-using the documentation of `join` if needed.
+
+First, make a formula including all relevant variables. Try to
+understand the code below using the documentation of `join` if needed.
 
 ```{python}
 formula = "mpg" + "~" + "+".join(auto.columns.difference(["name", "mpg"]))
@@ -129,12 +178,19 @@ formula
 ```
 
 Now we fit the model.
+
 ```{python}
 fit = smf.ols(formula, auto).fit()
 fit.summary()
 ```
 
 ##### Answers
-(i) Yes, there is a relationsship, we see that due to $R^2$. Using the anova function is not needed here.
-(ii) Poorly phrased question. The question should be "which predictors HAVE a statistically significant relationship [...]". Look at the table above and pick those with a p-value less than 0.05.
-(iii) There is a positive relationship between year and miles-per-gallon. This can be explained by evolution in technology.
+
+(i) Yes, there is a relationsship, we see that due to $R^2$. Using the
+    anova function is not needed here.
+(ii) Poorly phrased question. The question should be "which predictors
+     HAVE a statistically significant relationship \[...\]". Look at the
+     table above and pick those with a p-value less than 0.05.
+(iii) There is a positive relationship between year and
+      miles-per-gallon. This can be explained by evolution in
+      technology.

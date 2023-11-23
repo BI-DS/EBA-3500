@@ -232,11 +232,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">11.2</span> Exercises</a></li>
   <li><a href="#some-solution-sketches" id="toc-some-solution-sketches" class="nav-link" data-scroll-target="#some-solution-sketches"><span class="header-section-number">11.3</span> Some solution sketches</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">11.3.1</span> 3.7.3</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">11.3.2</span> 3.7.8</a></li>
-  <li><a href="#a-1" id="toc-a-1" class="nav-link" data-scroll-target="#a-1"><span class="header-section-number">11.3.3</span> (a)</a></li>
-  <li><a href="#b-1" id="toc-b-1" class="nav-link" data-scroll-target="#b-1"><span class="header-section-number">11.3.4</span> (b)</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">11.3.5</span> 9</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">11.3.1</span> 3.7.1</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">11.3.2</span> 3.7.3</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">11.3.3</span> 3.7.8</a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">11.3.4</span> 3.7.9</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -305,18 +304,28 @@ Note
 <section id="some-solution-sketches" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="some-solution-sketches"><span class="header-section-number">11.3</span> Some solution sketches</h2>
 <section id="section" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">11.3.1</span> 3.7.3</h3>
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">11.3.1</span> 3.7.1</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="..\code/lecture12-regression/reg.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">“For the Advertising data, least squares coefficient estimates of the multiple linear regression of number of units sold on TV, radio, and newspaper advertising budgets.” (Source: ITSS)</figcaption>
+</figure>
+</div>
+<p>Recall that a coefficient has <em>p</em>-value less than <span class="math inline">\(0.05\)</span> if the coefficient is significantly less than <span class="math inline">\(0\)</span>. If you do not want to talk directly about coefficients, talk about linear relationships instead. The <em>p</em>-value for TV is significant, hence there is a significant linear relationship between sales and TV when correcting for radio and newspaper. Likewise, there is a significant linear relationship between radio and sales when correcting for the other variables, but no relationship between newspaper and sales when correcting. (You do not need to comment on the significance of the intercept; a significant intercept is expected.)</p>
+</section>
+<section id="section-1" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">11.3.2</span> 3.7.3</h3>
 <p>We are dealing with the model <span class="math display">\[Y = \beta_0 + \beta_1\cdot GPA + \beta_2 \cdot IQ + \beta_3 * Level + \beta_4 \cdot GPA \cdot IQ + \beta_5 \cdot GPA \cdot Level +\epsilon.\]</span></p>
 <p>Plugging in the estimated coefficients, we have</p>
 <p><span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level.\]</span></p>
-<section id="a" class="level4" data-number="11.3.1.1">
-<h4 data-number="11.3.1.1" class="anchored" data-anchor-id="a"><span class="header-section-number">11.3.1.1</span> (a)</h4>
+<section id="a" class="level4" data-number="11.3.2.1">
+<h4 data-number="11.3.2.1" class="anchored" data-anchor-id="a"><span class="header-section-number">11.3.2.1</span> (a)</h4>
 <p>First let <span class="math inline">\(Level = 1\)</span>, i.e., we have college education. The equation becomes:</p>
 <p><span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35+ 0.01 \cdot GPA \cdot IQ -10 \cdot GPA.\]</span> Which simplied equals: <span class="math display">\[\hat{y} = 85 + 10 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.\]</span> Now consider <span class="math inline">\(Level=0\)</span>. The equation becomes: <span class="math display">\[\hat{y}' = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 0.01 \cdot GPA \cdot IQ.\]</span> Then <span class="math display">\[\hat{y}-\hat{y}'=35 - 10\cdot GPA.\]</span> Recall that <span class="math inline">\(0 \leq GPA\leq 4\)</span>. Hence the maximal value of <span class="math inline">\(\hat{y}-\hat{y}'\)</span> is <span class="math inline">\(25\)</span> when GPA is <span class="math inline">\(1\)</span>, which means the college graduate earns <span class="math inline">\(25\)</span>k more than the high school graduate. The minimal value is <span class="math inline">\(-5\)</span> when the GPA is <span class="math inline">\(4\)</span>, meaning that the college graduate earn <em>less</em> on average when the GPA is high enough.</p>
 <p>Thus the correct choice is (iii). Note that this is unlikely to be true in reality!</p>
 </section>
-<section id="b" class="level4" data-number="11.3.1.2">
-<h4 data-number="11.3.1.2" class="anchored" data-anchor-id="b"><span class="header-section-number">11.3.1.2</span> (b)</h4>
+<section id="b" class="level4" data-number="11.3.2.2">
+<h4 data-number="11.3.2.2" class="anchored" data-anchor-id="b"><span class="header-section-number">11.3.2.2</span> (b)</h4>
 <p>Use the equation <span class="math display">\[\hat{y} = 50 + 20 \cdot GPA + 0.07 \cdot IQ + 35 \cdot Level + 0.01 \cdot GPA \cdot IQ -10 \cdot GPA \cdot Level,\]</span> we find that <span class="math display">\[\hat{y} = 50 + 20 \cdot 4 + 0.07\cdot 110 + 35 + 0.01\cdot 4 \cdot 110 -10\cdot 4.\]</span> We can calculate this:</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span> <span class="op">+</span> <span class="dv">20</span> <span class="op">*</span> <span class="dv">4</span> <span class="op">+</span> <span class="fl">0.07</span> <span class="op">*</span> <span class="dv">110</span> <span class="op">+</span> <span class="dv">35</span> <span class="op">+</span> <span class="fl">0.01</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">110</span> <span class="op">-</span><span class="dv">10</span><span class="op">*</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -325,13 +334,13 @@ Note
 </div>
 </div>
 </section>
-<section id="c" class="level4" data-number="11.3.1.3">
-<h4 data-number="11.3.1.3" class="anchored" data-anchor-id="c"><span class="header-section-number">11.3.1.3</span> (c)</h4>
+<section id="c" class="level4" data-number="11.3.2.3">
+<h4 data-number="11.3.2.3" class="anchored" data-anchor-id="c"><span class="header-section-number">11.3.2.3</span> (c)</h4>
 <p>This can only be judged by looking at the <em>p</em>-value for the coefficient. We don’t know the sample size, and have limited information about the variance of the IQ, so we cannot say for certain. The effect, however, is likely to be very small.</p>
 </section>
 </section>
-<section id="section-1" class="level3" data-number="11.3.2">
-<h3 data-number="11.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">11.3.2</span> 3.7.8</h3>
+<section id="section-2" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">11.3.3</span> 3.7.8</h3>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
@@ -357,9 +366,8 @@ dtypes: float64(4), int64(4), object(1)
 memory usage: 30.6+ KB</code></pre>
 </div>
 </div>
-</section>
-<section id="a-1" class="level3" data-number="11.3.3">
-<h3 data-number="11.3.3" class="anchored" data-anchor-id="a-1"><span class="header-section-number">11.3.3</span> (a)</h3>
+<section id="a-1" class="level4" data-number="11.3.3.1">
+<h4 data-number="11.3.3.1" class="anchored" data-anchor-id="a-1"><span class="header-section-number">11.3.3.1</span> (a)</h4>
 <p>Now we fit the model.</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit <span class="op">=</span> smf.ols(<span class="st">"mpg ~ horsepower"</span>, data <span class="op">=</span> auto).fit()</span>
@@ -524,8 +532,8 @@ memory usage: 30.6+ KB</code></pre>
 </div>
 </div>
 </section>
-<section id="b-1" class="level3" data-number="11.3.4">
-<h3 data-number="11.3.4" class="anchored" data-anchor-id="b-1"><span class="header-section-number">11.3.4</span> (b)</h3>
+<section id="b-1" class="level4" data-number="11.3.3.2">
+<h4 data-number="11.3.3.2" class="anchored" data-anchor-id="b-1"><span class="header-section-number">11.3.3.2</span> (b)</h4>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.clf()</span>
@@ -538,16 +546,17 @@ memory usage: 30.6+ KB</code></pre>
 </div>
 </div>
 </section>
-<section id="section-2" class="level3" data-number="11.3.5">
-<h3 data-number="11.3.5" class="anchored" data-anchor-id="section-2"><span class="header-section-number">11.3.5</span> 9</h3>
+</section>
+<section id="section-3" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="section-3"><span class="header-section-number">11.3.4</span> 3.7.9</h3>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> pd.read_csv(<span class="st">"Auto.csv"</span>, na_values<span class="op">=</span><span class="st">"?"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>auto <span class="op">=</span> auto.dropna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="a-2" class="level4" data-number="11.3.5.1">
-<h4 data-number="11.3.5.1" class="anchored" data-anchor-id="a-2"><span class="header-section-number">11.3.5.1</span> (a)</h4>
+<section id="a-2" class="level4" data-number="11.3.4.1">
+<h4 data-number="11.3.4.1" class="anchored" data-anchor-id="a-2"><span class="header-section-number">11.3.4.1</span> (a)</h4>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sns.pairplot(auto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -556,8 +565,8 @@ memory usage: 30.6+ KB</code></pre>
 </div>
 </div>
 </section>
-<section id="b-2" class="level4" data-number="11.3.5.2">
-<h4 data-number="11.3.5.2" class="anchored" data-anchor-id="b-2"><span class="header-section-number">11.3.5.2</span> (b)</h4>
+<section id="b-2" class="level4" data-number="11.3.4.2">
+<h4 data-number="11.3.4.2" class="anchored" data-anchor-id="b-2"><span class="header-section-number">11.3.4.2</span> (b)</h4>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">500</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="dv">500</span>)</span>
@@ -677,8 +686,8 @@ memory usage: 30.6+ KB</code></pre>
 </div>
 </div>
 </section>
-<section id="c-1" class="level4" data-number="11.3.5.3">
-<h4 data-number="11.3.5.3" class="anchored" data-anchor-id="c-1"><span class="header-section-number">11.3.5.3</span> (c)</h4>
+<section id="c-1" class="level4" data-number="11.3.4.3">
+<h4 data-number="11.3.4.3" class="anchored" data-anchor-id="c-1"><span class="header-section-number">11.3.4.3</span> (c)</h4>
 <p>First, make a formula including all relevant variables. Try to understand the code below using the documentation of <code>join</code> if needed.</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> <span class="st">"mpg"</span> <span class="op">+</span> <span class="st">"~"</span> <span class="op">+</span> <span class="st">"+"</span>.join(auto.columns.difference([<span class="st">"name"</span>, <span class="st">"mpg"</span>]))</span>
@@ -867,8 +876,8 @@ memory usage: 30.6+ KB</code></pre>
 <br><br>Notes:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br>[2] The condition number is large, 8.59e+04. This might indicate that there are<br>strong multicollinearity or other numerical problems.
 </div>
 </div>
-<section id="answers" class="level5" data-number="11.3.5.3.1">
-<h5 data-number="11.3.5.3.1" class="anchored" data-anchor-id="answers"><span class="header-section-number">11.3.5.3.1</span> Answers</h5>
+<section id="answers" class="level5" data-number="11.3.4.3.1">
+<h5 data-number="11.3.4.3.1" class="anchored" data-anchor-id="answers"><span class="header-section-number">11.3.4.3.1</span> Answers</h5>
 <ol type="i">
 <li>Yes, there is a relationsship, we see that due to <span class="math inline">\(R^2\)</span>. Using the anova function is not needed here.</li>
 <li>Poorly phrased question. The question should be “which predictors HAVE a statistically significant relationship […]”. Look at the table above and pick those with a p-value less than 0.05.</li>
