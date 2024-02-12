@@ -1,0 +1,3 @@
+# Lecture 8: Regularization and high dimensions
+
+**Curriculum:** ISLP Chapter 6.2, 6.4 (~20 pages)

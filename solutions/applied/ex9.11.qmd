@@ -1,0 +1,66 @@
+# Exercise 8.11 {.unnumbered}
+> This question uses the Caravan data set.
+
+```{python}
+#| echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+```{python}
+caravan = pd.read_csv("data/Caravan.csv")
+```
+
+## (a)
+>  Create a training set consisting of the first $1,000$ observations, and a test set consisting of the remaining observations.
+
+```{python}
+from sklearn.model_selection import train_test_split
+X = caravan.drop("Purchase", axis=1)
+y = caravan["Purchase"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
+```
+
+## (b)
+>  Fit a boosting model to the training set with Purchase as the response and the other variables as predictors. Use $1,000$ trees, and a learning rate of $0.01$. Which $10$ predictors appear to be the most important?
+
+```{python}
+from sklearn.ensemble import GradientBoostingClassifier
+
+clf = GradientBoostingClassifier(learning_rate=0.01, n_estimators=1000)
+clf.fit(X, y)
+```
+
+
+```{python}
+pd.DataFrame(
+    {"Importance": clf.feature_importances_}, index=clf.feature_names_in_
+).sort_values("Importance", ascending=False).head(10).style.format(
+    "{:.2g}"
+).background_gradient()
+```
+
+## (c)
+> Use the boosting model to predict the response on the test data. Predict that a person will make a purchase if the estimated probability of purchase is greater than $20\%$. Form a confusion matrix. What fraction of the people predicted to make a purchase do in fact make one? How does this compare with the results obtained from applying KNN or logistic regression to this dataset?
+
+```{python}
+from sklearn.metrics import ConfusionMatrixDisplay
+ConfusionMatrixDisplay.from_estimator(clf, X_test, y_test)
+```
+
+```{python}
+from sklearn.metrics import ConfusionMatrixDisplay
+
+ConfusionMatrixDisplay.from_predictions(
+    (clf.predict_proba(X_test) > 0.2)[:, 0], y_test == "No"
+)
+```
+
+
+```{python}
+from sklearn.metrics import RocCurveDisplay
+RocCurveDisplay.from_estimator(clf, X_test, y_test)
+
+```

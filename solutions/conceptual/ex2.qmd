@@ -1,0 +1,46 @@
+# Conceptual exercises from Chapter 2
+
+## 2.4.1
+> For each of parts (a) through (d), indicate whether we would generally expect the performance of a fexible statistical learning method to be better or worse than an infexible method. Justify your answer.
+
+### (a)
+> The sample size $n$ is extremely large, and the number of predictors $p$ is small.
+
+Flexible methods will perform better, as we are unlikely to fit noise when $n$ is large compared to $p$.
+
+### (b)
+> The number of predictors $p$ is extremely large, and the number of observations $n$ is small.
+
+Here we need extremely inflexible models. There is simple not enough observations to allow us any flexibility.
+
+### (c)
+> The relationship between the predictors and response is highly non-linear.
+
+Most inflexible methods are linear, so it sounds prudent to use a flexible method. However, the responses in (a) and (b) still applies. If we have a small sample size and large number of predictors, we still have to use an inflexible method.
+
+### (d)
+> The variance of the error terms, i.e., $\sigma^2=\Var(\epsilon)$, is extremely high.
+
+It seems plausible that inflexible models would work best. But a high error variance doesn't matter in and of itself - what matters is how large the variance is compared to the features. (Recall equation (2.1, p.15)). To see why, think about a setting with very small error variance, e.g., $\sigma=0.001$. If we multiply $Y=f(X)+\epsilon$ by $1,000,000$ we get a standard deviation of $1000$, which is equivalent to a variance of $1,000,000$. But most methods will perform just as well on $1000Y=1000f(X)+1000\epsilon$ as it did on the original data! In essence, what matter is the ratio between $f(x)$ and $\sigma$: If $f(x)$ has a huge scale, then it's ok for $\sigma$ to have huge scale. If $f(x)$ has a small scale, then we will have to fit an inflexible model.
+
+
+
+```{python, echo = False}
+#| layout-ncol: 2
+#| fig-cap: 
+#|   - "Large error variance, small $x$."
+#|   - "Large error variance, large $x$."
+import matplotlib.pylab as plt
+import numpy as np
+rng = np.random.default_rng(seed=1)
+x = rng.standard_normal(100)
+eps = 1000*rng.standard_normal(100)
+plt.plot(x, 5 + x + eps, "bo")
+plt.xlabel("x")
+plt.ylabel("y")
+
+plt.plot(1000*x, 1000+5000*x+eps, "ro")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+```

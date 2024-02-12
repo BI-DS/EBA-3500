@@ -1,0 +1,172 @@
+# Exercise 5.4.5 {.unnumbered}
+
+> In Chapter 4, we used logistic regression to predict the probability of default using income and balance on the `Default` data set. We will now estimate the test error of this logistic regression model using the validation set approach. Do not forget to set a random seed before beginning your analysis.
+
+## (a)
+> Fit a logistic regression model that uses income and balance to predict default.
+
+First we load the data.
+
+```{python}
+import pandas as pd
+default = pd.read_csv("data/Default.csv")
+default.head()
+```
+
+We wish to predict default, which is stored as "No/Yes". We must convert it to $1$ and $0$ to proceed; we use the [replace](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.replace.html) method for this. We also replace the value in "student" for later use.
+
+```{python}
+default["default"].replace({"No": 0, "Yes": 1}, inplace = True)
+default["student"].replace({"No": 0, "Yes": 1}, inplace = True)
+```
+
+Now we can fit the logistic model using [`LogisticRegression`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) from `sklearn.linear_model`. Recall that we need to specify `penalty=None` when fitting a standard logistic regression.
+```{python}
+from sklearn.linear_model import LogisticRegression
+X = default.drop(["default", "student"], axis = 1)
+y = default["default"]
+LogisticRegression(penalty=None).fit(X, y)
+```
+
+## (b)
+
+> Using the validation set approach, estimate the test error of this
+model. In order to do this, you must perform the following steps.
+
+The exercise asks us to do 4 things. It's good practice to split them into 4 separate chunks then. 
+> i. Split the sample set into a training set and a validation set.
+
+This calls for the use of `train_test_split` from `sklearn`. We use a $80/20$-split for training and validation.
+
+```{python}
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y, 
+                                   random_state=313,  
+                                   test_size=0.20) 
+``` 
+
+> ii. Fit a multiple logistic regression model using only the training observations.
+
+We use the training data instead of the whole data set now.
+
+```{python}
+fit = LogisticRegression(penalty = None).fit(X_train, y_train)
+```
+
+> iii. Obtain a prediction of default status for each individual in the validation set by computing the posterior probability of default for that individual, and classifying the individual to the default category if the posterior probability is greater than 0.5.
+
+The predicted probabilities can be found using the method `predict_proba`. This function returns an array containing the classification probabilities for each class label. We are interested in the second probability, the probability of obtaining the class label `1`.
+
+```{python}
+fit.predict_proba(X_test)
+```
+We are interested in the second probability, the probability of obtaining the class label `1`. These can be found using indexing.
+```{python}
+fit.predict_proba(X_test)[:,1]
+```
+
+To predict the class labels we run
+```{python}
+predictions = 1*(fit.predict_proba(X_test)[:,1] > 0.5)
+predictions
+```
+It's also possible to do all of this directly using the `predict` method.
+```{python}
+(predictions == fit.predict(X_test)).all()
+```
+
+> iv. Compute the validation set error, which is the fraction of the observations in the validation set that are misclassifed.
+
+A misclassification occurs when the predicted value of $Y$ does not match its true value. Since we are dealing with the test set now, we can write:
+
+```{python}
+(predictions != y_test).mean()
+```
+A better way of doing this is the `score` method:
+
+```{python}
+1 - fit.score(X_test, y_test)
+```
+
+## (c)
+> Repeat the process in (b) three times, using three diferent splits of the observations into a training set and a validation set. Comment on the results obtained.
+
+This task is about taking everything you did in (b) and turning it into a function. Let's do that!
+
+```{python}
+def clf_error(x, y, random_state, test_size = 0.20):
+  """ Estimate classification error when running a regression with covariates
+      x and response y, using the split given by test_size and random_state. """
+  X_train, X_test, y_train, y_test = train_test_split(X,y, 
+                                   random_state=random_state,  
+                                   test_size=test_size,  
+                                   shuffle=True) 
+  fit = LogisticRegression(penalty = None).fit(X_train, y_train)
+  return 1 - fit.score(X_test, y_test)
+```
+
+Then we may call
+```{python}
+[clf_error(X, y, random_state, 0.20) for random_state in [1,2,3]]
+```
+The misclassification error is random. That's expected, since the split into training and test set is random.
+
+::: {.callout-important}
+You don't need to do this whole procedure each time you want to do cross-validation. You can use the `cross_val_score` instead for almost the same effect. Here the `cv` argument specifies the number of folds; in this case it has to be `k=1/0.20=5`. 
+
+```{python}
+from sklearn.model_selection import cross_val_score
+logit = LogisticRegression(penalty = None)
+1 - cross_val_score(logit, X, y, cv = 5)
+```
+:::
+
+There is no need to stop here: We can do this a thousand times instead. (This could take a minute or two to run.) Doing it a lot of times is generally speaking better - the more the merrier.
+
+```{python}
+results = [clf_error(x, y, random_state, 0.20) for random_state in range(100)]
+```
+
+Then make a histogram of the results
+
+```{python}
+import seaborn as sns
+import matplotlib.pylab as plt
+sns.histplot(results)
+plt.show()
+```
+The histogram tells us that the estimated classification error is quite precise. Not surprisingly, the distribution looks roughly normal. We can get more information by looking at its mean and standard deviation:
+```{python}
+import numpy as np
+[np.array(results).mean(), np.array(results).std(ddof=1)]
+```
+## (d)
+Fitting this model requires a minor modification of our work. First, we need our `X` to contain `student` now. Hence we run:
+```{python}
+X_stud = default.drop(["default"], axis = 1)
+y_stud = default["default"]
+``` 
+
+Then we use the function from (c) to estimate the misclassification probability for both models.
+
+```{python}
+results_stud = [clf_error(X_stud, y_stud, random_state, 0.20) for random_state in range(100)]
+[np.array(results_stud).mean(), np.array(results_stud).std(ddof=1)]
+```
+
+The mean classification error (`0.0322`) is higher with `student` than without. If you mostly care about classification error you will choose the model without `student` included. 
+
+:::{.callout-warning}
+Recall that classification error is not a good measure of model performance.  The log loss is a better choice, or even the AUC.
+**Make a note about this in the curriculum page. (Possible source: https://medium.com/@KrishnaRaj_Parthasarathy/ml-classification-why-accuracy-is-not-a-best-measure-for-assessing-ceeb964ae47c . https://stats.stackexchange.com/questions/312780/why-is-accuracy-not-the-best-measure-for-assessing-classification-models)
+:::
+
+Let's do the cross-validation using the log score instead.
+
+```{python}
+-cross_val_score(logit, X, y, cv = 5, scoring = "neg_log_loss").mean()
+```
+
+```{python}
+-cross_val_score(logit, X_stud, y_stud, cv = 5, scoring = "neg_log_loss").mean()
+```

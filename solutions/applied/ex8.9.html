@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ex8.9</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="ex8.9_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ex8.9_files/libs/quarto-html/quarto.js"></script>
+<script src="ex8.9_files/libs/quarto-html/popper.min.js"></script>
+<script src="ex8.9_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ex8.9_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ex8.9_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ex8.9_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ex8.9_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ex8.9_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ex8.9_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercise 8.9</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>This problem involves the <code>OJ</code> data set which is part of the ISLP package.</p>
+</blockquote>
+<div id="aa49ac84" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>oj <span class="op">=</span> pd.read_csv(<span class="st">"data/OJ.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>oj.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Purchase</th>
+<th data-quarto-table-cell-role="th">WeekofPurchase</th>
+<th data-quarto-table-cell-role="th">StoreID</th>
+<th data-quarto-table-cell-role="th">PriceCH</th>
+<th data-quarto-table-cell-role="th">PriceMM</th>
+<th data-quarto-table-cell-role="th">DiscCH</th>
+<th data-quarto-table-cell-role="th">DiscMM</th>
+<th data-quarto-table-cell-role="th">SpecialCH</th>
+<th data-quarto-table-cell-role="th">SpecialMM</th>
+<th data-quarto-table-cell-role="th">LoyalCH</th>
+<th data-quarto-table-cell-role="th">SalePriceMM</th>
+<th data-quarto-table-cell-role="th">SalePriceCH</th>
+<th data-quarto-table-cell-role="th">PriceDiff</th>
+<th data-quarto-table-cell-role="th">Store7</th>
+<th data-quarto-table-cell-role="th">PctDiscMM</th>
+<th data-quarto-table-cell-role="th">PctDiscCH</th>
+<th data-quarto-table-cell-role="th">ListPriceDiff</th>
+<th data-quarto-table-cell-role="th">STORE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CH</td>
+<td>237</td>
+<td>1</td>
+<td>1.75</td>
+<td>1.99</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0.500000</td>
+<td>1.99</td>
+<td>1.75</td>
+<td>0.24</td>
+<td>No</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.24</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>CH</td>
+<td>239</td>
+<td>1</td>
+<td>1.75</td>
+<td>1.99</td>
+<td>0.00</td>
+<td>0.3</td>
+<td>0</td>
+<td>1</td>
+<td>0.600000</td>
+<td>1.69</td>
+<td>1.75</td>
+<td>-0.06</td>
+<td>No</td>
+<td>0.150754</td>
+<td>0.000000</td>
+<td>0.24</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>CH</td>
+<td>245</td>
+<td>1</td>
+<td>1.86</td>
+<td>2.09</td>
+<td>0.17</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0.680000</td>
+<td>2.09</td>
+<td>1.69</td>
+<td>0.40</td>
+<td>No</td>
+<td>0.000000</td>
+<td>0.091398</td>
+<td>0.23</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>MM</td>
+<td>227</td>
+<td>1</td>
+<td>1.69</td>
+<td>1.69</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0.400000</td>
+<td>1.69</td>
+<td>1.69</td>
+<td>0.00</td>
+<td>No</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.00</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>CH</td>
+<td>228</td>
+<td>7</td>
+<td>1.69</td>
+<td>1.69</td>
+<td>0.00</td>
+<td>0.0</td>
+<td>0</td>
+<td>0</td>
+<td>0.956535</td>
+<td>1.69</td>
+<td>1.69</td>
+<td>0.00</td>
+<td>Yes</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.00</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">(a)</h2>
+<blockquote class="blockquote">
+<p>Create a training set containing a random sample of 800 observations, and a test set containing the remaining observations</p>
+</blockquote>
+<div id="85f7ad46" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> oj.drop(<span class="st">"Purchase"</span>, axis<span class="op">=</span><span class="dv">1</span>).replace({<span class="st">"Store7"</span>:{<span class="st">"Yes"</span>: <span class="dv">1</span>, <span class="st">"No"</span>: <span class="dv">0</span>}})</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> oj[<span class="st">"Purchase"</span>].replace({<span class="st">"CH"</span>: <span class="dv">1</span>, <span class="st">"MM"</span>: <span class="dv">0</span>})</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    X, y, random_state<span class="op">=</span><span class="dv">0</span>, train_size<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\jonas\AppData\Local\Temp\ipykernel_9104\1087579843.py:3: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  X = oj.drop("Purchase", axis=1).replace({"Store7":{"Yes": 1, "No": 0}})
+C:\Users\jonas\AppData\Local\Temp\ipykernel_9104\1087579843.py:4: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  y = oj["Purchase"].replace({"CH": 1, "MM": 0})</code></pre>
+</div>
+</div>
+</section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">(b)</h2>
+<blockquote class="blockquote">
+<p>Fit a tree to the training data, with Purchase as the response and the other variables as predictors. What is the training error rate?</p>
+</blockquote>
+<div id="7fcd0b4a" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeClassifier</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> DecisionTreeClassifier(random_state<span class="op">=</span><span class="dv">0</span>, max_leaf_nodes<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>clf.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>0.794392523364486</code></pre>
+</div>
+</div>
+<div id="19104faa" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> plot_tree</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plot_tree(clf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>[Text(0.5, 0.875, 'x[8] &lt;= 0.504\ngini = 0.471\nsamples = 856\nvalue = [325, 531]'),
+ Text(0.25, 0.625, 'x[8] &lt;= 0.281\ngini = 0.412\nsamples = 369\nvalue = [262.0, 107.0]'),
+ Text(0.125, 0.375, 'gini = 0.229\nsamples = 174\nvalue = [151, 23]'),
+ Text(0.375, 0.375, 'gini = 0.49\nsamples = 195\nvalue = [111, 84]'),
+ Text(0.75, 0.625, 'x[8] &lt;= 0.705\ngini = 0.225\nsamples = 487\nvalue = [63, 424]'),
+ Text(0.625, 0.375, 'x[11] &lt;= 0.265\ngini = 0.416\nsamples = 156\nvalue = [46.0, 110.0]'),
+ Text(0.5, 0.125, 'gini = 0.498\nsamples = 91\nvalue = [43, 48]'),
+ Text(0.75, 0.125, 'gini = 0.088\nsamples = 65\nvalue = [3, 62]'),
+ Text(0.875, 0.375, 'gini = 0.097\nsamples = 331\nvalue = [17, 314]')]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex8.9_files/figure-html/cell-6-output-2.png" width="540" height="389" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The tree has <span class="math inline">\(5\)</span> terminal nodes (<code>clf.get_n_leaves()</code>).</p>
+<div id="2b13e506" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>clf.get_n_leaves()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>5</code></pre>
+</div>
+</div>
+</section>
+<section id="with-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="with-pipelines">(with pipelines)</h2>
+<div id="9dec9a40" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> oj.drop(<span class="st">"Purchase"</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> oj[<span class="st">"Purchase"</span>]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    X, y, random_state<span class="op">=</span><span class="dv">0</span>, train_size<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> make_pipeline</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelBinarizer</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> TargetEncoder</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.compose <span class="im">import</span> ColumnTransformer</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> make_pipeline(</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ColumnTransformer(</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        [(<span class="st">"Store7"</span>, OneHotEncoder(), [<span class="st">"Store7"</span>])],</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        remainder<span class="op">=</span><span class="st">"passthrough"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    DecisionTreeClassifier(random_state<span class="op">=</span><span class="dv">0</span>),</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>clf.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>0.7616822429906542</code></pre>
+</div>
+</div>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">(c)</h2>
+<blockquote class="blockquote">
+<p>Create a plot of the tree, and interpret the results. How many terminal nodes does the tree have?</p>
+</blockquote>
+<div id="52e4c049" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_tree(clf.named_steps[<span class="st">"decisiontreeclassifier"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>[Text(0.5314564977973568, 0.9705882352941176, 'x[10] &lt;= 0.504\ngini = 0.471\nsamples = 856\nvalue = [531, 325]'),
+ Text(0.2411435389133627, 0.9117647058823529, 'x[10] &lt;= 0.281\ngini = 0.412\nsamples = 369\nvalue = [107.0, 262.0]'),
+ Text(0.08113069016152717, 0.8529411764705882, 'x[10] &lt;= 0.062\ngini = 0.229\nsamples = 174\nvalue = [23, 151]'),
+ Text(0.023494860499265784, 0.7941176470588235, 'x[3] &lt;= 1.5\ngini = 0.058\nsamples = 67\nvalue = [2, 65]'),
+ Text(0.011747430249632892, 0.7352941176470589, 'x[2] &lt;= 252.0\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.005873715124816446, 0.6764705882352942, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.01762114537444934, 0.6764705882352942, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.03524229074889868, 0.7352941176470589, 'x[2] &lt;= 268.5\ngini = 0.031\nsamples = 64\nvalue = [1, 63]'),
+ Text(0.02936857562408223, 0.6764705882352942, 'gini = 0.0\nsamples = 55\nvalue = [0, 55]'),
+ Text(0.041116005873715125, 0.6764705882352942, 'x[10] &lt;= 0.001\ngini = 0.198\nsamples = 9\nvalue = [1, 8]'),
+ Text(0.03524229074889868, 0.6176470588235294, 'gini = 0.0\nsamples = 8\nvalue = [0, 8]'),
+ Text(0.04698972099853157, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.13876651982378854, 0.7941176470588235, 'x[11] &lt;= 2.04\ngini = 0.315\nsamples = 107\nvalue = [21, 86]'),
+ Text(0.08957415565345081, 0.7352941176470589, 'x[10] &lt;= 0.086\ngini = 0.209\nsamples = 59\nvalue = [7, 52]'),
+ Text(0.06461086637298091, 0.6764705882352942, 'x[16] &lt;= 0.17\ngini = 0.5\nsamples = 6\nvalue = [3, 3]'),
+ Text(0.05873715124816446, 0.6176470588235294, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.07048458149779736, 0.6176470588235294, 'x[2] &lt;= 235.5\ngini = 0.375\nsamples = 4\nvalue = [1, 3]'),
+ Text(0.06461086637298091, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.0763582966226138, 0.5588235294117647, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.1145374449339207, 0.6764705882352942, 'x[3] &lt;= 1.5\ngini = 0.14\nsamples = 53\nvalue = [4, 49]'),
+ Text(0.09985315712187959, 0.6176470588235294, 'x[9] &lt;= 0.5\ngini = 0.42\nsamples = 10\nvalue = [3, 7]'),
+ Text(0.0881057268722467, 0.5588235294117647, 'x[10] &lt;= 0.134\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.08223201174743025, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.09397944199706314, 0.5, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.11160058737151249, 0.5588235294117647, 'x[10] &lt;= 0.152\ngini = 0.245\nsamples = 7\nvalue = [1, 6]'),
+ Text(0.10572687224669604, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.11747430249632893, 0.5, 'gini = 0.0\nsamples = 6\nvalue = [0, 6]'),
+ Text(0.12922173274596183, 0.6176470588235294, 'x[8] &lt;= 0.5\ngini = 0.045\nsamples = 43\nvalue = [1, 42]'),
+ Text(0.12334801762114538, 0.5588235294117647, 'gini = 0.0\nsamples = 35\nvalue = [0, 35]'),
+ Text(0.13509544787077826, 0.5588235294117647, 'x[12] &lt;= 1.72\ngini = 0.219\nsamples = 8\nvalue = [1, 7]'),
+ Text(0.12922173274596183, 0.5, 'gini = 0.0\nsamples = 4\nvalue = [0, 4]'),
+ Text(0.14096916299559473, 0.5, 'x[2] &lt;= 233.5\ngini = 0.375\nsamples = 4\nvalue = [1, 3]'),
+ Text(0.13509544787077826, 0.4411764705882353, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.14684287812041116, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.18795888399412627, 0.7352941176470589, 'x[2] &lt;= 236.5\ngini = 0.413\nsamples = 48\nvalue = [14, 34]'),
+ Text(0.18208516886930984, 0.6764705882352942, 'gini = 0.0\nsamples = 7\nvalue = [0, 7]'),
+ Text(0.19383259911894274, 0.6764705882352942, 'x[2] &lt;= 274.5\ngini = 0.45\nsamples = 41\nvalue = [14.0, 27.0]'),
+ Text(0.18795888399412627, 0.6176470588235294, 'x[10] &lt;= 0.248\ngini = 0.48\nsamples = 35\nvalue = [14, 21]'),
+ Text(0.1762114537444934, 0.5588235294117647, 'x[2] &lt;= 263.5\ngini = 0.5\nsamples = 26\nvalue = [13, 13]'),
+ Text(0.17033773861967694, 0.5, 'x[16] &lt;= 0.31\ngini = 0.483\nsamples = 22\nvalue = [9, 13]'),
+ Text(0.15859030837004406, 0.4411764705882353, 'x[2] &lt;= 252.5\ngini = 0.49\nsamples = 14\nvalue = [8, 6]'),
+ Text(0.1527165932452276, 0.38235294117647056, 'x[2] &lt;= 244.0\ngini = 0.496\nsamples = 11\nvalue = [5, 6]'),
+ Text(0.14096916299559473, 0.3235294117647059, 'x[10] &lt;= 0.141\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.13509544787077826, 0.2647058823529412, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.14684287812041116, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.1644640234948605, 0.3235294117647059, 'x[10] &lt;= 0.173\ngini = 0.408\nsamples = 7\nvalue = [2, 5]'),
+ Text(0.15859030837004406, 0.2647058823529412, 'gini = 0.0\nsamples = 4\nvalue = [0, 4]'),
+ Text(0.17033773861967694, 0.2647058823529412, 'x[10] &lt;= 0.199\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.1644640234948605, 0.20588235294117646, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.1762114537444934, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.1644640234948605, 0.38235294117647056, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.18208516886930984, 0.4411764705882353, 'x[10] &lt;= 0.181\ngini = 0.219\nsamples = 8\nvalue = [1, 7]'),
+ Text(0.1762114537444934, 0.38235294117647056, 'gini = 0.0\nsamples = 5\nvalue = [0, 5]'),
+ Text(0.18795888399412627, 0.38235294117647056, 'x[3] &lt;= 5.0\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.18208516886930984, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.19383259911894274, 0.3235294117647059, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.18208516886930984, 0.5, 'gini = 0.0\nsamples = 4\nvalue = [4, 0]'),
+ Text(0.19970631424375918, 0.5588235294117647, 'x[2] &lt;= 272.5\ngini = 0.198\nsamples = 9\nvalue = [1, 8]'),
+ Text(0.19383259911894274, 0.5, 'gini = 0.0\nsamples = 8\nvalue = [0, 8]'),
+ Text(0.2055800293685756, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.19970631424375918, 0.6176470588235294, 'gini = 0.0\nsamples = 6\nvalue = [0, 6]'),
+ Text(0.40115638766519823, 0.8529411764705882, 'x[13] &lt;= 0.05\ngini = 0.49\nsamples = 195\nvalue = [84, 111]'),
+ Text(0.28083700440528636, 0.7941176470588235, 'x[8] &lt;= 0.5\ngini = 0.332\nsamples = 76\nvalue = [16, 60]'),
+ Text(0.2444933920704846, 0.7352941176470589, 'x[3] &lt;= 1.5\ngini = 0.264\nsamples = 64\nvalue = [10, 54]'),
+ Text(0.2173274596182085, 0.6764705882352942, 'x[13] &lt;= 0.015\ngini = 0.091\nsamples = 21\nvalue = [1, 20]'),
+ Text(0.21145374449339208, 0.6176470588235294, 'gini = 0.0\nsamples = 19\nvalue = [0, 19]'),
+ Text(0.22320117474302498, 0.6176470588235294, 'x[10] &lt;= 0.408\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.2173274596182085, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.2290748898678414, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.27165932452276065, 0.6764705882352942, 'x[2] &lt;= 259.5\ngini = 0.331\nsamples = 43\nvalue = [9, 34]'),
+ Text(0.2555066079295154, 0.6176470588235294, 'x[9] &lt;= 0.5\ngini = 0.426\nsamples = 26\nvalue = [8, 18]'),
+ Text(0.24082232011747431, 0.5588235294117647, 'x[11] &lt;= 1.84\ngini = 0.305\nsamples = 16\nvalue = [3, 13]'),
+ Text(0.23494860499265785, 0.5, 'x[2] &lt;= 236.5\ngini = 0.337\nsamples = 14\nvalue = [3, 11]'),
+ Text(0.2290748898678414, 0.4411764705882353, 'x[2] &lt;= 229.5\ngini = 0.26\nsamples = 13\nvalue = [2, 11]'),
+ Text(0.22320117474302498, 0.38235294117647056, 'x[10] &lt;= 0.49\ngini = 0.375\nsamples = 8\nvalue = [2, 6]'),
+ Text(0.2173274596182085, 0.3235294117647059, 'x[10] &lt;= 0.44\ngini = 0.444\nsamples = 6\nvalue = [2, 4]'),
+ Text(0.21145374449339208, 0.2647058823529412, 'x[4] &lt;= 1.74\ngini = 0.32\nsamples = 5\nvalue = [1, 4]'),
+ Text(0.2055800293685756, 0.20588235294117646, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.2173274596182085, 0.20588235294117646, 'x[3] &lt;= 3.5\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.21145374449339208, 0.14705882352941177, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.22320117474302498, 0.14705882352941177, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.22320117474302498, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.2290748898678414, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.23494860499265785, 0.38235294117647056, 'gini = 0.0\nsamples = 5\nvalue = [0, 5]'),
+ Text(0.24082232011747431, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.24669603524229075, 0.5, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.2701908957415565, 0.5588235294117647, 'x[4] &lt;= 1.925\ngini = 0.5\nsamples = 10\nvalue = [5, 5]'),
+ Text(0.2643171806167401, 0.5, 'x[2] &lt;= 240.5\ngini = 0.494\nsamples = 9\nvalue = [5, 4]'),
+ Text(0.25844346549192365, 0.4411764705882353, 'x[14] &lt;= 0.135\ngini = 0.49\nsamples = 7\nvalue = [3, 4]'),
+ Text(0.2525697503671072, 0.38235294117647056, 'x[10] &lt;= 0.49\ngini = 0.5\nsamples = 6\nvalue = [3, 3]'),
+ Text(0.24082232011747431, 0.3235294117647059, 'x[14] &lt;= 0.059\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.23494860499265785, 0.2647058823529412, 'x[10] &lt;= 0.44\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.2290748898678414, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.24082232011747431, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.24669603524229075, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.2643171806167401, 0.3235294117647059, 'x[1] &lt;= 0.5\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.25844346549192365, 0.2647058823529412, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.2701908957415565, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.2643171806167401, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.2701908957415565, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.27606461086637296, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.2878120411160059, 0.6176470588235294, 'x[2] &lt;= 276.5\ngini = 0.111\nsamples = 17\nvalue = [1, 16]'),
+ Text(0.28193832599118945, 0.5588235294117647, 'gini = 0.0\nsamples = 15\nvalue = [0, 15]'),
+ Text(0.2936857562408223, 0.5588235294117647, 'x[17] &lt;= 3.5\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.2878120411160059, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.29955947136563876, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.31718061674008813, 0.7352941176470589, 'x[2] &lt;= 232.5\ngini = 0.5\nsamples = 12\nvalue = [6, 6]'),
+ Text(0.31130690161527164, 0.6764705882352942, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.32305433186490456, 0.6764705882352942, 'x[17] &lt;= 3.5\ngini = 0.48\nsamples = 10\nvalue = [4, 6]'),
+ Text(0.31718061674008813, 0.6176470588235294, 'x[10] &lt;= 0.381\ngini = 0.444\nsamples = 9\nvalue = [3, 6]'),
+ Text(0.31130690161527164, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.32305433186490456, 0.5588235294117647, 'x[1] &lt;= 0.5\ngini = 0.469\nsamples = 8\nvalue = [3, 5]'),
+ Text(0.31130690161527164, 0.5, 'x[10] &lt;= 0.45\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.3054331864904552, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.31718061674008813, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.33480176211453744, 0.5, 'x[10] &lt;= 0.45\ngini = 0.444\nsamples = 6\nvalue = [2, 4]'),
+ Text(0.328928046989721, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.3406754772393539, 0.4411764705882353, 'x[2] &lt;= 233.5\ngini = 0.5\nsamples = 4\nvalue = [2, 2]'),
+ Text(0.33480176211453744, 0.38235294117647056, 'gini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.3465491923641703, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.328928046989721, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.5214757709251101, 0.7941176470588235, 'x[11] &lt;= 2.205\ngini = 0.49\nsamples = 119\nvalue = [68, 51]'),
+ Text(0.46145374449339205, 0.7352941176470589, 'x[10] &lt;= 0.308\ngini = 0.469\nsamples = 101\nvalue = [63, 38]'),
+ Text(0.4555800293685756, 0.6764705882352942, 'gini = 0.0\nsamples = 8\nvalue = [8, 0]'),
+ Text(0.46732745961820854, 0.6764705882352942, 'x[10] &lt;= 0.483\ngini = 0.483\nsamples = 93\nvalue = [55, 38]'),
+ Text(0.4089574155653451, 0.6176470588235294, 'x[2] &lt;= 245.0\ngini = 0.5\nsamples = 62\nvalue = [31, 31]'),
+ Text(0.3700440528634361, 0.5588235294117647, 'x[2] &lt;= 234.0\ngini = 0.415\nsamples = 17\nvalue = [5, 12]'),
+ Text(0.35829662261380324, 0.5, 'x[10] &lt;= 0.458\ngini = 0.444\nsamples = 6\nvalue = [4, 2]'),
+ Text(0.3524229074889868, 0.4411764705882353, 'gini = 0.0\nsamples = 4\nvalue = [4, 0]'),
+ Text(0.3641703377386197, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.38179148311306904, 0.5, 'x[10] &lt;= 0.447\ngini = 0.165\nsamples = 11\nvalue = [1, 10]'),
+ Text(0.37591776798825255, 0.4411764705882353, 'gini = 0.0\nsamples = 10\nvalue = [0, 10]'),
+ Text(0.3876651982378855, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.447870778267254, 0.5588235294117647, 'x[17] &lt;= 1.5\ngini = 0.488\nsamples = 45\nvalue = [26.0, 19.0]'),
+ Text(0.41409691629955947, 0.5, 'x[10] &lt;= 0.406\ngini = 0.417\nsamples = 27\nvalue = [19, 8]'),
+ Text(0.39941262848751835, 0.4411764705882353, 'x[9] &lt;= 0.5\ngini = 0.332\nsamples = 19\nvalue = [15, 4]'),
+ Text(0.3876651982378855, 0.38235294117647056, 'x[11] &lt;= 2.155\ngini = 0.231\nsamples = 15\nvalue = [13, 2]'),
+ Text(0.38179148311306904, 0.3235294117647059, 'gini = 0.0\nsamples = 8\nvalue = [8, 0]'),
+ Text(0.3935389133627019, 0.3235294117647059, 'x[10] &lt;= 0.352\ngini = 0.408\nsamples = 7\nvalue = [5, 2]'),
+ Text(0.3876651982378855, 0.2647058823529412, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.39941262848751835, 0.2647058823529412, 'x[2] &lt;= 257.0\ngini = 0.5\nsamples = 4\nvalue = [2, 2]'),
+ Text(0.3935389133627019, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.4052863436123348, 0.20588235294117646, 'x[2] &lt;= 258.5\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.39941262848751835, 0.14705882352941177, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.4111600587371512, 0.14705882352941177, 'x[10] &lt;= 0.382\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.4052863436123348, 0.08823529411764706, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.4170337738619677, 0.08823529411764706, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.4111600587371512, 0.38235294117647056, 'x[10] &lt;= 0.383\ngini = 0.5\nsamples = 4\nvalue = [2, 2]'),
+ Text(0.4052863436123348, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.4170337738619677, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.4287812041116006, 0.4411764705882353, 'x[10] &lt;= 0.43\ngini = 0.5\nsamples = 8\nvalue = [4, 4]'),
+ Text(0.42290748898678415, 0.38235294117647056, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.434654919236417, 0.38235294117647056, 'x[16] &lt;= 0.325\ngini = 0.32\nsamples = 5\nvalue = [4, 1]'),
+ Text(0.4287812041116006, 0.3235294117647059, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.44052863436123346, 0.3235294117647059, 'x[2] &lt;= 252.0\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.434654919236417, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.44640234948604995, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.48164464023494863, 0.5, 'x[2] &lt;= 272.5\ngini = 0.475\nsamples = 18\nvalue = [7, 11]'),
+ Text(0.47577092511013214, 0.4411764705882353, 'x[2] &lt;= 271.0\ngini = 0.492\nsamples = 16\nvalue = [7, 9]'),
+ Text(0.4698972099853157, 0.38235294117647056, 'x[10] &lt;= 0.423\ngini = 0.459\nsamples = 14\nvalue = [5, 9]'),
+ Text(0.46402349486049926, 0.3235294117647059, 'x[2] &lt;= 251.0\ngini = 0.496\nsamples = 11\nvalue = [5, 6]'),
+ Text(0.4581497797356828, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.4698972099853157, 0.2647058823529412, 'x[5] &lt;= 2.135\ngini = 0.48\nsamples = 10\nvalue = [4, 6]'),
+ Text(0.46402349486049926, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.47577092511013214, 0.20588235294117646, 'x[2] &lt;= 264.5\ngini = 0.494\nsamples = 9\nvalue = [4, 5]'),
+ Text(0.46402349486049926, 0.14705882352941177, 'x[10] &lt;= 0.33\ngini = 0.375\nsamples = 4\nvalue = [1, 3]'),
+ Text(0.4581497797356828, 0.08823529411764706, 'x[12] &lt;= 1.81\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.4522760646108664, 0.029411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.46402349486049926, 0.029411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.4698972099853157, 0.08823529411764706, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.48751835535976507, 0.14705882352941177, 'x[10] &lt;= 0.335\ngini = 0.48\nsamples = 5\nvalue = [3, 2]'),
+ Text(0.48164464023494863, 0.08823529411764706, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.4933920704845815, 0.08823529411764706, 'x[9] &lt;= 0.5\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.48751835535976507, 0.029411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.49926578560939794, 0.029411764705882353, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.47577092511013214, 0.3235294117647059, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.48164464023494863, 0.38235294117647056, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.48751835535976507, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.5256975036710719, 0.6176470588235294, 'x[3] &lt;= 2.5\ngini = 0.35\nsamples = 31\nvalue = [24, 7]'),
+ Text(0.5051395007342144, 0.5588235294117647, 'x[16] &lt;= 0.195\ngini = 0.473\nsamples = 13\nvalue = [8, 5]'),
+ Text(0.49926578560939794, 0.5, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.5110132158590308, 0.5, 'x[16] &lt;= 0.31\ngini = 0.5\nsamples = 10\nvalue = [5, 5]'),
+ Text(0.5051395007342144, 0.4411764705882353, 'x[11] &lt;= 2.04\ngini = 0.469\nsamples = 8\nvalue = [3, 5]'),
+ Text(0.4933920704845815, 0.38235294117647056, 'x[4] &lt;= 1.72\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.48751835535976507, 0.3235294117647059, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.49926578560939794, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.5168869309838473, 0.38235294117647056, 'x[13] &lt;= 0.215\ngini = 0.32\nsamples = 5\nvalue = [1, 4]'),
+ Text(0.5110132158590308, 0.3235294117647059, 'x[2] &lt;= 245.5\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.5051395007342144, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.5168869309838473, 0.2647058823529412, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.5227606461086637, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.5168869309838473, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.5462555066079295, 0.5588235294117647, 'x[12] &lt;= 1.775\ngini = 0.198\nsamples = 18\nvalue = [16, 2]'),
+ Text(0.540381791483113, 0.5, 'x[11] &lt;= 2.11\ngini = 0.408\nsamples = 7\nvalue = [5, 2]'),
+ Text(0.5345080763582967, 0.4411764705882353, 'x[2] &lt;= 252.5\ngini = 0.48\nsamples = 5\nvalue = [3, 2]'),
+ Text(0.5286343612334802, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.540381791483113, 0.38235294117647056, 'x[6] &lt;= 0.285\ngini = 0.5\nsamples = 4\nvalue = [2, 2]'),
+ Text(0.5345080763582967, 0.3235294117647059, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.5462555066079295, 0.3235294117647059, 'gini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.5462555066079295, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.5521292217327459, 0.5, 'gini = 0.0\nsamples = 11\nvalue = [11, 0]'),
+ Text(0.5814977973568282, 0.7352941176470589, 'x[10] &lt;= 0.39\ngini = 0.401\nsamples = 18\nvalue = [5, 13]'),
+ Text(0.5756240822320118, 0.6764705882352942, 'gini = 0.0\nsamples = 6\nvalue = [0, 6]'),
+ Text(0.5873715124816447, 0.6764705882352942, 'x[16] &lt;= 0.37\ngini = 0.486\nsamples = 12\nvalue = [5, 7]'),
+ Text(0.5814977973568282, 0.6176470588235294, 'x[2] &lt;= 243.0\ngini = 0.494\nsamples = 9\nvalue = [5, 4]'),
+ Text(0.5697503671071953, 0.5588235294117647, 'x[10] &lt;= 0.476\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.5638766519823789, 0.5, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.5756240822320118, 0.5, 'x[3] &lt;= 3.5\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.5697503671071953, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.5814977973568282, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.593245227606461, 0.5588235294117647, 'x[10] &lt;= 0.398\ngini = 0.48\nsamples = 5\nvalue = [2, 3]'),
+ Text(0.5873715124816447, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.5991189427312775, 0.5, 'x[10] &lt;= 0.462\ngini = 0.375\nsamples = 4\nvalue = [1, 3]'),
+ Text(0.593245227606461, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.604992657856094, 0.4411764705882353, 'x[2] &lt;= 249.0\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.5991189427312775, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.6108663729809104, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.593245227606461, 0.6176470588235294, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.8217694566813509, 0.9117647058823529, 'x[10] &lt;= 0.705\ngini = 0.225\nsamples = 487\nvalue = [424, 63]'),
+ Text(0.7584434654919237, 0.8529411764705882, 'x[13] &lt;= 0.265\ngini = 0.416\nsamples = 156\nvalue = [110.0, 46.0]'),
+ Text(0.7092511013215859, 0.7941176470588235, 'x[16] &lt;= 0.235\ngini = 0.498\nsamples = 91\nvalue = [48, 43]'),
+ Text(0.6725403817914831, 0.7352941176470589, 'x[14] &lt;= 0.196\ngini = 0.481\nsamples = 57\nvalue = [23, 34]'),
+ Text(0.6519823788546255, 0.6764705882352942, 'x[10] &lt;= 0.558\ngini = 0.5\nsamples = 43\nvalue = [21, 22]'),
+ Text(0.6461086637298091, 0.6176470588235294, 'gini = 0.0\nsamples = 4\nvalue = [0, 4]'),
+ Text(0.657856093979442, 0.6176470588235294, 'x[16] &lt;= 0.115\ngini = 0.497\nsamples = 39\nvalue = [21, 18]'),
+ Text(0.6343612334801763, 0.5588235294117647, 'x[13] &lt;= -0.25\ngini = 0.494\nsamples = 27\nvalue = [12, 15]'),
+ Text(0.6226138032305433, 0.5, 'x[2] &lt;= 272.5\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.6167400881057269, 0.4411764705882353, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.6284875183553598, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.6461086637298091, 0.5, 'x[2] &lt;= 228.5\ngini = 0.476\nsamples = 23\nvalue = [9, 14]'),
+ Text(0.6402349486049926, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.6519823788546255, 0.4411764705882353, 'x[3] &lt;= 3.5\ngini = 0.463\nsamples = 22\nvalue = [8, 14]'),
+ Text(0.6343612334801763, 0.38235294117647056, 'x[10] &lt;= 0.675\ngini = 0.32\nsamples = 10\nvalue = [2, 8]'),
+ Text(0.6284875183553598, 0.3235294117647059, 'gini = 0.0\nsamples = 5\nvalue = [0, 5]'),
+ Text(0.6402349486049926, 0.3235294117647059, 'x[6] &lt;= 0.05\ngini = 0.48\nsamples = 5\nvalue = [2, 3]'),
+ Text(0.6343612334801763, 0.2647058823529412, 'gini = 0.0\nsamples = 3\nvalue = [0, 3]'),
+ Text(0.6461086637298091, 0.2647058823529412, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.6696035242290749, 0.38235294117647056, 'x[2] &lt;= 269.5\ngini = 0.5\nsamples = 12\nvalue = [6, 6]'),
+ Text(0.6637298091042585, 0.3235294117647059, 'x[2] &lt;= 268.0\ngini = 0.48\nsamples = 10\nvalue = [6, 4]'),
+ Text(0.657856093979442, 0.2647058823529412, 'x[15] &lt;= 0.025\ngini = 0.494\nsamples = 9\nvalue = [5, 4]'),
+ Text(0.6519823788546255, 0.20588235294117646, 'x[2] &lt;= 261.0\ngini = 0.469\nsamples = 8\nvalue = [5, 3]'),
+ Text(0.6461086637298091, 0.14705882352941177, 'x[2] &lt;= 230.5\ngini = 0.49\nsamples = 7\nvalue = [4, 3]'),
+ Text(0.6343612334801763, 0.08823529411764706, 'x[10] &lt;= 0.674\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.6284875183553598, 0.029411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.6402349486049926, 0.029411764705882353, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.657856093979442, 0.08823529411764706, 'x[10] &lt;= 0.621\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.6519823788546255, 0.029411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.6637298091042585, 0.029411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.657856093979442, 0.14705882352941177, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.6637298091042585, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.6696035242290749, 0.2647058823529412, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.6754772393538914, 0.3235294117647059, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.6813509544787077, 0.5588235294117647, 'x[11] &lt;= 1.84\ngini = 0.375\nsamples = 12\nvalue = [9, 3]'),
+ Text(0.6696035242290749, 0.5, 'x[4] &lt;= 1.81\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.6637298091042585, 0.4411764705882353, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.6754772393538914, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.6930983847283406, 0.5, 'x[10] &lt;= 0.675\ngini = 0.198\nsamples = 9\nvalue = [8, 1]'),
+ Text(0.6872246696035242, 0.4411764705882353, 'gini = 0.0\nsamples = 6\nvalue = [6, 0]'),
+ Text(0.6989720998531571, 0.4411764705882353, 'x[14] &lt;= 0.025\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.6930983847283406, 0.38235294117647056, 'gini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.7048458149779736, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.6930983847283406, 0.6764705882352942, 'x[10] &lt;= 0.65\ngini = 0.245\nsamples = 14\nvalue = [2, 12]'),
+ Text(0.6872246696035242, 0.6176470588235294, 'gini = 0.0\nsamples = 10\nvalue = [0, 10]'),
+ Text(0.6989720998531571, 0.6176470588235294, 'x[16] &lt;= 0.195\ngini = 0.5\nsamples = 4\nvalue = [2, 2]'),
+ Text(0.6930983847283406, 0.5588235294117647, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.7048458149779736, 0.5588235294117647, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.7459618208516887, 0.7352941176470589, 'x[3] &lt;= 2.5\ngini = 0.389\nsamples = 34\nvalue = [25, 9]'),
+ Text(0.7342143906020558, 0.6764705882352942, 'x[10] &lt;= 0.594\ngini = 0.473\nsamples = 13\nvalue = [5, 8]'),
+ Text(0.7283406754772394, 0.6176470588235294, 'x[9] &lt;= 0.5\ngini = 0.469\nsamples = 8\nvalue = [5, 3]'),
+ Text(0.7224669603524229, 0.5588235294117647, 'x[2] &lt;= 237.5\ngini = 0.408\nsamples = 7\nvalue = [5, 2]'),
+ Text(0.7165932452276065, 0.5, 'x[10] &lt;= 0.534\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.71071953010279, 0.4411764705882353, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.7224669603524229, 0.4411764705882353, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.7283406754772394, 0.5, 'gini = 0.0\nsamples = 4\nvalue = [4, 0]'),
+ Text(0.7342143906020558, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.7400881057268722, 0.6176470588235294, 'gini = 0.0\nsamples = 5\nvalue = [0, 5]'),
+ Text(0.7577092511013216, 0.6764705882352942, 'x[10] &lt;= 0.691\ngini = 0.091\nsamples = 21\nvalue = [20, 1]'),
+ Text(0.7518355359765051, 0.6176470588235294, 'gini = 0.0\nsamples = 20\nvalue = [20, 0]'),
+ Text(0.7635829662261381, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8076358296622613, 0.7941176470588235, 'x[10] &lt;= 0.684\ngini = 0.088\nsamples = 65\nvalue = [62, 3]'),
+ Text(0.7929515418502202, 0.7352941176470589, 'x[10] &lt;= 0.537\ngini = 0.061\nsamples = 63\nvalue = [61, 2]'),
+ Text(0.7812041116005873, 0.6764705882352942, 'x[3] &lt;= 2.5\ngini = 0.278\nsamples = 6\nvalue = [5, 1]'),
+ Text(0.775330396475771, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.7870778267254038, 0.6176470588235294, 'gini = 0.0\nsamples = 5\nvalue = [5, 0]'),
+ Text(0.8046989720998532, 0.6764705882352942, 'x[16] &lt;= 0.25\ngini = 0.034\nsamples = 57\nvalue = [56, 1]'),
+ Text(0.7988252569750367, 0.6176470588235294, 'x[2] &lt;= 251.5\ngini = 0.219\nsamples = 8\nvalue = [7, 1]'),
+ Text(0.7929515418502202, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8046989720998532, 0.5588235294117647, 'gini = 0.0\nsamples = 7\nvalue = [7, 0]'),
+ Text(0.8105726872246696, 0.6176470588235294, 'gini = 0.0\nsamples = 49\nvalue = [49, 0]'),
+ Text(0.8223201174743024, 0.7352941176470589, 'x[13] &lt;= 0.37\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.8164464023494861, 0.6764705882352942, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8281938325991189, 0.6764705882352942, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.8850954478707783, 0.8529411764705882, 'x[13] &lt;= -0.39\ngini = 0.097\nsamples = 331\nvalue = [314, 17]'),
+ Text(0.8458149779735683, 0.7941176470588235, 'x[3] &lt;= 1.5\ngini = 0.459\nsamples = 14\nvalue = [9, 5]'),
+ Text(0.8399412628487518, 0.7352941176470589, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.8516886930983847, 0.7352941176470589, 'x[8] &lt;= 0.5\ngini = 0.375\nsamples = 12\nvalue = [9, 3]'),
+ Text(0.8399412628487518, 0.6764705882352942, 'x[10] &lt;= 0.759\ngini = 0.198\nsamples = 9\nvalue = [8, 1]'),
+ Text(0.8340675477239354, 0.6176470588235294, 'x[7] &lt;= 0.6\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.8281938325991189, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.8399412628487518, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8458149779735683, 0.6176470588235294, 'gini = 0.0\nsamples = 7\nvalue = [7, 0]'),
+ Text(0.8634361233480177, 0.6764705882352942, 'x[10] &lt;= 0.997\ngini = 0.444\nsamples = 3\nvalue = [1, 2]'),
+ Text(0.8575624082232012, 0.6176470588235294, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.869309838472834, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.9243759177679882, 0.7941176470588235, 'x[11] &lt;= 2.26\ngini = 0.073\nsamples = 317\nvalue = [305, 12]'),
+ Text(0.8986784140969163, 0.7352941176470589, 'x[2] &lt;= 228.5\ngini = 0.063\nsamples = 307\nvalue = [297, 10]'),
+ Text(0.8869309838472834, 0.6764705882352942, 'x[10] &lt;= 0.79\ngini = 0.375\nsamples = 4\nvalue = [3, 1]'),
+ Text(0.8810572687224669, 0.6176470588235294, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8928046989720999, 0.6176470588235294, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.9104258443465492, 0.6764705882352942, 'x[12] &lt;= 1.775\ngini = 0.058\nsamples = 303\nvalue = [294, 9]'),
+ Text(0.9045521292217328, 0.6176470588235294, 'gini = 0.0\nsamples = 98\nvalue = [98, 0]'),
+ Text(0.9162995594713657, 0.6176470588235294, 'x[10] &lt;= 0.927\ngini = 0.084\nsamples = 205\nvalue = [196, 9]'),
+ Text(0.9001468428781204, 0.5588235294117647, 'x[16] &lt;= 0.16\ngini = 0.039\nsamples = 101\nvalue = [99, 2]'),
+ Text(0.8942731277533039, 0.5, 'x[9] &lt;= 0.5\ngini = 0.159\nsamples = 23\nvalue = [21, 2]'),
+ Text(0.882525697503671, 0.4411764705882353, 'x[10] &lt;= 0.872\ngini = 0.091\nsamples = 21\nvalue = [20, 1]'),
+ Text(0.8766519823788547, 0.38235294117647056, 'gini = 0.0\nsamples = 15\nvalue = [15, 0]'),
+ Text(0.8883994126284875, 0.38235294117647056, 'x[10] &lt;= 0.878\ngini = 0.278\nsamples = 6\nvalue = [5, 1]'),
+ Text(0.882525697503671, 0.3235294117647059, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.8942731277533039, 0.3235294117647059, 'gini = 0.0\nsamples = 5\nvalue = [5, 0]'),
+ Text(0.9060205580029369, 0.4411764705882353, 'x[11] &lt;= 1.74\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.9001468428781204, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.9118942731277533, 0.38235294117647056, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9060205580029369, 0.5, 'gini = 0.0\nsamples = 78\nvalue = [78, 0]'),
+ Text(0.9324522760646109, 0.5588235294117647, 'x[10] &lt;= 0.929\ngini = 0.126\nsamples = 104\nvalue = [97, 7]'),
+ Text(0.9265785609397944, 0.5, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9383259911894273, 0.5, 'x[13] &lt;= 0.195\ngini = 0.11\nsamples = 103\nvalue = [97, 6]'),
+ Text(0.9324522760646109, 0.4411764705882353, 'gini = 0.0\nsamples = 44\nvalue = [44, 0]'),
+ Text(0.9441997063142438, 0.4411764705882353, 'x[2] &lt;= 241.0\ngini = 0.183\nsamples = 59\nvalue = [53, 6]'),
+ Text(0.9236417033773862, 0.38235294117647056, 'x[10] &lt;= 0.956\ngini = 0.408\nsamples = 7\nvalue = [5, 2]'),
+ Text(0.9177679882525698, 0.3235294117647059, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9295154185022027, 0.3235294117647059, 'x[2] &lt;= 236.5\ngini = 0.278\nsamples = 6\nvalue = [5, 1]'),
+ Text(0.9236417033773862, 0.2647058823529412, 'gini = 0.0\nsamples = 3\nvalue = [3, 0]'),
+ Text(0.9353891336270191, 0.2647058823529412, 'x[2] &lt;= 238.0\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.9295154185022027, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9412628487518355, 0.20588235294117646, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.9647577092511013, 0.38235294117647056, 'x[17] &lt;= 1.5\ngini = 0.142\nsamples = 52\nvalue = [48, 4]'),
+ Text(0.9588839941262849, 0.3235294117647059, 'gini = 0.0\nsamples = 24\nvalue = [24, 0]'),
+ Text(0.9706314243759178, 0.3235294117647059, 'x[10] &lt;= 0.951\ngini = 0.245\nsamples = 28\nvalue = [24, 4]'),
+ Text(0.9588839941262849, 0.2647058823529412, 'x[5] &lt;= 2.205\ngini = 0.444\nsamples = 6\nvalue = [4, 2]'),
+ Text(0.9530102790014684, 0.20588235294117646, 'x[10] &lt;= 0.944\ngini = 0.32\nsamples = 5\nvalue = [4, 1]'),
+ Text(0.947136563876652, 0.14705882352941177, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.9588839941262849, 0.14705882352941177, 'x[10] &lt;= 0.945\ngini = 0.444\nsamples = 3\nvalue = [2, 1]'),
+ Text(0.9530102790014684, 0.08823529411764706, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9647577092511013, 0.08823529411764706, 'gini = 0.0\nsamples = 2\nvalue = [2, 0]'),
+ Text(0.9647577092511013, 0.20588235294117646, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9823788546255506, 0.2647058823529412, 'x[13] &lt;= 0.25\ngini = 0.165\nsamples = 22\nvalue = [20, 2]'),
+ Text(0.9765051395007343, 0.20588235294117646, 'gini = 0.0\nsamples = 15\nvalue = [15, 0]'),
+ Text(0.9882525697503671, 0.20588235294117646, 'x[10] &lt;= 0.983\ngini = 0.408\nsamples = 7\nvalue = [5, 2]'),
+ Text(0.9823788546255506, 0.14705882352941177, 'gini = 0.0\nsamples = 5\nvalue = [5, 0]'),
+ Text(0.9941262848751835, 0.14705882352941177, 'gini = 0.0\nsamples = 2\nvalue = [0, 2]'),
+ Text(0.9500734214390602, 0.7352941176470589, 'x[2] &lt;= 254.5\ngini = 0.32\nsamples = 10\nvalue = [8, 2]'),
+ Text(0.9441997063142438, 0.6764705882352942, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9559471365638766, 0.6764705882352942, 'x[10] &lt;= 0.813\ngini = 0.198\nsamples = 9\nvalue = [8, 1]'),
+ Text(0.9500734214390602, 0.6176470588235294, 'x[10] &lt;= 0.77\ngini = 0.5\nsamples = 2\nvalue = [1, 1]'),
+ Text(0.9441997063142438, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [1, 0]'),
+ Text(0.9559471365638766, 0.5588235294117647, 'gini = 0.0\nsamples = 1\nvalue = [0, 1]'),
+ Text(0.9618208516886931, 0.6176470588235294, 'gini = 0.0\nsamples = 7\nvalue = [7, 0]')]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ex8.9_files/figure-html/cell-9-output-2.png" width="543" height="389" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

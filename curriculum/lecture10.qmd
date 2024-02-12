@@ -1,0 +1,5 @@
+# Lecture 10: Model selection and model averaging
+
+* Stacked ensemble learning. https://blogs.sas.com/content/subconsciousmusings/2017/05/18/stacked-ensemble-models-win-data-science-competitions/
+
+

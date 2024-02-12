@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jonas Moss">
+<meta name="dcterms.date" content="2024-02-08">
+
+<title>Solution to exercise 2.2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="solution_2.3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="solution_2.3_files/libs/quarto-html/quarto.js"></script>
+<script src="solution_2.3_files/libs/quarto-html/popper.min.js"></script>
+<script src="solution_2.3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="solution_2.3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="solution_2.3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="solution_2.3_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="solution_2.3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="solution_2.3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="solution_2.3_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solution to exercise 2.2</h1>
+<p class="subtitle lead">Exercises in EBA3500, Fall 2024</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jonas Moss </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 8, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>In this exercise we study the bikeshare data.</p>
+</blockquote>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">(a)</h2>
+<blockquote class="blockquote">
+<p>Import the data and report basic information about the number columns and number rows. Which variables are qualitative and which are quantitative?</p>
+</blockquote>
+<div id="1b0e5cac" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bikeshare <span class="op">=</span> pd.read_csv(<span class="st">"data/Bikeshare.csv"</span>, index_col <span class="op">=</span> <span class="dv">0</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bikeshare.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">season</th>
+<th data-quarto-table-cell-role="th">mnth</th>
+<th data-quarto-table-cell-role="th">day</th>
+<th data-quarto-table-cell-role="th">hr</th>
+<th data-quarto-table-cell-role="th">holiday</th>
+<th data-quarto-table-cell-role="th">weekday</th>
+<th data-quarto-table-cell-role="th">workingday</th>
+<th data-quarto-table-cell-role="th">weathersit</th>
+<th data-quarto-table-cell-role="th">temp</th>
+<th data-quarto-table-cell-role="th">atemp</th>
+<th data-quarto-table-cell-role="th">hum</th>
+<th data-quarto-table-cell-role="th">windspeed</th>
+<th data-quarto-table-cell-role="th">casual</th>
+<th data-quarto-table-cell-role="th">registered</th>
+<th data-quarto-table-cell-role="th">bikers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>Jan</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>clear</td>
+<td>0.24</td>
+<td>0.2879</td>
+<td>0.81</td>
+<td>0.0</td>
+<td>3</td>
+<td>13</td>
+<td>16</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>Jan</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>clear</td>
+<td>0.22</td>
+<td>0.2727</td>
+<td>0.80</td>
+<td>0.0</td>
+<td>8</td>
+<td>32</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>Jan</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>clear</td>
+<td>0.22</td>
+<td>0.2727</td>
+<td>0.80</td>
+<td>0.0</td>
+<td>5</td>
+<td>27</td>
+<td>32</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>Jan</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>clear</td>
+<td>0.24</td>
+<td>0.2879</td>
+<td>0.75</td>
+<td>0.0</td>
+<td>3</td>
+<td>10</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>1</td>
+<td>Jan</td>
+<td>1</td>
+<td>4</td>
+<td>0</td>
+<td>6</td>
+<td>0</td>
+<td>clear</td>
+<td>0.24</td>
+<td>0.2879</td>
+<td>0.75</td>
+<td>0.0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">(b)</h2>
+<blockquote class="blockquote">
+<p>What is the relationship between <code>temp</code> and <code>atemp</code>? Do we need to keep them both?</p>
+</blockquote>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">(c)</h2>
+<blockquote class="blockquote">
+<p>Replace the <code>mnth</code> variables with month numbers, i.e., <code>Jan</code> with <code>1</code>, <code>Feb</code> with <code>2</code>, and so on. Store the results in <code>mnth_num</code>.</p>
+</blockquote>
+<div id="693cb4e7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>replacer <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(bikeshare[<span class="st">"mnth"</span>].unique(), <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">13</span>)))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bikeshare[<span class="st">"mnth_num"</span>] <span class="op">=</span> bikeshare[<span class="st">"mnth"</span>].replace(replacer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\jonas\AppData\Local\Temp\ipykernel_18544\2680626254.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  bikeshare["mnth_num"] = bikeshare["mnth"].replace(replacer)</code></pre>
+</div>
+</div>
+</section>
+<section id="d" class="level2">
+<h2 class="anchored" data-anchor-id="d">(d)</h2>
+<blockquote class="blockquote">
+<p>Inspect the correlation between <code>mnth_num</code>, <code>day</code>, and <code>season</code>. Explain why you see what you see. Make some suitable plots to shed light on the situation. ## (e) Display the correlation matrix and display some pairwise scatterplots of the columns in this data set. Describe your findings.</p>
+</blockquote>
+<div id="5a7aaa61" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bikeshare.corr(numeric_only<span class="op">=</span><span class="va">True</span>).style.background_gradient(cmap<span class="op">=</span><span class="st">'coolwarm'</span>, axis<span class="op">=</span><span class="va">None</span>).<span class="bu">format</span>(precision<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="78">
+<style type="text/css">
+#T_fb7c3_row0_col0, #T_fb7c3_row1_col1, #T_fb7c3_row1_col13, #T_fb7c3_row2_col2, #T_fb7c3_row3_col3, #T_fb7c3_row4_col4, #T_fb7c3_row5_col5, #T_fb7c3_row6_col6, #T_fb7c3_row7_col7, #T_fb7c3_row8_col8, #T_fb7c3_row9_col9, #T_fb7c3_row10_col10, #T_fb7c3_row11_col11, #T_fb7c3_row12_col12, #T_fb7c3_row13_col1, #T_fb7c3_row13_col13 {
+  background-color: #b40426;
+  color: #f1f1f1;
+}
+#T_fb7c3_row0_col1, #T_fb7c3_row0_col13, #T_fb7c3_row1_col0, #T_fb7c3_row13_col0 {
+  background-color: #df634e;
+  color: #f1f1f1;
+}
+#T_fb7c3_row0_col2, #T_fb7c3_row0_col4, #T_fb7c3_row1_col2, #T_fb7c3_row2_col0, #T_fb7c3_row2_col1, #T_fb7c3_row2_col13, #T_fb7c3_row4_col0, #T_fb7c3_row4_col10, #T_fb7c3_row10_col4, #T_fb7c3_row13_col2 {
+  background-color: #88abfd;
+  color: #000000;
+}
+#T_fb7c3_row0_col3, #T_fb7c3_row2_col3, #T_fb7c3_row3_col0, #T_fb7c3_row3_col2, #T_fb7c3_row3_col9, #T_fb7c3_row4_col11, #T_fb7c3_row9_col3, #T_fb7c3_row11_col4 {
+  background-color: #8badfd;
+  color: #000000;
+}
+#T_fb7c3_row0_col5, #T_fb7c3_row4_col13, #T_fb7c3_row5_col0, #T_fb7c3_row5_col12, #T_fb7c3_row12_col5, #T_fb7c3_row13_col4 {
+  background-color: #8fb1fe;
+  color: #000000;
+}
+#T_fb7c3_row0_col6, #T_fb7c3_row6_col0 {
+  background-color: #dedcdb;
+  color: #000000;
+}
+#T_fb7c3_row0_col7, #T_fb7c3_row7_col0 {
+  background-color: #dfdbd9;
+  color: #000000;
+}
+#T_fb7c3_row0_col8, #T_fb7c3_row1_col8, #T_fb7c3_row8_col0, #T_fb7c3_row8_col1, #T_fb7c3_row8_col13, #T_fb7c3_row13_col8 {
+  background-color: #bcd2f7;
+  color: #000000;
+}
+#T_fb7c3_row0_col9, #T_fb7c3_row1_col9, #T_fb7c3_row9_col0, #T_fb7c3_row9_col1, #T_fb7c3_row9_col13, #T_fb7c3_row13_col9 {
+  background-color: #6282ea;
+  color: #f1f1f1;
+}
+#T_fb7c3_row0_col10, #T_fb7c3_row10_col0 {
+  background-color: #b1cbfc;
+  color: #000000;
+}
+#T_fb7c3_row0_col11, #T_fb7c3_row0_col12, #T_fb7c3_row11_col0, #T_fb7c3_row12_col0 {
+  background-color: #c4d5f3;
+  color: #000000;
+}
+#T_fb7c3_row1_col3, #T_fb7c3_row3_col1, #T_fb7c3_row3_col13, #T_fb7c3_row13_col3 {
+  background-color: #93b5fe;
+  color: #000000;
+}
+#T_fb7c3_row1_col4, #T_fb7c3_row4_col1, #T_fb7c3_row5_col9, #T_fb7c3_row9_col5 {
+  background-color: #8db0fe;
+  color: #000000;
+}
+#T_fb7c3_row1_col5, #T_fb7c3_row2_col5, #T_fb7c3_row5_col1, #T_fb7c3_row5_col2, #T_fb7c3_row5_col13, #T_fb7c3_row13_col5 {
+  background-color: #8caffe;
+  color: #000000;
+}
+#T_fb7c3_row1_col6, #T_fb7c3_row6_col1, #T_fb7c3_row6_col13, #T_fb7c3_row13_col6 {
+  background-color: #cdd9ec;
+  color: #000000;
+}
+#T_fb7c3_row1_col7, #T_fb7c3_row7_col1, #T_fb7c3_row7_col13, #T_fb7c3_row13_col7 {
+  background-color: #cfdaea;
+  color: #000000;
+}
+#T_fb7c3_row1_col10, #T_fb7c3_row10_col1, #T_fb7c3_row10_col13, #T_fb7c3_row13_col10 {
+  background-color: #a3c2fe;
+  color: #000000;
+}
+#T_fb7c3_row1_col11, #T_fb7c3_row11_col1, #T_fb7c3_row11_col13, #T_fb7c3_row13_col11 {
+  background-color: #bbd1f8;
+  color: #000000;
+}
+#T_fb7c3_row1_col12, #T_fb7c3_row12_col1, #T_fb7c3_row12_col13, #T_fb7c3_row13_col12 {
+  background-color: #bad0f8;
+  color: #000000;
+}
+#T_fb7c3_row2_col4, #T_fb7c3_row4_col2, #T_fb7c3_row4_col12, #T_fb7c3_row6_col9, #T_fb7c3_row9_col6, #T_fb7c3_row12_col4 {
+  background-color: #89acfd;
+  color: #000000;
+}
+#T_fb7c3_row2_col6, #T_fb7c3_row2_col9, #T_fb7c3_row6_col2, #T_fb7c3_row9_col2 {
+  background-color: #abc8fd;
+  color: #000000;
+}
+#T_fb7c3_row2_col7, #T_fb7c3_row7_col2 {
+  background-color: #aac7fd;
+  color: #000000;
+}
+#T_fb7c3_row2_col8, #T_fb7c3_row3_col5, #T_fb7c3_row5_col3, #T_fb7c3_row8_col2 {
+  background-color: #4b64d5;
+  color: #f1f1f1;
+}
+#T_fb7c3_row2_col10, #T_fb7c3_row10_col2 {
+  background-color: #d6dce4;
+  color: #000000;
+}
+#T_fb7c3_row2_col11, #T_fb7c3_row11_col2 {
+  background-color: #e7d7ce;
+  color: #000000;
+}
+#T_fb7c3_row2_col12, #T_fb7c3_row12_col2 {
+  background-color: #ead5c9;
+  color: #000000;
+}
+#T_fb7c3_row3_col4, #T_fb7c3_row4_col3 {
+  background-color: #779af7;
+  color: #f1f1f1;
+}
+#T_fb7c3_row3_col6, #T_fb7c3_row3_col8, #T_fb7c3_row3_col12, #T_fb7c3_row6_col3, #T_fb7c3_row7_col8, #T_fb7c3_row8_col3, #T_fb7c3_row8_col7, #T_fb7c3_row12_col3 {
+  background-color: #85a8fc;
+  color: #f1f1f1;
+}
+#T_fb7c3_row3_col7, #T_fb7c3_row7_col3 {
+  background-color: #84a7fc;
+  color: #f1f1f1;
+}
+#T_fb7c3_row3_col10, #T_fb7c3_row5_col7, #T_fb7c3_row7_col5, #T_fb7c3_row10_col3 {
+  background-color: #98b9ff;
+  color: #000000;
+}
+#T_fb7c3_row3_col11, #T_fb7c3_row7_col9, #T_fb7c3_row9_col7, #T_fb7c3_row11_col3 {
+  background-color: #7ea1fa;
+  color: #f1f1f1;
+}
+#T_fb7c3_row4_col5, #T_fb7c3_row5_col4 {
+  background-color: #90b2fe;
+  color: #000000;
+}
+#T_fb7c3_row4_col6, #T_fb7c3_row6_col4, #T_fb7c3_row6_col8, #T_fb7c3_row8_col6 {
+  background-color: #81a4fb;
+  color: #f1f1f1;
+}
+#T_fb7c3_row4_col7, #T_fb7c3_row7_col4 {
+  background-color: #80a3fa;
+  color: #f1f1f1;
+}
+#T_fb7c3_row4_col8, #T_fb7c3_row8_col4 {
+  background-color: #7da0f9;
+  color: #f1f1f1;
+}
+#T_fb7c3_row4_col9, #T_fb7c3_row9_col4 {
+  background-color: #96b7ff;
+  color: #000000;
+}
+#T_fb7c3_row5_col6, #T_fb7c3_row6_col5 {
+  background-color: #9abbff;
+  color: #000000;
+}
+#T_fb7c3_row5_col8, #T_fb7c3_row8_col5 {
+  background-color: #92b4fe;
+  color: #000000;
+}
+#T_fb7c3_row5_col10, #T_fb7c3_row10_col5 {
+  background-color: #3b4cc0;
+  color: #f1f1f1;
+}
+#T_fb7c3_row5_col11, #T_fb7c3_row11_col5 {
+  background-color: #adc9fd;
+  color: #000000;
+}
+#T_fb7c3_row6_col7, #T_fb7c3_row7_col6 {
+  background-color: #b50927;
+  color: #f1f1f1;
+}
+#T_fb7c3_row6_col10, #T_fb7c3_row10_col6 {
+  background-color: #f2c9b4;
+  color: #000000;
+}
+#T_fb7c3_row6_col11, #T_fb7c3_row11_col6 {
+  background-color: #e5d8d1;
+  color: #000000;
+}
+#T_fb7c3_row6_col12, #T_fb7c3_row7_col12, #T_fb7c3_row12_col6, #T_fb7c3_row12_col7 {
+  background-color: #efcebd;
+  color: #000000;
+}
+#T_fb7c3_row7_col10, #T_fb7c3_row10_col7 {
+  background-color: #f2cab5;
+  color: #000000;
+}
+#T_fb7c3_row7_col11, #T_fb7c3_row11_col7 {
+  background-color: #e4d9d2;
+  color: #000000;
+}
+#T_fb7c3_row8_col9, #T_fb7c3_row9_col8 {
+  background-color: #485fd1;
+  color: #f1f1f1;
+}
+#T_fb7c3_row8_col10, #T_fb7c3_row10_col8 {
+  background-color: #3e51c5;
+  color: #f1f1f1;
+}
+#T_fb7c3_row8_col11, #T_fb7c3_row11_col8 {
+  background-color: #4c66d6;
+  color: #f1f1f1;
+}
+#T_fb7c3_row8_col12, #T_fb7c3_row12_col8 {
+  background-color: #4257c9;
+  color: #f1f1f1;
+}
+#T_fb7c3_row9_col10, #T_fb7c3_row10_col9 {
+  background-color: #9dbdff;
+  color: #000000;
+}
+#T_fb7c3_row9_col11, #T_fb7c3_row11_col9 {
+  background-color: #a1c0ff;
+  color: #000000;
+}
+#T_fb7c3_row9_col12, #T_fb7c3_row12_col9 {
+  background-color: #a2c1ff;
+  color: #000000;
+}
+#T_fb7c3_row10_col11, #T_fb7c3_row11_col10 {
+  background-color: #f5c0a7;
+  color: #000000;
+}
+#T_fb7c3_row10_col12, #T_fb7c3_row12_col10 {
+  background-color: #f08b6e;
+  color: #f1f1f1;
+}
+#T_fb7c3_row11_col12, #T_fb7c3_row12_col11 {
+  background-color: #bd1f2d;
+  color: #f1f1f1;
+}
+</style>
+
+<table id="T_fb7c3" data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_fb7c3_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">season</th>
+<th id="T_fb7c3_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">day</th>
+<th id="T_fb7c3_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">hr</th>
+<th id="T_fb7c3_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">holiday</th>
+<th id="T_fb7c3_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">weekday</th>
+<th id="T_fb7c3_level0_col5" class="col_heading level0 col5" data-quarto-table-cell-role="th">workingday</th>
+<th id="T_fb7c3_level0_col6" class="col_heading level0 col6" data-quarto-table-cell-role="th">temp</th>
+<th id="T_fb7c3_level0_col7" class="col_heading level0 col7" data-quarto-table-cell-role="th">atemp</th>
+<th id="T_fb7c3_level0_col8" class="col_heading level0 col8" data-quarto-table-cell-role="th">hum</th>
+<th id="T_fb7c3_level0_col9" class="col_heading level0 col9" data-quarto-table-cell-role="th">windspeed</th>
+<th id="T_fb7c3_level0_col10" class="col_heading level0 col10" data-quarto-table-cell-role="th">casual</th>
+<th id="T_fb7c3_level0_col11" class="col_heading level0 col11" data-quarto-table-cell-role="th">registered</th>
+<th id="T_fb7c3_level0_col12" class="col_heading level0 col12" data-quarto-table-cell-role="th">bikers</th>
+<th id="T_fb7c3_level0_col13" class="col_heading level0 col13" data-quarto-table-cell-role="th">mnth_num</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_fb7c3_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">season</td>
+<td id="T_fb7c3_row0_col0" class="data row0 col0">1.000</td>
+<td id="T_fb7c3_row0_col1" class="data row0 col1">0.825</td>
+<td id="T_fb7c3_row0_col2" class="data row0 col2">-0.012</td>
+<td id="T_fb7c3_row0_col3" class="data row0 col3">-0.001</td>
+<td id="T_fb7c3_row0_col4" class="data row0 col4">-0.014</td>
+<td id="T_fb7c3_row0_col5" class="data row0 col5">0.014</td>
+<td id="T_fb7c3_row0_col6" class="data row0 col6">0.344</td>
+<td id="T_fb7c3_row0_col7" class="data row0 col7">0.352</td>
+<td id="T_fb7c3_row0_col8" class="data row0 col8">0.192</td>
+<td id="T_fb7c3_row0_col9" class="data row0 col9">-0.155</td>
+<td id="T_fb7c3_row0_col10" class="data row0 col10">0.142</td>
+<td id="T_fb7c3_row0_col11" class="data row0 col11">0.221</td>
+<td id="T_fb7c3_row0_col12" class="data row0 col12">0.222</td>
+<td id="T_fb7c3_row0_col13" class="data row0 col13">0.829</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">day</td>
+<td id="T_fb7c3_row1_col0" class="data row1 col0">0.825</td>
+<td id="T_fb7c3_row1_col1" class="data row1 col1">1.000</td>
+<td id="T_fb7c3_row1_col2" class="data row1 col2">-0.012</td>
+<td id="T_fb7c3_row1_col3" class="data row1 col3">0.031</td>
+<td id="T_fb7c3_row1_col4" class="data row1 col4">0.011</td>
+<td id="T_fb7c3_row1_col5" class="data row1 col5">0.003</td>
+<td id="T_fb7c3_row1_col6" class="data row1 col6">0.261</td>
+<td id="T_fb7c3_row1_col7" class="data row1 col7">0.273</td>
+<td id="T_fb7c3_row1_col8" class="data row1 col8">0.189</td>
+<td id="T_fb7c3_row1_col9" class="data row1 col9">-0.154</td>
+<td id="T_fb7c3_row1_col10" class="data row1 col10">0.091</td>
+<td id="T_fb7c3_row1_col11" class="data row1 col11">0.185</td>
+<td id="T_fb7c3_row1_col12" class="data row1 col12">0.178</td>
+<td id="T_fb7c3_row1_col13" class="data row1 col13">0.996</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">hr</td>
+<td id="T_fb7c3_row2_col0" class="data row2 col0">-0.012</td>
+<td id="T_fb7c3_row2_col1" class="data row2 col1">-0.012</td>
+<td id="T_fb7c3_row2_col2" class="data row2 col2">1.000</td>
+<td id="T_fb7c3_row2_col3" class="data row2 col3">-0.001</td>
+<td id="T_fb7c3_row2_col4" class="data row2 col4">-0.006</td>
+<td id="T_fb7c3_row2_col5" class="data row2 col5">0.004</td>
+<td id="T_fb7c3_row2_col6" class="data row2 col6">0.121</td>
+<td id="T_fb7c3_row2_col7" class="data row2 col7">0.116</td>
+<td id="T_fb7c3_row2_col8" class="data row2 col8">-0.251</td>
+<td id="T_fb7c3_row2_col9" class="data row2 col9">0.125</td>
+<td id="T_fb7c3_row2_col10" class="data row2 col10">0.304</td>
+<td id="T_fb7c3_row2_col11" class="data row2 col11">0.390</td>
+<td id="T_fb7c3_row2_col12" class="data row2 col12">0.407</td>
+<td id="T_fb7c3_row2_col13" class="data row2 col13">-0.012</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">holiday</td>
+<td id="T_fb7c3_row3_col0" class="data row3 col0">-0.001</td>
+<td id="T_fb7c3_row3_col1" class="data row3 col1">0.031</td>
+<td id="T_fb7c3_row3_col2" class="data row3 col2">-0.001</td>
+<td id="T_fb7c3_row3_col3" class="data row3 col3">1.000</td>
+<td id="T_fb7c3_row3_col4" class="data row3 col4">-0.076</td>
+<td id="T_fb7c3_row3_col5" class="data row3 col5">-0.248</td>
+<td id="T_fb7c3_row3_col6" class="data row3 col6">-0.020</td>
+<td id="T_fb7c3_row3_col7" class="data row3 col7">-0.027</td>
+<td id="T_fb7c3_row3_col8" class="data row3 col8">-0.023</td>
+<td id="T_fb7c3_row3_col9" class="data row3 col9">0.001</td>
+<td id="T_fb7c3_row3_col10" class="data row3 col10">0.053</td>
+<td id="T_fb7c3_row3_col11" class="data row3 col11">-0.047</td>
+<td id="T_fb7c3_row3_col12" class="data row3 col12">-0.023</td>
+<td id="T_fb7c3_row3_col13" class="data row3 col13">0.030</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">weekday</td>
+<td id="T_fb7c3_row4_col0" class="data row4 col0">-0.014</td>
+<td id="T_fb7c3_row4_col1" class="data row4 col1">0.011</td>
+<td id="T_fb7c3_row4_col2" class="data row4 col2">-0.006</td>
+<td id="T_fb7c3_row4_col3" class="data row4 col3">-0.076</td>
+<td id="T_fb7c3_row4_col4" class="data row4 col4">1.000</td>
+<td id="T_fb7c3_row4_col5" class="data row4 col5">0.019</td>
+<td id="T_fb7c3_row4_col6" class="data row4 col6">-0.039</td>
+<td id="T_fb7c3_row4_col7" class="data row4 col7">-0.042</td>
+<td id="T_fb7c3_row4_col8" class="data row4 col8">-0.051</td>
+<td id="T_fb7c3_row4_col9" class="data row4 col9">0.040</td>
+<td id="T_fb7c3_row4_col10" class="data row4 col10">-0.013</td>
+<td id="T_fb7c3_row4_col11" class="data row4 col11">-0.001</td>
+<td id="T_fb7c3_row4_col12" class="data row4 col12">-0.004</td>
+<td id="T_fb7c3_row4_col13" class="data row4 col13">0.012</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">workingday</td>
+<td id="T_fb7c3_row5_col0" class="data row5 col0">0.014</td>
+<td id="T_fb7c3_row5_col1" class="data row5 col1">0.003</td>
+<td id="T_fb7c3_row5_col2" class="data row5 col2">0.004</td>
+<td id="T_fb7c3_row5_col3" class="data row5 col3">-0.248</td>
+<td id="T_fb7c3_row5_col4" class="data row5 col4">0.019</td>
+<td id="T_fb7c3_row5_col5" class="data row5 col5">1.000</td>
+<td id="T_fb7c3_row5_col6" class="data row5 col6">0.053</td>
+<td id="T_fb7c3_row5_col7" class="data row5 col7">0.053</td>
+<td id="T_fb7c3_row5_col8" class="data row5 col8">0.025</td>
+<td id="T_fb7c3_row5_col9" class="data row5 col9">0.011</td>
+<td id="T_fb7c3_row5_col10" class="data row5 col10">-0.325</td>
+<td id="T_fb7c3_row5_col11" class="data row5 col11">0.130</td>
+<td id="T_fb7c3_row5_col12" class="data row5 col12">0.012</td>
+<td id="T_fb7c3_row5_col13" class="data row5 col13">0.004</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">temp</td>
+<td id="T_fb7c3_row6_col0" class="data row6 col0">0.344</td>
+<td id="T_fb7c3_row6_col1" class="data row6 col1">0.261</td>
+<td id="T_fb7c3_row6_col2" class="data row6 col2">0.121</td>
+<td id="T_fb7c3_row6_col3" class="data row6 col3">-0.020</td>
+<td id="T_fb7c3_row6_col4" class="data row6 col4">-0.039</td>
+<td id="T_fb7c3_row6_col5" class="data row6 col5">0.053</td>
+<td id="T_fb7c3_row6_col6" class="data row6 col6">1.000</td>
+<td id="T_fb7c3_row6_col7" class="data row6 col7">0.992</td>
+<td id="T_fb7c3_row6_col8" class="data row6 col8">-0.040</td>
+<td id="T_fb7c3_row6_col9" class="data row6 col9">-0.006</td>
+<td id="T_fb7c3_row6_col10" class="data row6 col10">0.479</td>
+<td id="T_fb7c3_row6_col11" class="data row6 col11">0.382</td>
+<td id="T_fb7c3_row6_col12" class="data row6 col12">0.451</td>
+<td id="T_fb7c3_row6_col13" class="data row6 col13">0.260</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">atemp</td>
+<td id="T_fb7c3_row7_col0" class="data row7 col0">0.352</td>
+<td id="T_fb7c3_row7_col1" class="data row7 col1">0.273</td>
+<td id="T_fb7c3_row7_col2" class="data row7 col2">0.116</td>
+<td id="T_fb7c3_row7_col3" class="data row7 col3">-0.027</td>
+<td id="T_fb7c3_row7_col4" class="data row7 col4">-0.042</td>
+<td id="T_fb7c3_row7_col5" class="data row7 col5">0.053</td>
+<td id="T_fb7c3_row7_col6" class="data row7 col6">0.992</td>
+<td id="T_fb7c3_row7_col7" class="data row7 col7">1.000</td>
+<td id="T_fb7c3_row7_col8" class="data row7 col8">-0.024</td>
+<td id="T_fb7c3_row7_col9" class="data row7 col9">-0.046</td>
+<td id="T_fb7c3_row7_col10" class="data row7 col10">0.474</td>
+<td id="T_fb7c3_row7_col11" class="data row7 col11">0.378</td>
+<td id="T_fb7c3_row7_col12" class="data row7 col12">0.447</td>
+<td id="T_fb7c3_row7_col13" class="data row7 col13">0.273</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">hum</td>
+<td id="T_fb7c3_row8_col0" class="data row8 col0">0.192</td>
+<td id="T_fb7c3_row8_col1" class="data row8 col1">0.189</td>
+<td id="T_fb7c3_row8_col2" class="data row8 col2">-0.251</td>
+<td id="T_fb7c3_row8_col3" class="data row8 col3">-0.023</td>
+<td id="T_fb7c3_row8_col4" class="data row8 col4">-0.051</td>
+<td id="T_fb7c3_row8_col5" class="data row8 col5">0.025</td>
+<td id="T_fb7c3_row8_col6" class="data row8 col6">-0.040</td>
+<td id="T_fb7c3_row8_col7" class="data row8 col7">-0.024</td>
+<td id="T_fb7c3_row8_col8" class="data row8 col8">1.000</td>
+<td id="T_fb7c3_row8_col9" class="data row8 col9">-0.263</td>
+<td id="T_fb7c3_row8_col10" class="data row8 col10">-0.307</td>
+<td id="T_fb7c3_row8_col11" class="data row8 col11">-0.244</td>
+<td id="T_fb7c3_row8_col12" class="data row8 col12">-0.289</td>
+<td id="T_fb7c3_row8_col13" class="data row8 col13">0.188</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">windspeed</td>
+<td id="T_fb7c3_row9_col0" class="data row9 col0">-0.155</td>
+<td id="T_fb7c3_row9_col1" class="data row9 col1">-0.154</td>
+<td id="T_fb7c3_row9_col2" class="data row9 col2">0.125</td>
+<td id="T_fb7c3_row9_col3" class="data row9 col3">0.001</td>
+<td id="T_fb7c3_row9_col4" class="data row9 col4">0.040</td>
+<td id="T_fb7c3_row9_col5" class="data row9 col5">0.011</td>
+<td id="T_fb7c3_row9_col6" class="data row9 col6">-0.006</td>
+<td id="T_fb7c3_row9_col7" class="data row9 col7">-0.046</td>
+<td id="T_fb7c3_row9_col8" class="data row9 col8">-0.263</td>
+<td id="T_fb7c3_row9_col9" class="data row9 col9">1.000</td>
+<td id="T_fb7c3_row9_col10" class="data row9 col10">0.066</td>
+<td id="T_fb7c3_row9_col11" class="data row9 col11">0.081</td>
+<td id="T_fb7c3_row9_col12" class="data row9 col12">0.085</td>
+<td id="T_fb7c3_row9_col13" class="data row9 col13">-0.156</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">casual</td>
+<td id="T_fb7c3_row10_col0" class="data row10 col0">0.142</td>
+<td id="T_fb7c3_row10_col1" class="data row10 col1">0.091</td>
+<td id="T_fb7c3_row10_col2" class="data row10 col2">0.304</td>
+<td id="T_fb7c3_row10_col3" class="data row10 col3">0.053</td>
+<td id="T_fb7c3_row10_col4" class="data row10 col4">-0.013</td>
+<td id="T_fb7c3_row10_col5" class="data row10 col5">-0.325</td>
+<td id="T_fb7c3_row10_col6" class="data row10 col6">0.479</td>
+<td id="T_fb7c3_row10_col7" class="data row10 col7">0.474</td>
+<td id="T_fb7c3_row10_col8" class="data row10 col8">-0.307</td>
+<td id="T_fb7c3_row10_col9" class="data row10 col9">0.066</td>
+<td id="T_fb7c3_row10_col10" class="data row10 col10">1.000</td>
+<td id="T_fb7c3_row10_col11" class="data row10 col11">0.519</td>
+<td id="T_fb7c3_row10_col12" class="data row10 col12">0.715</td>
+<td id="T_fb7c3_row10_col13" class="data row10 col13">0.093</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">registered</td>
+<td id="T_fb7c3_row11_col0" class="data row11 col0">0.221</td>
+<td id="T_fb7c3_row11_col1" class="data row11 col1">0.185</td>
+<td id="T_fb7c3_row11_col2" class="data row11 col2">0.390</td>
+<td id="T_fb7c3_row11_col3" class="data row11 col3">-0.047</td>
+<td id="T_fb7c3_row11_col4" class="data row11 col4">-0.001</td>
+<td id="T_fb7c3_row11_col5" class="data row11 col5">0.130</td>
+<td id="T_fb7c3_row11_col6" class="data row11 col6">0.382</td>
+<td id="T_fb7c3_row11_col7" class="data row11 col7">0.378</td>
+<td id="T_fb7c3_row11_col8" class="data row11 col8">-0.244</td>
+<td id="T_fb7c3_row11_col9" class="data row11 col9">0.081</td>
+<td id="T_fb7c3_row11_col10" class="data row11 col10">0.519</td>
+<td id="T_fb7c3_row11_col11" class="data row11 col11">1.000</td>
+<td id="T_fb7c3_row11_col12" class="data row11 col12">0.969</td>
+<td id="T_fb7c3_row11_col13" class="data row11 col13">0.186</td>
+</tr>
+<tr class="odd">
+<td id="T_fb7c3_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">bikers</td>
+<td id="T_fb7c3_row12_col0" class="data row12 col0">0.222</td>
+<td id="T_fb7c3_row12_col1" class="data row12 col1">0.178</td>
+<td id="T_fb7c3_row12_col2" class="data row12 col2">0.407</td>
+<td id="T_fb7c3_row12_col3" class="data row12 col3">-0.023</td>
+<td id="T_fb7c3_row12_col4" class="data row12 col4">-0.004</td>
+<td id="T_fb7c3_row12_col5" class="data row12 col5">0.012</td>
+<td id="T_fb7c3_row12_col6" class="data row12 col6">0.451</td>
+<td id="T_fb7c3_row12_col7" class="data row12 col7">0.447</td>
+<td id="T_fb7c3_row12_col8" class="data row12 col8">-0.289</td>
+<td id="T_fb7c3_row12_col9" class="data row12 col9">0.085</td>
+<td id="T_fb7c3_row12_col10" class="data row12 col10">0.715</td>
+<td id="T_fb7c3_row12_col11" class="data row12 col11">0.969</td>
+<td id="T_fb7c3_row12_col12" class="data row12 col12">1.000</td>
+<td id="T_fb7c3_row12_col13" class="data row12 col13">0.179</td>
+</tr>
+<tr class="even">
+<td id="T_fb7c3_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">mnth_num</td>
+<td id="T_fb7c3_row13_col0" class="data row13 col0">0.829</td>
+<td id="T_fb7c3_row13_col1" class="data row13 col1">0.996</td>
+<td id="T_fb7c3_row13_col2" class="data row13 col2">-0.012</td>
+<td id="T_fb7c3_row13_col3" class="data row13 col3">0.030</td>
+<td id="T_fb7c3_row13_col4" class="data row13 col4">0.012</td>
+<td id="T_fb7c3_row13_col5" class="data row13 col5">0.004</td>
+<td id="T_fb7c3_row13_col6" class="data row13 col6">0.260</td>
+<td id="T_fb7c3_row13_col7" class="data row13 col7">0.273</td>
+<td id="T_fb7c3_row13_col8" class="data row13 col8">0.188</td>
+<td id="T_fb7c3_row13_col9" class="data row13 col9">-0.156</td>
+<td id="T_fb7c3_row13_col10" class="data row13 col10">0.093</td>
+<td id="T_fb7c3_row13_col11" class="data row13 col11">0.186</td>
+<td id="T_fb7c3_row13_col12" class="data row13 col12">0.179</td>
+<td id="T_fb7c3_row13_col13" class="data row13 col13">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="a490313c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bikeshare.plot.scatter(<span class="st">"mnth_num"</span>, <span class="st">"day"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="solution_2.3_files/figure-html/cell-6-output-1.png" width="593" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="e491d7d0" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bikeshare.plot.scatter(<span class="st">"mnth_num"</span>, <span class="st">"season"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="solution_2.3_files/figure-html/cell-7-output-1.png" width="589" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="f" class="level2">
+<h2 class="anchored" data-anchor-id="f">(f)</h2>
+<blockquote class="blockquote">
+<p>We are interested in predicting <code>bikers</code>. Discuss the relationship between <code>bikers</code> and the other variables; which covariates are interesting to include?</p>
+</blockquote>
+</section>
+<section id="e" class="level2">
+<h2 class="anchored" data-anchor-id="e">(e)</h2>
+<blockquote class="blockquote">
+<p><code>bikers</code> is itself a function of two other columns in the data set. Which ones? Investigate how the remaining covariates are related to these two columns.</p>
+</blockquote>
+<div id="794e213e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(bikeshare[<span class="st">"casual"</span>] <span class="op">+</span> bikeshare[<span class="st">"registered"</span>] <span class="op">==</span> bikeshare[<span class="st">"bikers"</span>]).<span class="bu">all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="81">
+<pre><code>True</code></pre>
+</div>
+</div>
+</section>
+<section id="g" class="level2">
+<h2 class="anchored" data-anchor-id="g">(g)</h2>
+<div id="08c4310c" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bikeshare[[<span class="st">"bikers"</span>, <span class="st">"casual"</span>,<span class="st">"registered"</span>]].hist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="82">
+<pre><code>array([[&lt;Axes: title={'center': 'bikers'}&gt;,
+        &lt;Axes: title={'center': 'casual'}&gt;],
+       [&lt;Axes: title={'center': 'registered'}&gt;, &lt;Axes: &gt;]], dtype=object)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="solution_2.3_files/figure-html/cell-9-output-2.png" width="583" height="431" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6bb309ad" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bikeshare.plot.scatter(<span class="st">"registered"</span>, <span class="st">"casual"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="solution_2.3_files/figure-html/cell-10-output-1.png" width="593" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2eeb876c" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sns.lmplot(data <span class="op">=</span> bikeshare, x<span class="op">=</span><span class="st">"registered"</span>, y<span class="op">=</span><span class="st">"casual"</span>, col <span class="op">=</span> <span class="st">"weekday"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="solution_2.3_files/figure-html/cell-11-output-1.png" width="3350" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

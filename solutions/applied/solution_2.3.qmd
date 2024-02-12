@@ -1,0 +1,84 @@
+---
+title: "Solution to exercise 2.3"
+subtitle: Exercises in EBA3500, Fall 2024
+author: Jonas Moss
+date: last-modified
+execute:
+  echo: true
+jupyter: python3
+reference-location: margin
+citation-location: margin
+---
+
+> In this exercise we study the bikeshare data.
+```{python}
+#| echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+## (a)
+> Import the data and report basic information about the number columns and number rows. Which variables are qualitative and which are quantitative?
+
+```{python}
+bikeshare = pd.read_csv("data/Bikeshare.csv", index_col = 0)
+bikeshare.head()
+```
+
+## (b)
+> What is the relationship between `temp` and `atemp`? Do we need to keep them both?
+
+## (c)
+> Replace the `mnth` variables with month numbers, i.e., `Jan` with `1`, `Feb` with `2`, and so on. Store the results in `mnth_num`.
+
+```{python}
+replacer = dict(zip(bikeshare["mnth"].unique(), range(1, 13)))
+bikeshare["mnth_num"] = bikeshare["mnth"].replace(replacer)
+```
+
+## (d)
+> Inspect the correlation between `mnth_num`, `day`, and `season`. Explain why you see what you see. Make some suitable plots to shed light on the situation.
+## (e)
+>  Display the correlation matrix and display some pairwise scatterplots of the columns in this data set. Describe your findings.
+
+```{python}
+bikeshare.corr(numeric_only=True).style.background_gradient(cmap='coolwarm', axis=None).format(precision=3)
+```
+
+
+```{python}
+bikeshare.plot.scatter("mnth_num", "day")
+```
+
+```{python}
+bikeshare.plot.scatter("mnth_num", "season")
+```
+
+## (f)
+> We are interested in predicting `bikers`. Discuss the relationship between `bikers` and the other variables; which covariates are interesting to include?
+
+## (e)
+> `bikers` is itself a function of two other columns in the data set. Which ones? Investigate how the remaining covariates are related to these two columns.
+
+```{python}
+(bikeshare["casual"] + bikeshare["registered"] == bikeshare["bikers"]).all()
+
+```
+
+
+## (g)
+```{python}
+bikeshare[["bikers", "casual","registered"]].hist()
+```
+
+
+```{python}
+bikeshare.plot.scatter("registered", "casual")
+```
+
+
+```{python}
+sns.lmplot(data = bikeshare, x="registered", y="casual", col = "weekday")
+```

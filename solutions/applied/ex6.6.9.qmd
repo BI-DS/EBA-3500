@@ -1,0 +1,178 @@
+# Exercise 4.6.9 {.unnumbered}
+
+> In this exercise, we will predict the number of applications received using the other variables in the College data set.
+
+Let's import `College`. The argument `index_col=0` tells `pandas` to view the first column as an index column; that's appropriate, as can be seen below.
+
+```{python}
+import pandas as pd
+college = pd.read_csv("data/College.csv", index_col = 0)
+college.head()
+```
+From the `info` method we see that all columns except "Private" has a useful format. Before proceeding, we change `Private` into `int64`. 
+
+```{python}
+import pandas as pd
+college["Private"].replace({"Yes": 1, "No": 0}, inplace = True)
+college.info()
+```
+
+Finally, since we are working with ridge and lasso in this exercise, we need to
+scale the input. We want the mean of each column to be $0$ and its variance to be $1$. 
+
+Now, however, we have the variances
+
+```{python}
+college.var()
+```
+
+We'll use the `StandardScaler` along with Pipeline to scale the data. It's also possible to scale the data manually, as done in the lab. (The lab also mentions the pipeline and scaler though.)
+
+## (a)
+> Split the data set into a training set and a test set.
+
+We have done this many times; use the `train_test_split` function for this.
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+X = college.drop(["Apps", "Accept"], axis=1)
+y = college["Accept"] / college["Apps"]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=1, test_size=0.20, shuffle=True
+) 
+```
+
+## (b)
+> Fit a linear model using least squares on the training set, and report the test error obtained.
+
+A linear regression model can be trained using the `LinearRegression` class from `sklearn.linear_model`. The exercise is not $100\%$ clear about what test error means, so we will go for the mean squared error. (Recall that smaller mean squared errors are better.)
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+linreg = Pipeline(steps=[("scale", StandardScaler()), ("reg", LinearRegression())])
+linreg.fit(X_train, y_train)
+linreg_mse = mean_squared_error(y_true=y_test, y_pred=linreg.predict(X_test))
+linreg_mse
+```
+
+Alternatively, we could go for the $R^2$, which is easier to compute and easier to interpret than the mean squared error. The mean squared error is better suited for model comparisons though.
+```{python}
+linreg.score(X_test,y_test)
+```
+
+## (c)
+> Fit a ridge regression model on the training set, with $\lambda$ chosen by cross-validation. Report the test error obtained.
+
+The $\lambda$ parameter is called $\alpha$ in [sklearn](https://scikit-learn.org/stable/modules/linear_model.html#ridge-regression-and-classification). Cross-validation is done by `RidgeCV`, so we do not have to implement it ourselves. [`RidgeCV`](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.RidgeCV.html#sklearn.linear_model.RidgeCV) defaults to leave-one-out cross-validation since it is fast, but other options are possible.
+
+```{python}
+from sklearn.linear_model import RidgeCV
+from sklearn.pipeline import make_pipeline
+import numpy as np
+ridge = make_pipeline(StandardScaler(),RidgeCV(cv=5))
+ridge.fit(X_train, y_train)
+```
+
+```{python}
+ridge_mse = mean_squared_error(y_true=y_test, y_pred=ridge.predict(X_test))
+ridge_mse 
+```
+
+## (d)
+> Fit a lasso model on the training set, with $\lambda$ chosen by cross-validation. Report the test error obtained, along with the number of non-zero coefcient estimates.
+
+We'll use `LassoCV` along with 5-fold cross-validation.
+
+```{python}
+from sklearn.linear_model import LassoCV
+lasso = make_pipeline(StandardScaler(),LassoCV(cv=5, random_state=0))
+lasso.fit(X_train, y_train)
+```
+
+Then we find the mean squared error.
+```{python}
+lasso_mse = mean_squared_error(y_true=y_test, y_pred=lasso.predict(X_test))
+lasso_mse 
+```
+
+The mean squared error is much worse than for ridge and linear regression. This is not unusual: Lasso is typically worse at prediction problems than ridge, but is better at finding a small set of decent predictors.
+
+The list of coefficient is in the list `lasso.namesd_steps["lassocv"].coef_` (found by `lassocv.coef_` if fitted without a pipeline). The list is not named though, so to identify the non-zero coefficient we can construct a data frame from it.
+```{python}
+coefs = pd.DataFrame({"coef": lasso.named_steps["lassocv"].coef_}).set_index(
+    X_test.columns
+)
+coefs
+```
+
+Now we can filter out the non-zero coefficient
+```{python}
+coefs[coefs["coef"] != 0].sort_values(
+    "coef", key=np.abs, ascending=False
+).style.background_gradient()
+```
+
+
+## (e)
+> Train and elastic net model instead.
+
+```{python}
+from sklearn.linear_model import ElasticNetCV
+elasticnet = make_pipeline(StandardScaler(),ElasticNetCV(cv=5, random_state=0))
+elasticnet.fit(X_train, y_train)
+```
+
+```{python}
+elasticnet_mse = mean_squared_error(y_true=y_test, y_pred=elasticnet.predict(X_test))
+elasticnet_mse
+```
+
+## (g)
+> Comment on the results obtained. How accurately can we predict the number of college applications received? Is there much diference among the test errors resulting from these fve approaches?
+
+
+```{python}
+
+pd.DataFrame(
+    {
+        "MSE": [linreg_mse, ridge_mse, lasso_mse, elasticnet_mse],
+        "R2": [
+            linreg.score(X_test, y_test),
+            ridge.score(X_test, y_test),
+            lasso.score(X_test, y_test),
+            elasticnet.score(X_test, y_test),
+        ],
+    },
+    index=["ols", "ridge", "lasso", "elastic_net"],
+).style.format(precision=4)
+
+```
+
+## (h)
+> Transform the regressor using the logit function.
+
+```{python}
+from sklearn.linear_model import RidgeCV
+from sklearn.pipeline import make_pipeline
+from sklearn.compose import TransformedTargetRegressor
+
+import numpy as np
+
+inverse_func = lambda x: 1 / (1 + np.exp(-x))
+func = lambda p: np.log(p) - np.log(1 - p)
+
+ridge = make_pipeline(
+    StandardScaler(),
+    TransformedTargetRegressor(
+        regressor=RidgeCV(cv=5), func=func, inverse_func=inverse_func
+    ),
+)
+ridge.fit(X_train, y_train)
+ridge_mse = mean_squared_error(y_true=y_test, y_pred=ridge.predict(X_test))
+ridge_mse 
+```

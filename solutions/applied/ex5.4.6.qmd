@@ -1,0 +1,96 @@
+# Exercise 5.4.6 {.unnumbered}
+
+>  We continue to consider the use of a logistic regression model to predict the probability of default using income and balance on the Default data set. In particular, we will now compute estimates for the standard errors of the income and balance logistic regression coefcients in two diferent ways: (1) using the bootstrap, and (2) using the standard formula for computing the standard errors in the sm.GLM() function. Do not forget to set a random seed before beginning your analysis.
+
+**Note:** We will not use `sm.GLM`, but `smf.logit`. That's just simply a better choice. (If you decide not to follow the exercise to the letter, you may provide such as note when relevant.)
+
+We must import the data first. In addition, we will modify the columns student and default to become binary. We also did this in exercise 5.4.5,
+
+```{python}
+import pandas as pd
+default = pd.read_csv("data/Default.csv")
+default["default"].replace({"No": 0, "Yes": 1}, inplace = True)
+default["student"].replace({"No": 0, "Yes": 1}, inplace = True)
+```
+
+## (a)
+
+> Using the summarize() and sm.GLM() functions, determine the
+estimated standard errors for the coefcients associated with
+income and balance in a multiple logistic regression model that
+uses both predictors.
+
+**Note:** This is possible to do, but there are better options. The purpose of this exercise is to extract the standard errors, and there is a dedicated method for that. The name of the method is [`bse`](https://www.statsmodels.org/stable/generated/statsmodels.base.distributed_estimation.DistributedResults.bse.html#statsmodels.base.distributed_estimation.DistributedResults.bse).
+
+```{python}
+import statsmodels.formula.api as smf
+fit = smf.logit("default ~ income + balance", data = default).fit()
+ses_model = fit.bse
+ses_model
+```
+
+## (b)
+> Write a function, boot_fn(), that takes as input the `Default` data set as well as an index of the observations, and that outputs the coefficient estimates for income and balance in the multiple logistic regression model.
+
+***Note:*** I don't think this exercise and the next shows the ideal way of doing this, so I will solve it the correct way in addition to exactly what the exercise asks for.
+
+The purpose of this exercise is to generate single bootstrap sample. The indices are indices for the rows. Recall that the regression coefficients of a fitted statsmodels object is kept in the `params` attribute. We use the `disp=0` argument in `logit` to avoid messages like `Optimization terminated successfully...`.
+```{python}
+def boot_fn(indices):
+  """Generate a single bootstrap sample using the indices in "indices"."""
+  fit = smf.logit("default ~ income + balance", data = default.iloc[indices]).fit(disp=0)
+  return fit.params
+```
+To use this function we need to sample some indices.
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+indices = rng.choice(default.shape[0], size = default.shape[0], replace = True)
+```
+We can test the function on `indices`.
+```{python}
+boot_fn(indices)
+```
+A cleaner approach would be to pass `rng` object into the function to ensure reproducibility. Moreover, the function should take `data` and `formula` as arguments, making it easier to use it for slightly different tasks.
+```{python}
+def boot_sample(data, formula, rng):
+  n = default.shape[0]
+  indices = rng.choice(n, size = n, replace = True)
+  fit = smf.logit(formula, data = data.iloc[indices]).fit(disp=0)
+  return fit.params
+```
+
+Which yields
+```{python}
+rng = np.random.default_rng(seed=313)
+boot_sample(default, "default ~ income + balance", rng)
+```
+
+## (c)
+>  Following the bootstrap example in the lab, use your `boot_fn()` function to estimate the standard errors of the logistic regression coefcients for income and balance.
+
+***Note:*** I am using the `boot_sample` function instead.
+
+To calculate the bootstrap errors we need to make many bootstrap samples, usually $1000$. Then we need to calculate the standard error for every single parameter. A convenient way to do this is with list comprehensions and the `.std` method from Numpy. (Recall that methdods such as `.std` has the axis argument, allowing you to calculate the standard error for each column separately.)
+
+```{python}
+def boot_se(data, formula, rng, n_reps=1000):
+  """ Bootstrap standard error for the logistic model with formula `formula`
+      applied to the data `data`. The rng is a random number generator and `n_reps`
+      is the number of bootstrap repetitions. """
+  params = np.array([boot_sample(data, formula, rng) for _ in range(n_reps)])
+  return params.std(axis = 0, ddof = 1)
+```
+
+Let's simulate with `1000` repetitions.
+```{python}
+rng = np.random.default_rng(seed=313)
+ses_boot = boot_se(default, "default ~ income + balance", rng, 1000)
+ses_boot
+```
+## (d)
+The difference between the standard errors is negligible. 
+
+```{python}
+ses_boot - ses_model
+```

@@ -1,0 +1,38 @@
+# EBA3500 Data science with scikit-learn
+
+## Introduction
+In this course, we will embark on an exciting journey into the realm of artificial intelligence and data science. Machine learning, a subset of AI, empowers computers to learn from data and make predictions or decisions without explicit programming.
+
+Throughout this course, we will leverage the power of scikit-learn, one of the most popular and user-friendly libraries for machine learning in Python. Scikit-learn provides a rich set of tools for data preprocessing, model building, evaluation, and much more. 
+
+This course will equip you with the foundational knowledge and practical skills needed to tackle real-world problems involving classification and regression.
+
+## Learning outcomes - Knowledge
+* Knowledge of basic concepts of machine learning such as bias-variance trade-off, the Bayes error, the difference between supervised and unsupervised learning, training error and validation error.
+* Definition, interpretation, and properties of some of the most popular machine learning methods.
+* Understanding of machine learning workflows, including data loading, preprocessing, fitting, and model evaluation.
+
+## Learning outcomes - Skills
+* Basic loading, cleaning, and exploration of data.
+* Fitting basic classifiers, including logistic regression, latent discriminant analysis, quadratic discriminant analysis, and naive Bayes.
+* Run and make informed choices among linear regression.
+* Splitting data into test and training sets.
+* Construct estimator pipelines.
+* Perform regularized regression such as ridge and lasso.
+* Usage of non-linear features such as polynomials and splines.
+* Using principal component analysis in conjunction with regression or classification methods.
+* Make informed choices between different models using cross-validation.
+
+## General competence
+During the course, students will also improve their general programming and presentation skills, and practice working in teams.
+
+## Course content
+This courses introduces the students to machine learning using Python and scikit-learn. The students will use scikit-learn to work with all parts of the machine learning, such as data loading, preprocessing, model fitting, and model evaluation. Moreover, the students will learn about basic machine learning methods.
+
+## Learning process and requirements to students
+The course will be a combination of lectures and tutorials. 
+
+Please note that while attendance is not compulsory in all courses, it is the student’s own responsibility to obtain any information provided in class that is not included on itslearning or in the text book.
+
+## Curriculum
+- James et al. (2023) An Introduction to Statistical Learning with Applications in Python

@@ -1,0 +1,157 @@
+# Exercise 2.4.10 {.unnumbered}
+> This exercise involves the [Boston](https://islp.readthedocs.io/en/stable/datasets/Boston.html) housing data set
+
+```{python}
+#| echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+## (a) 
+> To begin, load in the `Boston` data set, which is part of the `ISLP` library. Which predictors are quantitative and which are qualitative?
+
+The first column in the CSV is not informative and serves as the index.
+```{python}
+boston = pd.read_csv("data/Boston.csv", index_col=0)
+boston.head()
+```
+
+The data types are as follows.
+```{python}
+boston.dtypes
+```
+
+From the documentation we see that `chas` is a qualitative indicator variable, as "`chas`: Charles River dummy variable (= 1 if tract bounds river; 0 otherwise)." We could have transformed this a string, but opt not to. 
+
+The variables `tax` and `rad` are integer-valued, but `tax` is quantitative since it is a right. The documentation is not completely clear about what `rad` is, but the distribution of its indices is as follows.
+
+```{python}
+boston["rad"].value_counts().sort_index().plot(kind="bar")
+```
+
+Observe that the spread of the values looks somewhat unnatural, and it may be fruitful to replace 24 with 9 in modelling applications.
+
+## (b)
+> How many rows are in this data set? How many columns? What do the rows and columns represent?
+The columns represent the features and targets of the data, the rows are observations. The number of columns is `{python} boston.shape[1]` and the number of rows is `{python} boston.shape[0]`. 
+
+## (c)
+>  Display the correlation matrix and display some pairwise scatterplots of the columns in this data set. Describe your findings.
+```{python}
+boston.corr(numeric_only=True).style.background_gradient(cmap='coolwarm', axis=None).format(precision=2)
+```
+
+We make the following observations:
+* The indicator variable `chas` is barely correlated with anything. 
+* The only strong correlations are `dis` vs `indus`, `dis` vs `nox`, `dis` vs `age`, `tax` vs `rad` (the highest, at `0.91`), and `lstat` vs `medv`.
+* There are many moderate correlations; those are displayed in orange and the darker shades of blue.
+
+```{python}
+#sns.pairplot(boston)
+```
+
+
+The correlation between `tax` and `rad` is reduced if we change the coding of `rad`, but it is still substantial. 
+```{python}
+boston.plot.scatter("tax", "rad")
+```
+
+
+```{python}
+plt.scatter(boston["tax"], boston["rad"].replace({24:9}))
+boston.replace({"rad": {24:9}})[["tax", "rad"]].corr()
+```
+
+The most peculiar relationships are between `crim` and the other columns, which we investigate in the next exercise. There are several non-linear relationships in the data. Consider the afore-mentioned `indus` vs `dis` and `lstat` vs `medv`. The plots look more linear when we apply the log-transform to the data; mostly when we do so on both sides.
+
+```{python}
+boston.plot.scatter("lstat", "medv")
+```
+
+
+```{python}
+boston.plot.scatter("indus", "dis")
+```
+
+```{python}
+plt.scatter(np.log(boston["indus"]), np.log(boston["dis"]))
+```
+
+The linea
+```{python}
+plt.scatter(np.log(boston["medv"]), np.log(boston["lstat"]))
+np.corrcoef(boston["medv"], np.log(boston["lstat"]))
+np.corrcoef(np.log(boston["medv"]), np.log(boston["lstat"]))
+np.corrcoef(np.log(boston["medv"]), boston["lstat"])
+```
+
+## (d)
+> Are any of the predictors associated with per capita crime rate? If so, explain the relationship.
+```{python}
+boston.corr(numeric_only=True)[["crim"]].style.background_gradient(cmap='coolwarm', axis=None).format(precision=2)
+```
+
+```{python}
+sns.pairplot(boston, x_vars="crim")
+```
+
+```{python}
+boston["crim"].plot.hist()
+```
+
+```{python}
+boston["crim"].describe()
+```
+
+## (e)
+> Do any of the suburbs of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
+
+```{python}
+boston.describe()[["crim", "tax", "ptratio"]]
+```
+
+We can also use the boxplot here.
+
+```{python}
+sns.violinplot(boston[["crim", "tax", "ptratio"]])
+```
+
+## (f)
+> How many of the suburbs in this data set bound the Charles river?
+```{python}
+boston.chas.sum()
+```
+
+## (g)
+> What is the median pupil-teacher ratio among the towns in this data set?
+Already answered in (f). But we can find it as 
+
+```{python}
+boston["ptratio"].median()
+```
+
+## (h)
+> Which suburb of Boston has lowest median value of owner occupied homes? What are the values of the other predictors for that suburb, and how do those values compare to the overall ranges for those predictors? Comment on your fndings.
+
+This requires the function `argmin`.
+```{python}
+boston["medv"].argmin()
+```
+
+```{python}
+frame = boston.describe().transpose()
+boston.iloc[boston["medv"].argmin()].transpose()
+```
+
+## (i)
+> In this data set, how many of the suburbs average more than seven rooms per dwelling? More than eight rooms per dwelling? Comment on the suburbs that average more than eight rooms per dwelling.
+
+```{python}
+[(boston["rm"] >= 7).sum(), (boston["rm"] >= 8).sum()]
+```
+
+```{python}
+boston[boston["rm"] >= 8]
+```

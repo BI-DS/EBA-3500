@@ -1,0 +1,107 @@
+# Exercise 4.8.16 {.unnumbered}
+---
+format:
+  html:
+    code-fold: false
+    theme:
+      light: sandstone
+      dark: superhero
+jupyter: python3
+---
+
+
+> Using the `Boston` data set, fit classifcation models in order to predict whether a given suburb has a crime rate above or below the median. Explore logistic regression, LDA, naive Bayes, and KNN models using various subsets of the predictors. Describe your fndings. *Hint: You will have to create the response variable yourself, using the variables that are contained in the Boston data set.*
+
+This exercise is similar to 4.8.13 and 4.8.14. Let's import `Boston`
+
+```{python}
+import pandas as pd
+boston = pd.read_csv("data/Boston.csv")
+boston.head()
+```
+
+The first column is useless, so we remove it.
+
+```{python}
+boston.drop("Unnamed: 0", axis = 1, inplace = True)
+```
+
+Then we make a new column "above", which is $1$ if the `crim` is above the median and $0$ if not. We also remove the `crim` column, since we shouldn't use it to predict anything.
+
+```{python}
+boston["above"] = 1*(boston["crim"] > boston["crim"].median())
+boston.drop("crim", axis = 1, inplace = True)
+```
+
+We have learned from previous exercises that the `pairplot` isn't as useful for classifications as it is for regression - but we need to have a look at the correlation matrix.
+
+```{python}
+boston.corr()
+```
+
+All covariates have decent correlation with `above` except `chas`. There might be problems with multicollinearity regarding `tax` and `rad`; thus we could be justified in removing `rad` as well, but we'll keep it for now. 
+
+Let's split the data in a training and validation set.
+
+```{python}
+from sklearn.model_selection import train_test_split
+X = boston.drop(["above", "chas"], axis = 1)
+y = boston["above"]
+X_train, X_test, y_train, y_test = train_test_split(X,y, 
+                                   random_state=313,  
+                                   test_size=0.20,  
+                                   shuffle=True) 
+
+```
+
+We fit the models using logistic regression, LDA, QDA, and naive Bayes.
+
+```{python}
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis as QDA
+from sklearn.naive_bayes import GaussianNB as NB
+from sklearn.linear_model import LogisticRegression as Logit
+
+def evaluator(fitter):
+  return fitter.fit(X_train, y_train).score(X_test, y_test)
+
+[evaluator(fitter) for fitter in [LDA(), QDA(), NB(), Logit(penalty=None)]]
+```
+
+You may ignore the error message; it means the model could potentially be fitted even better. But it does something sensible, as you can see from the output. The performance of QDA is pretty good. One possible way to proceed now would be to use interactions or polynomial features in `QDA()` to see if the fit would improve. Alternatively, one could try to add linear features one at a time. 
+
+```{python}
+(boston.corr()["above"]).abs().sort_values()
+```
+Now we got a strategy we can use to add covariates one at a time. We start with `nox`, then add `rad`, and so on. If adding a covariate does not help, we skip it and try the next one.
+
+To do this we use this function:
+```{python}
+def evaluator_remove(fitter, features):
+  return fitter.fit(X_train[features], y_train).score(X_test[features], y_test)
+```
+
+Now let's compare the inclusion of `nox` to the inclusion of `nox` and `rad`:
+```{python}
+[evaluator_remove(QDA(), ["nox"]),
+evaluator_remove(QDA(), ["nox", "rad"])]
+```
+
+Including `rad` didn't help us, so we move on to the next covariate that improves the fit:
+
+
+```{python}
+[evaluator_remove(QDA(), ["nox", "tax"]), 
+evaluator_remove(QDA(), ["nox", "tax", "indus"]), 
+evaluator_remove(QDA(), ["nox", "tax", "indus", "zn"]), 
+evaluator_remove(QDA(), ["nox", "tax", "indus", "zn", "medv"]),
+evaluator_remove(QDA(), ["nox", "tax", "indus", "zn", "medv", "ptratio"])]
+```
+
+Finally, let's start at the top of the list and add `rad``:
+```{python}
+evaluator_remove(QDA(), ["nox", "tax", "indus", "zn", "medv", "ptratio", "rad"])
+```
+This is a good model and the one we go for. 
+
+Observe that adding `rad` to the model with `nox` only didn't improve the accuracy, but adding `rad` to the model with many other variables did. This is not uncommon!

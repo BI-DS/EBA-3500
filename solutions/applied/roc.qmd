@@ -1,0 +1,54 @@
+# Area under the ROC Curve {.unnumbered}
+
+* Should be one lecture.
+* Can write several pages, ~15 perhaps.
+* Imbalanced data.
+
+
+* Scoring rules
+* **Bayes classifier.** The best possible classifier given the data.
+* Accuracy score.
+    * As a loss: zero-one loss.
+    * Best possible score given the features: "Bayes error rate", equal $P(Y=1)
+    * "Irreducible error".
+    * Not a proper scoring rule.
+* ROC and AUC
+* The log loss and cross-entropy loss.
+    * Best possible loss given the features: 
+    * Sometimes called logistic loss.
+    * A proper loss function.
+    * Has information-theoretic justification.
+* Brier score or quadratic scoring rule.
+    * A proper scoring rule.
+    * Not as well-justified as the log loss.
+* Are other proper scoring rules too, the spherical scoring rule is well-known.
+* The AUC is not a proper scoring rule.
+* Confusion matrices
+* *Maybe* proper scoring rules.
+* Decision rules and separation of concerns.
+    * Make a model that represents reality as well as possible. Roughly speaking, it should have the smallest possible 
+* Find some decent references.
+* Exercises: Compare metrics,
+
+
+```{python}
+#| echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+## Scoring and loss functions
+* In cross-validation.
+    * `sklearn` uses the convention that higher scores are better.
+    * Such scores are often called utility functions, especially in economics and philosophy.
+    * Metrics with loss in their name work in the opposite way. Smaller losses are better.    
+
+* In estimation. Logistic regression minimizes the log loss under the model $P(Y=1\mid X)=\frac{\exp{\beta^T X}}{(1+\exp(\beta^T X))}$. Neural networks 
+* In the final model evaluation.
+
+For classificaiton problems the only proper scoring rules in `sklearn` are the Brier score (`neg_brier_score`) and `neg_log_loss`. 
+
+## The soft-max function
+(This should be a conceptual exercise.)

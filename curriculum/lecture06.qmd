@@ -1,0 +1,7 @@
+# Lecture 6: Discriminant analysis
+
+## Misc
+* Is https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestCentroid.html#sklearn.neighbors.NearestCentroid the same as "diagonal discriminant analysis" with all-equal variance terms?
+    * Diagnosis of multiple cancer types by shrunken centroids of gene expression.
+
+* Find studies on effectiveness of these algorithms (there is one )

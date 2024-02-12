@@ -1,0 +1,28 @@
+# Exercise 6.6.8 {.unnumbered}
+> In this exercise, we will generate simulated data, and will then use this data to perform forward and backward stepwise selection.
+
+## (a)
+> Create a random number generator and use its normal() method to generate a predictor X of length n = 100, as well as a noise vector " of length n = 100.
+
+```{python}
+import numpy as np
+rng = np.random.default_rng(seed=313)
+n = 100
+x = rng.normal(n)
+eps = rng.normal(n)
+```
+
+## (b)
+> Generate a response vector Y of length n = 100 according to [a cubic model, where you choose the coefficients.]
+
+```{python}
+beta0 = 2
+beta1 = np.pi
+beta2 = 3
+beta3 = 1/3
+
+y = beta0 + beta1 * x + beta2 * x**2 + beta3 * x**3 + eps 
+```
+
+## (c)
+Forward stepwise selection can be done using the ISLP package. Scikit learn does not support it, neither does 

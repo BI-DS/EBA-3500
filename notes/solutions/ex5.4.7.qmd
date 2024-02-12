@@ -1,0 +1,108 @@
+# Exercise 5.4.7
+
+> In Sections 5.1.2 and 5.1.3, we saw that the cross_validate() function can be used in order to compute the LOOCV test error estimate. Alternatively, one could compute those quantities using just sm.GLM() and the predict() method of the ftted model within a for loop. You will now take this approach in order to compute the LOOCV error for a simple logistic regression model on the Weekly data set. Recall that in the context of classifcation problems, the LOOCV error is given in (5.4).
+
+As always, we start by importing the data.
+
+```{python}
+import pandas as pd
+weekly = pd.read_csv("data/Weekly.csv")
+weekly.head()
+```
+
+Then we modify `Direction` to be binary.
+```{python}
+weekly["Direction"].replace({"Up": 1, "Down": 0}, inplace = True)
+```
+
+## (a)
+> Fit a logistic regression model that predicts `Direction` using `Lag1` and `Lag2`.
+
+We have done this many times already. Recall that the `disp=0` argument prevents the fit method from displaying any information.
+
+```{python}
+import statsmodels.formula.api as smf
+fit = smf.logit("Direction ~ Lag1 + Lag2", data = weekly).fit(disp=0)
+```
+
+## (b)
+> Fit a logistic regression model that predicts `Direction` using `Lag1`
+and `Lag2` using all but the frst observation.
+
+The `drop` method an be used to get rid of the first observation.
+
+```{python}
+import statsmodels.formula.api as smf
+fit = smf.logit("Direction ~ Lag1 + Lag2", data = weekly.drop(0)).fit(disp=0)
+```
+
+## (c)
+> Use the model from (b) to predict the direction of the frst observation. You can do this by predicting that the frst observation will go up if P(Direction = "Up"|Lag1, Lag2) > 0.5. Was this observation correctly classifed?
+
+The predict method is what we need here. 
+
+```{python}
+fit.predict(weekly.iloc[0])
+```
+
+Since the predicted probability is greater than $0.5$, the prediction is that `Direction` equals 1. This prediction is false, however, so the observation was incorrectly classified.
+
+```{python}
+1*(fit.predict(weekly.iloc[0]) > 0.5)[0]
+weekly.iloc[0]["Direction"]
+```
+
+## (d)
+> Write a for loop from i = 1 to i = n, where n is the number of observations in the data set, that performs each of the following steps: [...]
+
+We opt to use a list comprehension instead of a for-loop; the code is very similar,
+but list comprehensions are more Pythonic. 
+
+Observe that we use `y_pred[i]` when squaring the difference (you can also use the absolute value); this is because we want to access the $i$th element from the series `y_pred`.
+```{python}
+
+def error(i):
+  """Calculate the leave-one-out error for the index i."""
+  fit = smf.logit("Direction ~ Lag1 + Lag2", data = weekly.drop(i)).fit(disp=0)
+  y_obs = weekly.iloc[i]["Direction"]
+  y_pred = 1*(fit.predict(weekly.iloc[i]) > 0.5)
+  return (y_obs - y_pred[i])**2
+
+errors = [error(i) for i in range(weekly.shape[0])]
+```
+  
+
+## (e)
+> Take the average of the n numbers obtained in (d)iv in order to
+obtain the LOOCV estimate for the test error. Comment on the
+results.
+
+```{python}
+import numpy as np
+np.array(errors).mean()
+```
+
+This error is barely better than random guessing! Let's compare it to `sklearn`'s 
+`cross_validate`. We need to fit the same model with `sklearn`'s `LogisticRegression` to use `cross_validate`. The object we need is `LogisticRegression(penalty = "none")`, as we do not want any penalty.
+
+```{python}
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import LeaveOneOut
+from sklearn.linear_model import LogisticRegression
+clf = LogisticRegression(penalty = "none")
+```
+
+Let's define our required covariates and responses.
+
+```{python}
+X = weekly[["Lag1", "Lag2"]]
+y = weekly["Direction"]
+```
+
+Now we're ready to cross-validate. The "test_score" element of `loo` below (which is a dictionary) equal $1$ if the prediction is a success and $0$ otherwise. Thus we need to subtract the score from $1$ to get the same result as above.
+
+```{python}
+loo = cross_validate(clf, X, y, cv = LeaveOneOut())
+1-loo["test_score"].mean()
+```
+
