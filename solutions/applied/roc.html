@@ -74,7 +74,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Area under the ROC Curve</h1>
+<h1 class="title">Scoring rules for classifiers</h1>
 </div>
 
 
@@ -92,23 +92,107 @@ window.Quarto = {
 
 
 <ul>
-<li>Should be one lecture.</li>
-<li>Can write several pages, ~15 perhaps.</li>
-<li>Imbalanced data.</li>
-<li>ROC and AUC</li>
-<li>The log score</li>
-<li>Confusion matrices</li>
-<li><em>Maybe</em> proper scoring rules.</li>
-<li>Decision rules and separation of concerns.</li>
-<li>Find some decent references.</li>
-<li>Exercises: Compare metrics,</li>
-</ul>
-<section id="the-uses-of-scoring" class="level2">
-<h2 class="anchored" data-anchor-id="the-uses-of-scoring">The uses of scoring</h2>
+<li><p>Should be one lecture.</p></li>
+<li><p>Can write several pages, ~20 perhaps.</p></li>
+<li><p>Imbalanced data.</p></li>
+<li><p>Scoring rules</p></li>
+<li><p><strong>Bayes classifier.</strong> The best possible classifier given the data.</p></li>
+<li><p>Accuracy score.</p>
 <ul>
-<li>As a criterion in cross-validation,</li>
-<li>In estimation. Logistic regression minimizes the log loss under the model <span class="math inline">\(P(Y=1\mid X)=\frac{\exp{\beta^T X}}{(1+\exp(\beta^T X))}\)</span></li>
+<li>As a loss: zero-one loss.</li>
+<li>Best possible score given the features: “Bayes error rate”, equal $P(Y=1)</li>
+<li>“Irreducible error”.</li>
+<li>Not a proper scoring rule.</li>
+</ul></li>
+<li><p>ROC and AUC</p></li>
+<li><p>The log loss and cross-entropy loss.</p>
+<ul>
+<li>Best possible loss given the features:</li>
+<li>Sometimes called logistic loss.</li>
+<li>A proper loss function.</li>
+<li>Has information-theoretic justification.</li>
+</ul></li>
+<li><p>Brier score or quadratic scoring rule.</p>
+<ul>
+<li>A proper scoring rule.</li>
+<li>Not as well-justified as the log loss.</li>
+</ul></li>
+<li><p>Are other proper scoring rules too, the spherical scoring rule is well-known.</p></li>
+<li><p>The AUC is not a proper scoring rule.</p></li>
+<li><p>Confusion matrices</p></li>
+<li><p><em>Maybe</em> proper scoring rules.</p></li>
+<li><p>Decision rules and separation of concerns.</p>
+<ul>
+<li>Make a model that represents reality as well as possible. Roughly speaking, it should have the smallest possible</li>
+</ul></li>
+<li><p>Find some decent references.</p></li>
+<li><p>Log loss usually outpeforms its competitors.</p>
+<ul>
+<li>Decision trees: Gini impurity vs log loss. Log loss wins.</li>
+<li>Logistic regression: Is estimated using maximum likelihood; equivalent to minimizing the empirical log loss. This algorithm performs much better than</li>
+</ul></li>
+<li><p>Exercises: Compare metrics,</p></li>
 </ul>
+<section id="scoring-and-loss-functions" class="level2">
+<h2 class="anchored" data-anchor-id="scoring-and-loss-functions">Scoring and loss functions</h2>
+<ul>
+<li>In cross-validation.
+<ul>
+<li><code>sklearn</code> uses the convention that higher scores are better.</li>
+<li>Such scores are often called utility functions, especially in economics and philosophy.</li>
+<li>Metrics with loss in their name work in the opposite way. Smaller losses are better.</li>
+</ul></li>
+<li>In estimation. Logistic regression minimizes the log loss under the model <span class="math inline">\(P(Y=1\mid X)=\frac{\exp{\beta^T X}}{(1+\exp(\beta^T X))}\)</span>. Neural networks</li>
+<li>In the final model evaluation.</li>
+</ul>
+<p>For classificaiton problems the only proper scoring rules in <code>sklearn</code> are the Brier score (<code>neg_brier_score</code>) and <code>neg_log_loss</code>.</p>
+</section>
+<section id="the-soft-max-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-soft-max-function">The soft-max function</h2>
+<p>(This should be a conceptual exercise.)</p>
+</section>
+<section id="how-confusion-matrices-roc-and-auc-are-often-used" class="level1">
+<h1>How confusion matrices, ROC, and AUC are often used</h1>
+</section>
+<section id="proper-scoring-rules" class="level1">
+<h1>Proper scoring rules</h1>
+<p><strong>Motivation:</strong> You run a weather forecasting company. You want to provide incentives to your employees for giving the best possible forecasts in the set <code>rain</code>, <code>cloudy</code> and <code>sunny</code>.</p>
+<p>s(p,Y)</p>
+<p><span class="math inline">\(Es(p,Y)\)</span></p>
+<p>Strictly proper scoring rules: The <strong>logarithmic scoring rule</strong> and the <strong>Brier score</strong>.</p>
+<p>Improper scoring rules: The AUC, the misclassification error, any rule that does not depend on probabilities.</p>
+<p>Let <span class="math inline">\(Y\in \{1,2,\ldots C\}\)</span> be a qualitative target variable and <span class="math inline">\(X\)</span> be a collection of features.</p>
+</section>
+<section id="connection-to-machine-learning" class="level1">
+<h1>Connection to machine learning</h1>
+</section>
+<section id="statistical-efficiency" class="level1">
+<h1>Statistical efficiency</h1>
+</section>
+<section id="conditional-entropy-and-r2" class="level1">
+<h1>Conditional entropy and <span class="math inline">\(R^2\)</span></h1>
+<p><span class="math display">\[h(Y\mid X) = -\sum_{y\in\mathcal{C}} \int \log(x \mid y)f(y,x)dx\]</span></p>
+<p><span class="math display">\[
+1-\frac{\min_{q\in\mathcal{Q}}E[l(Y,q(X))]}{\min_{q}E[l(Y,q)]},
+\]</span></p>
+</section>
+<section id="the-zoo-of-metrics" class="level1">
+<h1>The zoo of metrics</h1>
+</section>
+<section id="resources" class="level1">
+<h1>Resources</h1>
+<p>As usual, none of these resources are on the curriculum. * https://intelligence.org/files/TechnicalExplanation.pdf</p>
+<ul>
+<li><p>https://www.fharrell.com/post/class-damage/</p></li>
+<li><p>https://academic.oup.com/jamia/article/29/9/1525/6605096?login=false</p></li>
+<li><p>https://people.inf.elte.hu/kiss/11dwhdm/roc.pdf</p></li>
+</ul>
+</section>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<ol type="1">
+<li>Looking at cross-validation scores.</li>
+</ol>
 </section>
 
 </main>

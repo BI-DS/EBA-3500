@@ -1,0 +1,10 @@
+---
+title: "Support vector machines"
+author: Jonas Moss
+date: last-modified
+execute:
+  echo: true
+jupyter: python3
+reference-location: margin
+citation-location: margin
+---

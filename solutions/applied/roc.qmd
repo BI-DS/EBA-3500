@@ -1,7 +1,7 @@
-# Area under the ROC Curve {.unnumbered}
+# Scoring rules for classifiers {.unnumbered}
 
 * Should be one lecture.
-* Can write several pages, ~15 perhaps.
+* Can write several pages, ~20 perhaps.
 * Imbalanced data.
 
 
@@ -28,6 +28,9 @@
 * Decision rules and separation of concerns.
     * Make a model that represents reality as well as possible. Roughly speaking, it should have the smallest possible 
 * Find some decent references.
+* Log loss usually outpeforms its competitors.
+    * Decision trees: Gini impurity vs log loss. Log loss wins.
+    * Logistic regression: Is estimated using maximum likelihood; equivalent to minimizing the empirical log loss. This algorithm performs much better than 
 * Exercises: Compare metrics,
 
 
@@ -50,5 +53,57 @@ import seaborn as sns
 
 For classificaiton problems the only proper scoring rules in `sklearn` are the Brier score (`neg_brier_score`) and `neg_log_loss`. 
 
-## The soft-max function
-(This should be a conceptual exercise.)
+
+# The ROC curve and AUC are often used
+* Discrete classifier (kNN) (is a point)
+* Probabilistic classifier (all others) produces a curve.
+* The ROC depicts the tradeoff between benefits (true positives) and costs (false positives).
+* A conservative classifier is on the left-hand side.
+* A liberal classifier is on the right-hand side.
+* The line $x=y$ is a random classifier.
+* Worse-than-random classifiers are below the line $x=y$. 
+
+https://stackoverflow.com/questions/34881298/roc-curve-shows-strange-pattern
+
+
+# Proper scoring rules
+
+**Motivation:** You run a weather forecasting company. You want to provide incentives to your employees for giving the best possible forecasts in the set `rain`, `cloudy` and `sunny`.
+
+s(p,Y)
+
+$Es(p,Y)$
+
+Strictly proper scoring rules: The **logarithmic scoring rule** and the **Brier score**.
+
+Improper scoring rules: The AUC, the misclassification error, any rule that does not depend on probabilities.
+
+Let $Y\in \{1,2,\ldots C\}$ be a qualitative target variable and $X$ be a collection of features. 
+
+# Connection to machine learning
+
+# Statistical efficiency
+
+# Conditional entropy and $R^2$
+
+$$h(Y\mid X) = -\sum_{y\in\mathcal{C}} \int \log(x \mid y)f(y,x)dx$$
+
+$$
+1-\frac{\min_{q\in\mathcal{Q}}E[l(Y,q(X))]}{\min_{q}E[l(Y,q)]},
+$$
+
+# The zoo of metrics
+
+# Resources
+As usual, none of these resources are on the curriculum. 
+* https://intelligence.org/files/TechnicalExplanation.pdf
+
+* https://www.fharrell.com/post/class-damage/
+
+* https://academic.oup.com/jamia/article/29/9/1525/6605096?login=false
+
+* https://people.inf.elte.hu/kiss/11dwhdm/roc.pdf
+
+# Exercises
+
+1. Looking at cross-validation scores.

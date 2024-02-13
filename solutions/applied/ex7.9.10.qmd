@@ -14,12 +14,12 @@ college.head()
 
 ```{python}
 from sklearn.model_selection import train_test_split
-X = college.drop(["Outstate"], axis = 1)
+
+X = college.drop(["Outstate"], axis=1)
 y = college["Outstate"]
-X_train, X_test, y_train, y_test = train_test_split(X,y, 
-                                   random_state=313,  
-                                   test_size=0.20,  
-                                   shuffle=True) 
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=313, test_size=0.20, shuffle=True
+) 
 
 ```
 

@@ -108,6 +108,8 @@ regr_boost_big.fit(X_train, y_train)
 mse(regr_boost_big.predict(X_test), y_test)
 ```
 
+
+
 ## (c) AdaBoost
 
 ```{python}
