@@ -48,27 +48,6 @@
 
 -   Using PCA and cross-validation with logistic regression: https://scikit-learn.org/stable/auto_examples/compose/plot_digits_pipe.html#sphx-glr-auto-examples-compose-plot-digits-pipe-py
 
-## Plan
-
-| Number | Name | Chapters |
-| --     | ---  | ------   |
-| 1  | Introduction and recap               | ISLP 1
-| 2  | Statistical learning                 | ISLP 2
-| 3  | Exploration and exposition           | Notes on exploratory data analysis 
-| 4  | More exploration and exposition      | Notes on exploratory data analysis 
-| 5  | Linear regression                    | ISPL 3
-| 6  | Feature transformations              | ISPL 3
-| 7  | Logistic regression                  | ISPL 4
-| 8  | Generative models for classification | ISPL 4
-| 9  | Cross-validation                     | ISPL 5
-| 10 | Regularization                       | ISPL 6
-| 11 | Non-linear features                  | ISPL 7
-| 12 | Decision trees                       | ISPL 8
-| 13 | Boosting and random forests          | ISPL 9
-| 14 | Evaluating models                    | Notes on evaluating models
-| 15 | Connecting the dots                  | 
-
-
 ## Questions
 
 Make \~300 questions, \~20 for each week? (10 in lecture, 10 after exercises.)

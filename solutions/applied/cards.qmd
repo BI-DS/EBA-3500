@@ -60,22 +60,3 @@ Which of LDA, QDA, Gaussian naive Bayes and logistic regression could generate t
 
 ###
 Generative models for classification.
-
-###
-What is the odds ratio?
-
-###
-What are odds? 
-
-###
-When is the odds ratio approximately equal to the risk ratio?
-
-## Chapter 5
-
-## Chapter 8
-
-###
-What is the *learning rate* in boosting for regression trees?
-
-
-

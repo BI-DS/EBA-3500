@@ -67,55 +67,6 @@ from sklearn.metrics import RocCurveDisplay
 RocCurveDisplay.from_estimator(clf, X_test, y_test)
 ```
 
-```{python}
-from sklearn.metrics import RocCurveDisplay
-RocCurveDisplay.from_estimator(clf, X_test, y_test)
-```
-
-```{python}
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
-
-clf_boost = GradientBoostingClassifier()
-clf_boost.fit(X_train, y_train)
-clf_rf = RandomForestClassifier()
-clf_rf.fit(X_train, y_train)
-clf_logit = LogisticRegression()
-clf_logit.fit(X_train, y_train)
-
-_, ax = plt.subplots()
-RocCurveDisplay.from_estimator(clf_boost, X_test, y_test, ax=ax)
-RocCurveDisplay.from_estimator(clf, X_test, y_test, ax=ax)
-RocCurveDisplay.from_estimator(clf_rf, X_test, y_test, ax=ax)
-RocCurveDisplay.from_estimator(clf_logit, X_test, y_test, ax=ax)
-
-from sklearn.metrics import log_loss
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import accuracy_score
-
-loss = lambda clf: -log_loss(y_test, clf.predict_proba(X_test))
-aucl = lambda clf: roc_auc_score(y_test, clf.predict_proba(X_test)[:, 1])
-accl = lambda clf: accuracy_score(y_test, clf.predict(X_test))
-
-
-pd.DataFrame(
-    {
-        "logloss": [loss(clf_boost), loss(clf_rf), loss(clf_logit), loss(clf)],
-        "AUC": [aucl(clf_boost), aucl(clf_rf), aucl(clf_logit), aucl(clf)],
-        "accuracy": [accl(clf_boost), accl(clf_rf), accl(clf_logit), accl(clf)],
-    },
-    index=["boost", "random forest", "logit", "tree"],
-)
-```
-
-```{python}
-from sklearn.svm import SVC
-
-clf_svc = SVC()
-clf_svc.fit(X_train, y_train)
-
-```
 ## (f)
 > Use cross-validation on the training set in order to determine the optimal tree size.
 
@@ -142,43 +93,18 @@ accuracy_score(clf_cv.predict(X_test), y_test)
 ```
 
 ## (g)
-> Produce a plot with tree size on the $x$-axis and cross-validated log loss on the $y$-axis.
+> Produce a plot with tree size on the $x$-axis and cross-validated
+log loss on the $y$-axis.
 
 ```{python}
 x = [list(x.values())[0] for x in clf_cv.cv_results_["params"]]
-y = clf_cv.cv_results_["mean_test_neg_log_loss"]
+y = clf_cv.cv_results_["mean_test_score"]
 plt.plot(x,y)
 plt.xlabel("Maximal number of leaf nodes")
 plt.ylabel("Cross-validated negative log loss")
 ```
 
-## (h)
-```{python}
-x_acc = [list(x.values())[0] for x in clf_cv.cv_results_["params"]]
-y_acc = clf_cv.cv_results_["mean_test_accuracy"]
-plt.plot(x_acc,y_acc)
-plt.xlabel("Maximal number of leaf nodes")
-plt.ylabel("Cross-validated accuracy score")
-```
 
-## (i)
-```{python}
-x_acc = [list(x.values())[0] for x in clf_cv.cv_results_["params"]]
-y_acc = clf_cv.cv_results_["mean_test_accuracy"]
-plt.plot(x_acc,y_acc)
-plt.xlabel("Maximal number of leaf nodes")
-plt.ylabel("Cross-validated accuracy score")
-```
-
-## (j)
-> Produce a pruned tree corresponding to the optimal tree size obtained using cross-validation. If cross-validation does not lead to selection of a pruned tree, then create a pruned tree with five terminal nodes.
-
-[Cost-complexity pruning](https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html)
-
-```{python}
-path = clf.cost_complexity_pruning_path(X_train, y_train)
-ccp_alphas = path.ccp_alphas
-```
 
 ## (with pipelines)
 ```{python}
