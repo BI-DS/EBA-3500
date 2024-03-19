@@ -7,7 +7,7 @@ number of reasons why this measure should be avoided.
 
 1. It’s highly dependent on the cutpoint chosen for a “positive” prediction.
 
-2. You can add a highly significant variable to the model and have the percentage classified correctly actually decrease. Classification error is a very
+2. You can add a highly significant variable to the model and have the percentage classified correctly actually decrease. Classification error is a very
 insensitive and statistically inefficient measure264, 633 since if the threshold
 for “positive” is, say 0.75, a prediction of 0.99 rates the same as one of
 0.751.

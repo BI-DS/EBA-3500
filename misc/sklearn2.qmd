@@ -1,192 +1,21 @@
 # Functions in `sklearn` {.unnumbered}
 
-
-## Functions in `matplotlib` and `seaborn`
-
-## Functions and methods in `pandas`
-We assume basic knowledge of `pandas` this course, e.g., 
-
-
-
-| Name                          | Description           | Examples  | Lecture   |
-| ----------------------------- | -------------------   | -------   | -------   |
-| .read_csv()                   |                       |           | 8         |              
-| .head()                       |                       |           | 8         |
-| .info()                       |                       |           | 8         |
-| .dtypes()                     |                       |           | 8         |
-| .describe()                   |                       |           | 8         |
-| .value_counts()               |                       |           | 8         |
-| .astype()                     |                       |           | 8         |
-| .sort_values()                |                       |           | 8         |
-| .reset_index()                |                       |           | 8         |
-| Indexing with []              |                       |           | 9         |
-| Filtering with bools          |                       |           | 9         |
-| `.loc`                        |                       |           | 9         |
-| `.iloc`                       |                       |           | 9         |
-| `concat` `merge`              |                       |           | 9         |
-| `.isna()`                     |                       |           | 10        |
-| `.dropna()`                   |                       |           | 10        |
-| `.fillna()`                   |                       |           | 10        |
-| `.sum()`                      |                       |           | 10        |
-| `.cut()`                      |                       |           | 10        |
-| `.groupby()`                  |                       |           | 10        |
-| `.pivot_table()`              |                       |           | 10        |
-| `.crosstab()`                 |                       |           | 10        |
-| `.plot()`                     |                       |           | 11        |
-| Axes and subplots             |                       |           | 12        |
-| `sns.lineplot`                |                       |           | 12        |
-| `sns.countplot`               |                       |           | 12        |
-| `sns.barplot`                 |                       |           | 12        |
-| `sns.heatmap`                 |                       |           | 12        |
-| `sns.histplot`                |                       |           | 12        |
-| `sns.jointplot`               |                       |           | 12        | 
-| `sns.pairplot`                |                       |           | 12        |
-| `sns.FacetGrid`               |                       |           | 12        |
-
-### `pandas` recap
-
-#### Lecture 8
-* Series, their values and indices.
-* Dataframe, creation from dictionaries, with indices.
-* `read_csv`, `head`, and `info`.
-* Show datatypes with `dtypes` for the dataframe and `dtype` for a series.
-* `describe()`.
-* `value_counts()`.
-* `astype`.
-* Sorting with `sort_values`.
-* Using `inplace=True`.
-* `reset_index`.
-
-#### Lecture 9
-* Selection by index with []; selecting multiple indices.
-* Filtering by boolean arrays.
-* Logical operators in selection.
-* Selection with `.loc`.
-* Selection with `.iloc`.
-* Concatenation with `concat`.
-* Merging data frames with `merge`.
-
-**Attributes**
-df.index, df.columns, 
-
-#### Lecture 10
-* `.isna()`,
-* `.dropna()`,
-* `.fillna()`,
-* `.sum()`,
-* `.cut()`,
-* `.groupby()`,
-* `.pivot_table()`,
-* `.crosstab`.
-
-#### Lecture 11
-* `plt.plot`: Line plot, scatter plot, bar plot.
-* `sns.lineplot`
-* `sns.countplot`
-* `sns.barplot`
-* `sns.heatmap`
-* `sns.histplot`
-* `sns.pairplot`
-* `sns.FacetGrid`
-
-
-### Data cleaning and missing values
-
-Data cleaning:
-* Split columns.
-* 
-https://datascientyst.com/exploratory-data-analysis-pandas-examples/
-https://bookdown.org/rdpeng/exdata/exploratory-data-analysis-checklist.html
-
-### Outliers
-* Use visual explanation of box plots in lecture.
-* Show how to find the outliers.
-* Mention there is a lot of stuff about this.
-* Have some exercises where it matters.
-
-### Imbalanced data
-
-### Data leakage
-* Find a good source on this at the correct level.
-
-* Having the target as a feature.
-
-#### Invalid processing
-* The example from Elements of Statistical Learning.
-* All data processing must be done using only the training data.
-* Exploratory data analysis is usually fine, but no always.
-* Separate into train and test in the beginning.
-* Do all modelling steps in cross-validation:
-    * Feature scaling.
-    * Feature selection.
-    * And so on.
-* https://www.cs.umb.edu/~ding/history/470_670_fall_2011/papers/cs670_Tran_PreferredPaper_LeakingInDataMining.pdf
-    * (i) An "account number" feature, for the problem of predicting whether a potential customer would open an account at a bank. Obviously, assignment of such an account number is only done after an account has been opened. 
-    * (ii) An "interviewer name" feature, in a cellular company churn prediction problem.
-    * **Anachronisms.**
-        * Was feature $x$ registered before or after the event $y$?
-            * IBM example.
-    * Find some data sets with data leakage.
-
-### Embarassing mistakes
-* Understanding your domain.
-
-### Formatting and styling
-
-* style.highlight_between():
-    * Highlight negative values.
-* style.highlight_max(), style_highlight_min().
-
-## New functions
-We use several functions in `pandas`, `matplotlib`, and `seaborn` that haven't been covered, in addition to several `numpy` functions and some `statsmodels` functions.
-
-| Name                          | Library               | Description         | Examples |
-| ----------------------------- | --------------------- | ------------------- | -------  |
-| .corr()                       | `pandas`              | Correlation matrix.  | 
-| .dtype()                      | `pandas`              | Data type for series. |
-| .min() / .max()               | `pandas` / `numpy`    | Find minimal / maximal value. 
-| .argmin() / .argmax()         | `pandas` / `numpy`    | Find index of the minimal / maximal values. | 
-| .nonzero()                    | `pandas`              | 
-| .all() / .any()               | `pandas` / `numpy`    | Check if every element of an array is `True`.    
-| .replace()                    | `pandas`              | Replace values in data frame or series. Often used to replace strings with numbers. |
-| .to_numpy()                   | `pandas`              | Converts data frame or series to Numpy | 
-| .lmplot                       | `seaborn`             | 
-| .style.format                 | `pandas`              | Format data frames for visual inspection. |
-| .std / .var                   | `pandas` / `numpy`    | Standard deviation and variance. |
-| .mean / .median               | `pandas`              | Mean and median.
-| style.background_gradient     | `pandas`              | Styling of data frames with colors. Important for correlation matrices. | 
-| .query()                      | `pandas`              | Selecting rows from a dataset using specialized syntax.
-| .boxplot()                    | `seaborn`             | 
-| .violinplot()                 | `seaborn`             |
-| .sort_index()                 | `seaborn`             |
-| .log()                         | `numpy`               | Natural logarithm.                      
-| .log1p()                       | `numpy`               | Narural logarithm of $1+x$.
-| .sample()                     | `pandas` | 
-| .shape |                      | `pandas` / `numpy`
-| .describe(include='object')   | `pandas` | 
-| .nunique() / .unique()                    | `pandas` | 
-| sns.catplot()                 | `pandas` |
-
-
-## Functions in `sklearn`
 [`sklearn`](https://scikit-learn.org/stable/index.html), also known as scikit-learn, is the most important Python library for fitting machine learning model. It has strong support for basic functionality such as metrics, cross-validation, fitting algorithms, and feature manipulation. That said, it is a big library, and we only use parts of it. 
 
 The following is a complete list of `sklearn` functions used in this course, and we expect some familiarity with all of them. No exercise requires you to use any other function than those on this list, and all of them have been covered in the lectures. In the same way, the exercises on the exam will only use functions on this list.
-
-
 
 ### Model selection and evaluation
 
 | Name                                                                                                                                                        | Module            | Usage                                                                                 | Examples |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|---------------------------------------------------------------------------------------|----------|
-| [`cross_val_score`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html#sklearn.model_selection.cross_val_score) | `model_selection` | Cross-validation for a specified score.                                                           |          |
+| [`cross_val_score`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html#sklearn.model_selection.cross_val_score) | `model_selection` | Carry out cross-validation.                                                           |          |
 | [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV)          | `model_selection` | Cross-validation over a grid of values. Used to find the hyperparameters for a model.                                |          |
 | [`confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html)                                               | `metrics`         | Calculate the confusion matrix of a classifier.                                       |          |
 | [`r2_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html#sklearn.metrics.r2_score)                                      | `metrics`         | The $R^2$ score. Default score for most regression methods. Usually available through `reg.score()`.                           |          |
 | [`mean_absolute_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_absolute_error.html#sklearn.metrics.mean_absolute_error)     | `metrics`         | The mean absolute error score in regression, $\text{MAE}=\sum_{i=1}^n|\hat{y_i}-y_i|$ |          |
 | [`mean_squared_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html#sklearn.metrics.mean_squared_error)        | `metrics`         | The mean squared error score in regression,$\text{MSE}=\sum_{i=1}^n(\hat{y_i}-y_i)^2$ |          |
 | [`log_loss`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.log_loss.html#sklearn.metrics.log_loss)                                      | `metrics`         | The log loss, or cross-entropy loss, for classification.                              |          |
-| [`auc`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.auc.html#sklearn.metrics.auc)                                                     | `metrics`         | The area under the ROC curve, used in classification.                                     |          |
+| [`auc`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.auc.html#sklearn.metrics.auc)                                                     | `metrics`         | The area under the curve, used in classification.                                     |          |
 | [`accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html) | `metrics` | Accuracy classification score. Default score for most classification methods. Usually available through `clf.score()`. | |
 
 ### Visualization

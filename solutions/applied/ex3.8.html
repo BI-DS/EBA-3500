@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jonas Moss">
+<meta name="dcterms.date" content="2024-02-09">
 
-<title>python_quarto</title>
+<title>Solution to exercise 2.1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,16 +25,19 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="python_quarto_files/libs/clipboard/clipboard.min.js"></script>
-<script src="python_quarto_files/libs/quarto-html/quarto.js"></script>
-<script src="python_quarto_files/libs/quarto-html/popper.min.js"></script>
-<script src="python_quarto_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="python_quarto_files/libs/quarto-html/anchor.min.js"></script>
-<link href="python_quarto_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="python_quarto_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="python_quarto_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="python_quarto_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="python_quarto_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="ex3.8_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ex3.8_files/libs/quarto-html/quarto.js"></script>
+<script src="ex3.8_files/libs/quarto-html/popper.min.js"></script>
+<script src="ex3.8_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ex3.8_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ex3.8_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ex3.8_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ex3.8_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ex3.8_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ex3.8_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -43,35 +48,143 @@ ul.task-list li input[type="checkbox"] {
 
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Solution to exercise 2.1</h1>
+</div>
 
 
 
-<section id="software-to-install" class="level1">
-<h1>Software to install</h1>
-<p>We use the following software in the course, available for Mac, Windows, and Linux.</p>
-<ol type="1">
-<li>The newest stable version of <a href="https://www.python.org/">Python</a>, at least version 3.12. Be sure to update, as we might use features not available on your current installation. I can’t guarantee Anaconda will work.
-<ul>
-<li>Windows users: You must check add Python to path.</li>
-<li>Upgrade <code>pip</code> using <code>pip install --upgrade pip</code>.</li>
-<li>We also need the following packages, installed using <code>pip install</code>.</li>
-<li><code>scikit-learn</code>, <code>seaborn</code>, <code>matplotlib</code>, <code>numpy</code>, <code>statsmodels</code>, <code>jupyter</code>, <code>scipy</code>, <code>pandas</code>.</li>
-</ul></li>
-<li>The technical publishing system <a href="https://quarto.org/">Quarto</a>.</li>
-<li>The code editor <a href="https://code.visualstudio.com/">VS Code</a>. You can use other editors, but they need to support Quarto. I only support VS Code.
-<ul>
-<li>Quarto.</li>
-<li>Python.</li>
-<li>Black.</li>
-<li>(Optional.) Python Snippets for Data Science.</li>
-</ul></li>
-</ol>
-<section id="windows" class="level2">
-<h2 class="anchored" data-anchor-id="windows">Windows</h2>
-</section>
-<section id="mac" class="level2">
-<h2 class="anchored" data-anchor-id="mac">Mac</h2>
-</section>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jonas Moss </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 9, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>We use the <code>auto</code> data in this exercise. Provided the data is in the data folder, we obtain.</p>
+</blockquote>
+<div id="b448667a" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mpg</th>
+<th data-quarto-table-cell-role="th">cylinders</th>
+<th data-quarto-table-cell-role="th">displacement</th>
+<th data-quarto-table-cell-role="th">horsepower</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">acceleration</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">origin</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">chevrolet chevelle malibu</td>
+<td>18.0</td>
+<td>8</td>
+<td>307.0</td>
+<td>130.0</td>
+<td>3504</td>
+<td>12.0</td>
+<td>70</td>
+<td>American</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">buick skylark 320</td>
+<td>15.0</td>
+<td>8</td>
+<td>350.0</td>
+<td>165.0</td>
+<td>3693</td>
+<td>11.5</td>
+<td>70</td>
+<td>American</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">plymouth satellite</td>
+<td>18.0</td>
+<td>8</td>
+<td>318.0</td>
+<td>150.0</td>
+<td>3436</td>
+<td>11.0</td>
+<td>70</td>
+<td>American</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">amc rebel sst</td>
+<td>16.0</td>
+<td>8</td>
+<td>304.0</td>
+<td>150.0</td>
+<td>3433</td>
+<td>12.0</td>
+<td>70</td>
+<td>American</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">ford torino</td>
+<td>17.0</td>
+<td>8</td>
+<td>302.0</td>
+<td>140.0</td>
+<td>3449</td>
+<td>10.5</td>
+<td>70</td>
+<td>American</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">(a)</h2>
+<blockquote class="blockquote">
+<p>Use the <code>smf.ols()</code> function to perform a simple linear regression with mpg as the response and horsepower as the predictor.</p>
+</blockquote>
+<div id="06d1bb2e" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>0    24.467077
+dtype: float64</code></pre>
+</div>
+</div>
 </section>
 
 </main>

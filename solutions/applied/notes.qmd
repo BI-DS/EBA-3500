@@ -1,0 +1,136 @@
+
+# Useful functions
+
+## Seaborn
+sns.boxplot
+sns.violinplot
+
+## Pandas
+
+# From notebooks
+
+https://www.kaggle.com/code/bandiatindra/telecom-churn-prediction
+
+* Correlation for one variable (can use better colors here).
+* df_dummies.corr()['Churn'].sort_values(ascending = False).plot(kind='bar')
+
+```{python}
+#| echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+```{python}
+telco = pd.read_csv("kaggle/telco.csv", index_col = "customerID", na_values=" ")
+```
+
+```{python}
+sns.boxplot(telco, x="MonthlyCharges", hue="Churn")
+```
+
+## Association between nominal variables
+There is no standard way to 
+
+```{python}
+pd.crosstab(telco["Churn"], telco["gender"], normalize = True).style.format(precision=2)
+```
+
+```{python}
+sns.catplot(telco, x="Churn", hue="gender")
+```
+
+```{python}
+from sklearn.feature_selection import mutual_info_classif
+from scipy.stats import entropy
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+
+# Label encoding for categoricals
+for colname in X.select_dtypes("object"):
+    X[colname], _ = X[colname].factorize()
+
+# All discrete features should now have integer dtypes (double-check this before using MI!)
+discrete_features = X.dtypes == "int64"
+
+def make_mi_scores(X, y, discrete_features):
+    mi_scores = mutual_info_classif(X, y, discrete_features=discrete_features)
+    mi_scores = pd.Series(mi_scores, name="MI Scores", index=X.columns)
+    mi_scores = mi_scores.sort_values(ascending=False)
+    return mi_scores
+
+mi_scores = make_mi_scores(X, y, discrete_features)
+#mi_scores[::3]  # show a few features with their MI scores
+
+```
+
+
+```{python}
+from sklearn.feature_selection import mutual_info_classif
+from scipy.stats import entropy
+(pd.crosstab(telco["Churn"], telco["gender"], normalize = True).style.format(precision=2))
+```
+https://medium.com/swlh/a-deep-conceptual-guide-to-mutual-information-a5021031fad0
+
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import brier_score_loss
+from sklearn.metrics import log_loss
+
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+y.replace({"Yes": 1, "No": 0}, inplace=True)
+logit = LogisticRegression(penalty=None)
+feature, _ = X["Contract"].factorize()
+feature = feature.reshape(-1, 1)
+logit.fit(feature, y)
+
+
+rsq(feature, y, log_loss)
+
+
+```
+
+```{python}
+def allrsq(X, y):
+    logit = LogisticRegression(penalty=None)
+    y_, _ = y.factorize()
+    bottom = log_loss(y_, y_.mean() * np.ones(y_.size))
+
+    def rsq(x, y, loss=log_loss):
+        top = loss(y, logit.predict_proba(x)[:, 1])
+        return 1 - top / bottom
+
+    def massage(x):
+        if x.dtype == "object":
+            print("object")
+            x_, _ = x.factorize()
+        else:
+            print("notobject")
+            x_ = x.to_numpy()
+        x_ = x_.reshape(-1, 1)
+        logit.fit(x_, y_)
+        return rsq(x_, y_)
+
+    return {name: massage(X[name]) for name in X}
+
+
+def rsq(x, y, loss=log_loss):
+    top = loss(y, logit.predict_proba(x)[:, 0])
+    bottom = loss(y, y.mean() * np.ones(y.size))
+    return [top, bottom]
+
+
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+allrsq(X, y)
+```
+
+
+## Association between ordinal variables
+The standards are Kendall's tau and Spearman's rho. 
