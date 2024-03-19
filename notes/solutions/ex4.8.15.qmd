@@ -1,2 +1,0 @@
-# Exercise 4.8.15
-> This problem involves writing functions.

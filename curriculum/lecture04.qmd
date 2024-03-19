@@ -1,8 +1,0 @@
-# Lecture 4: Categorical variables and k-nearest neighbors
-
-## Content
-### K-Nearest Neighbors
-* Fix and Hodges (1951). One of the oldest and best understood machine learning algorithms.
-
-## Programming
-* Using the one-hot-encoder for transformations.

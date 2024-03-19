@@ -1,3 +1,0 @@
-# Lecture 9: Feature transformations
-
-**Curriculum:** ISLP Chapter 7.1 - 7.4 (20 pages)

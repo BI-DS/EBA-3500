@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data analysis with Programming - 13&nbsp; Binary regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../site/13-inference-for-linear-regression.html" rel="prev">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../site/14-binary-regression.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Binary regression</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Data analysis with Programming</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/bi-ds/EBA-3500/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/00-videos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Links to videos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/00-python-tips.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python tips</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/01-scipy-numpy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to <code>Numpy</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/02-statistical-simulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/03-limit-theorems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Limit theorems</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/04-exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory data analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/05-statistical-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basic statistical models and the bootstrap</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/06-unbiased-estimators-efficiency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Unbiased estimators and efficiency</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/07-constructing-estimators.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Constructing estimators</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/08-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Confidence intervals</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/09-testing-hypotheses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Testing hypotheses</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/10-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statistical learning, machine learning, and statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/12-basics-of-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Basics of multiple linear regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/13-inference-for-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">More linear regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../site/14-binary-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Binary regression</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#curriculum" id="toc-curriculum" class="nav-link active" data-scroll-target="#curriculum"><span class="header-section-number">13.1</span> Curriculum</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">13.2</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#conceptual-exercises" id="toc-conceptual-exercises" class="nav-link" data-scroll-target="#conceptual-exercises"><span class="header-section-number">13.2.1</span> Conceptual exercises</a></li>
+  <li><a href="#applied-exercises" id="toc-applied-exercises" class="nav-link" data-scroll-target="#applied-exercises"><span class="header-section-number">13.2.2</span> Applied exercises</a></li>
+  </ul></li>
+  <li><a href="#solution-sketches-to-some-exercises" id="toc-solution-sketches-to-some-exercises" class="nav-link" data-scroll-target="#solution-sketches-to-some-exercises"><span class="header-section-number">13.3</span> Solution sketches to some exercises</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">13.3.1</span> 4.4.6</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">13.3.2</span> 4.4.6</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">13.3.3</span> 4.4.16</a></li>
+  <li><a href="#exercise-1-1" id="toc-exercise-1-1" class="nav-link" data-scroll-target="#exercise-1-1"><span class="header-section-number">13.3.4</span> Exercise 1</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Binary regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="curriculum" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="curriculum"><span class="header-section-number">13.1</span> Curriculum</h2>
+<ul>
+<li>James et al., Chapters 4.1 - 4.3, 4.7.1 - 4.7.2</li>
+</ul>
+</section>
+<section id="exercises" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="exercises"><span class="header-section-number">13.2</span> Exercises</h2>
+<section id="conceptual-exercises" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="conceptual-exercises"><span class="header-section-number">13.2.1</span> Conceptual exercises</h3>
+<ul>
+<li>4.8.1, 4.8.6, 4.8.9</li>
+</ul>
+</section>
+<section id="applied-exercises" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="applied-exercises"><span class="header-section-number">13.2.2</span> Applied exercises</h3>
+<section id="from-the-book" class="level4" data-number="13.2.2.1">
+<h4 data-number="13.2.2.1" class="anchored" data-anchor-id="from-the-book"><span class="header-section-number">13.2.2.1</span> From the book</h4>
+<ul>
+<li>4.8.15, 4.8.16 (use only logistic regression)</li>
+</ul>
+</section>
+<section id="exercise-1" class="level4" data-number="13.2.2.2">
+<h4 data-number="13.2.2.2" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">13.2.2.2</span> Exercise 1</h4>
+<section id="download-data" class="level5" data-number="13.2.2.2.1">
+<h5 data-number="13.2.2.2.1" class="anchored" data-anchor-id="download-data"><span class="header-section-number">13.2.2.2.1</span> Download data</h5>
+<p>Load the data set at <code>https://userpage.fu-berlin.de/soga/200/2010_data_sets/hurricanes.xlsx</code> into a data frame <code>hurricanes</code>. Make a <code>sns.pairplot</code> and look at the correlation matrix. For more information about the data, look at the link. Some of the correlations are extremely high. Why? (<em>Hint</em>: Be sure to remove columns that aren’t numeric using <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop.html"><code>drop</code></a>. You can use <code>df.corr()</code> to calculate the correlation matrix.)</p>
+</section>
+<section id="correlation-plot" class="level5" data-number="13.2.2.2.2">
+<h5 data-number="13.2.2.2.2" class="anchored" data-anchor-id="correlation-plot"><span class="header-section-number">13.2.2.2.2</span> Correlation plot</h5>
+<p>The correlation matrix is hard to read. Modify the code from <a href="https://seaborn.pydata.org/examples/many_pairwise_correlations.html">here</a> or <a href="https://medium.com/@szabo.bibor/how-to-create-a-seaborn-correlation-heatmap-in-python-834c0686b88e">here</a> to make it readable. (<em>Hint:</em> Start out with <code>sns.heatmap(dataframe.corr())</code>.)</p>
+</section>
+<section id="fitting-a-logistic-regression" class="level5" data-number="13.2.2.2.3">
+<h5 data-number="13.2.2.2.3" class="anchored" data-anchor-id="fitting-a-logistic-regression"><span class="header-section-number">13.2.2.2.3</span> Fitting a logistic regression</h5>
+<p>Make a new column in <code>hurricanes</code> called <code>Type.new</code>. A value in this column equals <span class="math inline">\(0\)</span> if <code>Type == 0</code> and <span class="math inline">\(1\)</span> otherwise. Use <code>sns.lmplot</code> to plot a logistic regression <code>"Type_new ~ FirstLat"</code>. (<em>Hint:</em> First make a column <code>c</code> that is <span class="math inline">\(1\)</span> if <code>Type == 0</code> and <span class="math inline">\(0\)</span> otherwise. Then modify it to be <span class="math inline">\(0\)</span> if <code>Type == 0</code> and <span class="math inline">\(1\)</span> otherwise using <code>1 - c</code>, or <code>(1 - 1 * (hurricanes["Type"] == 0))</code>.)</p>
+</section>
+<section id="finding-other-predictors" class="level5" data-number="13.2.2.2.4">
+<h5 data-number="13.2.2.2.4" class="anchored" data-anchor-id="finding-other-predictors"><span class="header-section-number">13.2.2.2.4</span> Finding other predictors</h5>
+<p>Using the <code>Type.new</code> variable as a response, find other reasonable predictors and plot them. (<em>Hint:</em> Can you use <code>hurricanes.corr()</code> for this?)</p>
+</section>
+</section>
+<section id="exercise-2" class="level4" data-number="13.2.2.3">
+<h4 data-number="13.2.2.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">13.2.2.3</span> Exercise 2</h4>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/madmashup/targeted-marketing-predictive-engine/master/banking.csv"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bank <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>bank.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">marital</th>
+<th data-quarto-table-cell-role="th">education</th>
+<th data-quarto-table-cell-role="th">default</th>
+<th data-quarto-table-cell-role="th">housing</th>
+<th data-quarto-table-cell-role="th">loan</th>
+<th data-quarto-table-cell-role="th">contact</th>
+<th data-quarto-table-cell-role="th">month</th>
+<th data-quarto-table-cell-role="th">day_of_week</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">campaign</th>
+<th data-quarto-table-cell-role="th">pdays</th>
+<th data-quarto-table-cell-role="th">previous</th>
+<th data-quarto-table-cell-role="th">poutcome</th>
+<th data-quarto-table-cell-role="th">emp_var_rate</th>
+<th data-quarto-table-cell-role="th">cons_price_idx</th>
+<th data-quarto-table-cell-role="th">cons_conf_idx</th>
+<th data-quarto-table-cell-role="th">euribor3m</th>
+<th data-quarto-table-cell-role="th">nr_employed</th>
+<th data-quarto-table-cell-role="th">y</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>44</td>
+<td>blue-collar</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>unknown</td>
+<td>yes</td>
+<td>no</td>
+<td>cellular</td>
+<td>aug</td>
+<td>thu</td>
+<td>...</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>1.4</td>
+<td>93.444</td>
+<td>-36.1</td>
+<td>4.963</td>
+<td>5228.1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>53</td>
+<td>technician</td>
+<td>married</td>
+<td>unknown</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>cellular</td>
+<td>nov</td>
+<td>fri</td>
+<td>...</td>
+<td>1</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>-0.1</td>
+<td>93.200</td>
+<td>-42.0</td>
+<td>4.021</td>
+<td>5195.8</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>28</td>
+<td>management</td>
+<td>single</td>
+<td>university.degree</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>cellular</td>
+<td>jun</td>
+<td>thu</td>
+<td>...</td>
+<td>3</td>
+<td>6</td>
+<td>2</td>
+<td>success</td>
+<td>-1.7</td>
+<td>94.055</td>
+<td>-39.8</td>
+<td>0.729</td>
+<td>4991.6</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>39</td>
+<td>services</td>
+<td>married</td>
+<td>high.school</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>cellular</td>
+<td>apr</td>
+<td>fri</td>
+<td>...</td>
+<td>2</td>
+<td>999</td>
+<td>0</td>
+<td>nonexistent</td>
+<td>-1.8</td>
+<td>93.075</td>
+<td>-47.1</td>
+<td>1.405</td>
+<td>5099.1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>55</td>
+<td>retired</td>
+<td>married</td>
+<td>basic.4y</td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>cellular</td>
+<td>aug</td>
+<td>fri</td>
+<td>...</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+<td>success</td>
+<td>-2.9</td>
+<td>92.201</td>
+<td>-31.4</td>
+<td>0.869</td>
+<td>5076.2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 21 columns</p>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The dataset comes from the UCI Machine Learning repository, and it is related to direct marketing campaigns (phone calls) of a Portuguese banking institution. The classification goal is to predict whether the client will subscribe (1/0) to a term deposit (variable y). The dataset can be downloaded from here. <a href="https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8"><em>Source</em></a>.</p>
+</blockquote>
+<p>See the linked page for a description of the data set. We are interested in prediction the value <code>y</code>.</p>
+<ol type="1">
+<li>Fit the model <code>"y ~ job + marital"</code> to the data using the logistic model. How can you interpret the parameters?</li>
+<li>Fit the models <code>"y ~ job"</code> and <code>"y ~ job + marital"</code>. Which do you prefer?</li>
+<li>Fit at least 5 other models and select the best one.</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="solution-sketches-to-some-exercises" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="solution-sketches-to-some-exercises"><span class="header-section-number">13.3</span> Solution sketches to some exercises</h2>
+<section id="section" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="section"><span class="header-section-number">13.3.1</span> 4.4.6</h3>
+<ol type="a">
+<li>Use the function <span class="math inline">\(f(x) = \frac{e^{\beta^Tx}}{1+e^{\beta^Tx}}\)</span> and plug in the values of <span class="math inline">\(\beta\)</span>.</li>
+</ol>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>betas <span class="op">=</span> [<span class="op">-</span><span class="dv">6</span>, <span class="fl">0.05</span>, <span class="dv">1</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> x: np.exp(betas[<span class="dv">0</span>] <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">*</span> betas[<span class="dv">1</span>] <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">*</span> betas[<span class="dv">2</span>]) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(betas[<span class="dv">0</span>] <span class="op">+</span> x[<span class="dv">0</span>] <span class="op">*</span> betas[<span class="dv">1</span>] <span class="op">+</span> x[<span class="dv">1</span>] <span class="op">*</span> betas[<span class="dv">2</span>]))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>f([<span class="dv">40</span>, <span class="fl">3.5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>0.37754066879814546</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Use the expression <span class="math inline">\(\log(p/(1-p)) = \beta^Tx\)</span>, where <span class="math inline">\(p=P(Y=1\mid beta)\)</span>. We know the values of <span class="math inline">\(\beta\)</span>, <span class="math inline">\(p=0.5\)</span> and <span class="math inline">\(x_2 = 3.5\)</span>. Since <span class="math inline">\(\log(0.5/0.5) = 0\)</span>, we get <span class="math display">\[0 = -6 + 0.05 x_1 + 3.5\]</span>. Solving for <span class="math inline">\(x_1\)</span>, we find <span class="math inline">\(x_1 = (6-3.5)/0.05 = 50\)</span>.</li>
+</ol>
+</section>
+<section id="section-1" class="level3" data-number="13.3.2">
+<h3 data-number="13.3.2" class="anchored" data-anchor-id="section-1"><span class="header-section-number">13.3.2</span> 4.4.6</h3>
+<ol type="a">
+<li><p>Remember that <span class="math inline">\(odds=p/(1-p)\)</span>. Solving for odds, we find that <span class="math inline">\(odds(1-p) = p\)</span> which implies <span class="math inline">\(odds = (1+odds)p\)</span>, hence <span class="math inline">\(p=odds/(1+odds)\)</span>.</p></li>
+<li><p>The probability can be plugged directly into the expression <span class="math inline">\(odds = p/(1-p)\)</span>.</p></li>
+</ol>
+</section>
+<section id="section-2" class="level3" data-number="13.3.3">
+<h3 data-number="13.3.3" class="anchored" data-anchor-id="section-2"><span class="header-section-number">13.3.3</span> 4.4.16</h3>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>boston <span class="op">=</span> pd.read_csv(<span class="st">"Boston.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>boston.info()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>boston[<span class="st">"crime_new"</span>] <span class="op">=</span> <span class="dv">1</span> <span class="op">*</span> (boston.crim <span class="op">&gt;=</span> np.median(boston.crim))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>boston.corr().crime_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 506 entries, 0 to 505
+Data columns (total 14 columns):
+ #   Column      Non-Null Count  Dtype  
+---  ------      --------------  -----  
+ 0   Unnamed: 0  506 non-null    int64  
+ 1   crim        506 non-null    float64
+ 2   zn          506 non-null    float64
+ 3   indus       506 non-null    float64
+ 4   chas        506 non-null    int64  
+ 5   nox         506 non-null    float64
+ 6   rm          506 non-null    float64
+ 7   age         506 non-null    float64
+ 8   dis         506 non-null    float64
+ 9   rad         506 non-null    int64  
+ 10  tax         506 non-null    int64  
+ 11  ptratio     506 non-null    float64
+ 12  lstat       506 non-null    float64
+ 13  medv        506 non-null    float64
+dtypes: float64(10), int64(4)
+memory usage: 55.5 KB</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>Unnamed: 0    0.369430
+crim          0.409395
+zn           -0.436151
+indus         0.603260
+chas          0.070097
+nox           0.723235
+rm           -0.156372
+age           0.613940
+dis          -0.616342
+rad           0.619786
+tax           0.608741
+ptratio       0.253568
+lstat         0.453263
+medv         -0.263017
+crime_new     1.000000
+Name: crime_new, dtype: float64</code></pre>
+</div>
+</div>
+<p>Observe which variables are highly correlation with crime_new. Let’s try four of the highest.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + dis + tax + indus"</span>, data <span class="op">=</span> boston).fit().summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.302879
+         Iterations 8</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Logit Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>crime_new</td>
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>506</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>Logit</td>
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>501</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>MLE</td>
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Tue, 21 Nov 2023</td>
+<td data-quarto-table-cell-role="th">Pseudo R-squ.:</td>
+<td>0.5630</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>13:48:41</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>-153.26</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">converged:</td>
+<td>True</td>
+<td data-quarto-table-cell-role="th">LL-Null:</td>
+<td>-350.73</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th">LLR p-value:</td>
+<td>3.429e-84</td>
+</tr>
+</tbody>
+</table>
+<table class="simpletable table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">z</td>
+<td data-quarto-table-cell-role="th">P&gt;|z|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>-19.9814</td>
+<td>2.810</td>
+<td>-7.112</td>
+<td>0.000</td>
+<td>-25.488</td>
+<td>-14.475</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">nox</td>
+<td>36.0183</td>
+<td>5.110</td>
+<td>7.049</td>
+<td>0.000</td>
+<td>26.003</td>
+<td>46.033</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">dis</td>
+<td>0.1090</td>
+<td>0.130</td>
+<td>0.837</td>
+<td>0.402</td>
+<td>-0.146</td>
+<td>0.364</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">tax</td>
+<td>0.0037</td>
+<td>0.001</td>
+<td>2.692</td>
+<td>0.007</td>
+<td>0.001</td>
+<td>0.006</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">indus</td>
+<td>-0.1046</td>
+<td>0.038</td>
+<td>-2.785</td>
+<td>0.005</td>
+<td>-0.178</td>
+<td>-0.031</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Observe that <code>dis</code> is not significant, so let’s try to fit a model without it and choose using the AIC (remember that the smaller the AIC the better).</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + dis + tax + indus"</span>, data <span class="op">=</span> boston).fit().aic</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"crime_new ~ nox + tax + indus"</span>, data <span class="op">=</span> boston).fit().aic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.302879
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.303562
+         Iterations 8</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>315.20515267105964</code></pre>
+</div>
+</div>
+<p>The model without <code>dis</code> has a smaller AIC and is prefered.</p>
+</section>
+<section id="exercise-1-1" class="level3" data-number="13.3.4">
+<h3 data-number="13.3.4" class="anchored" data-anchor-id="exercise-1-1"><span class="header-section-number">13.3.4</span> Exercise 1</h3>
+<p>The following code</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load the data set, but remove unwanted covariates.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hurr <span class="op">=</span> pd.read_excel(<span class="st">"hurricanes.xlsx"</span>).drop([<span class="st">"RowNames"</span>, <span class="st">"Number"</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Change some Pandas settings for visualization purposes; you can also make heat maps.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="dv">500</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="dv">500</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="dv">1000</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>hurr.drop(<span class="st">"Name"</span>, axis <span class="op">=</span> <span class="dv">1</span>).corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">FirstLat</th>
+<th data-quarto-table-cell-role="th">FirstLon</th>
+<th data-quarto-table-cell-role="th">MaxLat</th>
+<th data-quarto-table-cell-role="th">MaxLon</th>
+<th data-quarto-table-cell-role="th">LastLat</th>
+<th data-quarto-table-cell-role="th">LastLon</th>
+<th data-quarto-table-cell-role="th">MaxInt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Year</td>
+<td>1.000000</td>
+<td>0.194502</td>
+<td>0.061686</td>
+<td>0.146470</td>
+<td>0.036905</td>
+<td>0.203846</td>
+<td>0.023999</td>
+<td>0.112338</td>
+<td>-0.108181</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Type</td>
+<td>0.194502</td>
+<td>1.000000</td>
+<td>0.662654</td>
+<td>-0.067350</td>
+<td>0.525167</td>
+<td>0.154305</td>
+<td>0.159709</td>
+<td>0.153903</td>
+<td>-0.413241</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">FirstLat</td>
+<td>0.061686</td>
+<td>0.662654</td>
+<td>1.000000</td>
+<td>-0.136393</td>
+<td>0.854849</td>
+<td>0.163005</td>
+<td>0.369432</td>
+<td>0.216586</td>
+<td>-0.530203</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">FirstLon</td>
+<td>0.146470</td>
+<td>-0.067350</td>
+<td>-0.136393</td>
+<td>1.000000</td>
+<td>0.018821</td>
+<td>0.849398</td>
+<td>0.450712</td>
+<td>0.712697</td>
+<td>0.133285</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MaxLat</td>
+<td>0.036905</td>
+<td>0.525167</td>
+<td>0.854849</td>
+<td>0.018821</td>
+<td>1.000000</td>
+<td>0.223451</td>
+<td>0.604356</td>
+<td>0.351265</td>
+<td>-0.295264</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MaxLon</td>
+<td>0.203846</td>
+<td>0.154305</td>
+<td>0.163005</td>
+<td>0.849398</td>
+<td>0.223451</td>
+<td>1.000000</td>
+<td>0.477417</td>
+<td>0.849161</td>
+<td>-0.158521</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">LastLat</td>
+<td>0.023999</td>
+<td>0.159709</td>
+<td>0.369432</td>
+<td>0.450712</td>
+<td>0.604356</td>
+<td>0.477417</td>
+<td>1.000000</td>
+<td>0.669348</td>
+<td>0.071727</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">LastLon</td>
+<td>0.112338</td>
+<td>0.153903</td>
+<td>0.216586</td>
+<td>0.712697</td>
+<td>0.351265</td>
+<td>0.849161</td>
+<td>0.669348</td>
+<td>1.000000</td>
+<td>-0.156770</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">MaxInt</td>
+<td>-0.108181</td>
+<td>-0.413241</td>
+<td>-0.530203</td>
+<td>0.133285</td>
+<td>-0.295264</td>
+<td>-0.158521</td>
+<td>0.071727</td>
+<td>-0.156770</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The <code>lmplot</code> function is handy for quick plotting of linear regression and logistic regression functions.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hurr[<span class="st">"Type_new"</span>] <span class="op">=</span> (<span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">*</span> (hurr[<span class="st">"Type"</span>] <span class="op">==</span> <span class="dv">0</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(hurr, x <span class="op">=</span> <span class="st">"FirstLat"</span>, y <span class="op">=</span> <span class="st">"Type_new"</span>, logistic <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="14-binary-regression_files/figure-html/cell-10-output-1.png" width="470" height="470"></p>
+</div>
+</div>
+<p>Fit some models and look at the AIC. Remember, the lower the AIC the better.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>smf.logit(<span class="st">"Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>smf.probit(<span class="st">"Type_new ~ FirstLat + MaxLon + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>smf.probit(<span class="st">"Type_new ~ FirstLat + MaxLat+ LastLat + LastLon + MaxInt"</span>, data <span class="op">=</span> hurr).fit().aic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.328329
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.336899
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.307908
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.307705
+         Iterations 8
+Optimization terminated successfully.
+         Current function value: 0.307814
+         Iterations 7
+Optimization terminated successfully.
+         Current function value: 0.308249
+         Iterations 7</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>219.75953818954733</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../site/13-inference-for-linear-regression.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">More linear regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
