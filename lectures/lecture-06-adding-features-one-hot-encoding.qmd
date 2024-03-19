@@ -1,0 +1,3 @@
+# Lecture 6 Categorical variables {.unnumbered}
+
+### Example: Alternate-day fasting

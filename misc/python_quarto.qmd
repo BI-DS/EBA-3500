@@ -1,19 +1,30 @@
-# Software to install
+# Software to install 
 
-We use the following software in the course, available for Mac, Windows, and Linux.
+You need to set up some software before the first lecture. From experience many students struggle getting Python to work correctly, but everything should work if you follow the steps below.
 
-1. The newest stable version of [Python](https://www.python.org/), at least version 3.12. Be sure to update, as we might use features not available on your current installation. I can't guarantee Anaconda will work.
-    * Windows users: You must check add Python to path.
-    * Upgrade `pip` using `pip install --upgrade pip`.
-    * We also need the following packages, installed using `pip install`.
-    * `scikit-learn`, `seaborn`, `matplotlib`, `numpy`, `statsmodels`, `jupyter`,  `scipy`, `pandas`.
-2. The technical publishing system [Quarto](https://quarto.org/).
-3. The code editor [VS Code](https://code.visualstudio.com/). You can use other editors, but they need to support Quarto. I only support VS Code.
-    * Quarto.
-    * Python.
-    * Black.
-    * (Optional.) Python Snippets for Data Science.
+A video detailing the steps required on Windows can be found here; watch it if you run into any trouble.
 
-## Windows
+## Programs to download
 
-## Mac
+1. [Python](https://www.python.org/), at least version 3.12. Be sure to update, as we might use features not available on your current installation. I can't guarantee Anaconda will work. 
+    * Windows users: You *must* check **add Python to path** during installation. If you forgot this, go back and install again.
+    * *You may need to uinstall other versions of Python.* Some of the steps below may fail with multiple versions of Python.
+2. [VS Code](https://code.visualstudio.com/), the most popular code editor. 
+3. [Quarto](https://quarto.org/), a the technical publishing system similar to Jupyter notebooks.
+
+## Python packages
+We use the packages `scikit-learn`, `seaborn`, `matplotlib`, `numpy`, `statsmodels`, `jupyter`,  `scipy`, `pandas`. Install them via `pip` in the terminal. You might also need to upgrade `pip` first. To upgrade `pip` and install the required packages, run the following code in the terminal.
+
+```zsh
+pip install --upgrade pip && pip install scikit-learn seaborn matplotlib numpy statsmodels jupyter scipy pandas quarto
+```
+
+*Hint:* To access the terminal in Windows, press the Windows button and search for `power`, then press `Windows PowerShell`. For Mac users, to find Terminal among your installed applications, open the Launchpad app and search for "Terminal."
+
+## VS Code extensions
+VS Code is built around extensions; you can install these from the extension tab in VS Code (Windows: Ctrl + Shift + X, Mac: Command+Shift+X)
+
+* [Quarto](https://marketplace.visualstudio.com/items?itemName=quarto.quarto), required for efficiently working with Quarto in VS Code.
+* [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python), the official coding extension for Python.
+* [Black](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter). Black is a helpful tool for programmers because it automatically cleans up their Python code, making it easier to read and understand. All you have to do is press Ctrl+Alt+F (Windows) or Shift + Option + F (Mac), and Black will take care of the formatting, ensuring your code follows the right style rules. This saves time and helps you focus on learning without getting bogged down in formatting details.
+* [Custom snippets for EBA350X.](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter) Snippets in VS Code make Python coding faster and easier. They let you insert commonly used code with just a few keystrokes, saving time and reducing errors. Whether it's defining functions or loops, snippets help you work more efficiently, so you can focus on solving problems. Snippets in VS Code are particularly handy when dealing with long imports in Python. This extension contains several snippets useful for machine learning in sklearn and dealing with Quarto.

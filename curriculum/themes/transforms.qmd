@@ -1,0 +1,68 @@
+# Simple transforms
+
+1. Log-transforms:
+    1. Very quick motivation using .
+    2. Mention multiplicativity.
+    3. Works only with positive data; use `np.log1p` instead.
+    3. In `statsmodels.formula.api`.
+    4. In sklearn:
+        2a: Manually
+        2b: Using pipelines.
+
+2. Quadratic transforms.
+    1. Very quick motivation.
+    2. In `statsmodels.formula.api`.
+    3. In sklearn:
+        2a: Manually.
+        2b: Using pipelines.
+
+```{python}
+# | echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.formula.api as smf
+import statsmodels as sm
+```
+
+
+```{python}
+from sklearn.datasets import fetch_california_housing
+california = fetch_california_housing(as_frame=True).data
+```
+
+https://ourworldindata.org/grapher/urbanization-vs-gdp
+```{python}
+urban = pd.read_csv("urbanization-vs-gdp.csv")
+urban2010 = (urban.query("Year == 2010"))[["GDP per capita", "Population share in urban areas"]].dropna().sort_values("GDP per capita")
+g = sns.lmplot(urban2010, y = "Population share in urban areas", x = "GDP per capita")
+g.set(xscale="log")
+```
+
+
+```{python}
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+reg.fit(np.log(urban2010["GDP per capita"]).to_numpy().reshape(-1,1), urban2010["Population share in urban areas"])
+plt.plot(urban2010["GDP per capita"],urban2010["Population share in urban areas"],"o")
+plt.plot(urban2010["GDP per capita"], reg.predict(np.log(urban2010["GDP per capita"]).to_numpy().reshape(-1,1)))
+```
+
+```{python}
+from sklearn.metrics import mean_squared_error
+mse_log = mean_squared_error(urban2010["Population share in urban areas"], reg.predict(np.log(urban2010["GDP per capita"]).to_numpy().reshape(-1,1)))
+```
+
+```{python}
+from sklearn.metrics import mean_squared_error
+reg.fit((urban2010["GDP per capita"]).to_numpy().reshape(-1,1), urban2010["Population share in urban areas"])
+mse_none = mean_squared_error(urban2010["Population share in urban areas"], reg.predict(np.log(urban2010["GDP per capita"]).to_numpy().reshape(-1,1)))
+```
+
+| Transform | MSE | 
+| --------  | --- |
+| Log       | `{python} round(mse_log)` |
+| None      | `{python} round(mse_none)` |
+
+The ratio between the MSEs is `{python} round(mse_none/mse_log,1)`, thus we can say that the log-transformed model performs roughly $2.5$ as well as the non-transformed model. That is impressive!

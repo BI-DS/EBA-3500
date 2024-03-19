@@ -21,6 +21,7 @@ from sklearn.preprocessing import PolynomialFeatures
 
 poly = PolynomialFeatures(2).fit_transform(X)
 clf_ldaq = LinearDiscriminantAnalysis().fit(poly, y)
+clf_logitq = LogisticRegression().fit(poly, y)
 
 features = [0,1,2,3]
 

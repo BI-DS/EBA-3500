@@ -77,10 +77,523 @@ window.Quarto = {
 
 <section id="functions-in-sklearn" class="level1 unnumbered">
 <h1 class="unnumbered">Functions in <code>sklearn</code></h1>
+<section id="functions-in-matplotlib-and-seaborn" class="level2">
+<h2 class="anchored" data-anchor-id="functions-in-matplotlib-and-seaborn">Functions in <code>matplotlib</code> and <code>seaborn</code></h2>
+</section>
+<section id="functions-and-methods-in-pandas" class="level2">
+<h2 class="anchored" data-anchor-id="functions-and-methods-in-pandas">Functions and methods in <code>pandas</code></h2>
+<p>We assume basic knowledge of <code>pandas</code> this course, e.g.,</p>
+<table class="table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 30%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+<th>Examples</th>
+<th>Lecture</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>.read_csv()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>.head()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>.info()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>.dtypes()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>.describe()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>.value_counts()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>.astype()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>.sort_values()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td>.reset_index()</td>
+<td></td>
+<td></td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>Indexing with []</td>
+<td></td>
+<td></td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>Filtering with bools</td>
+<td></td>
+<td></td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td><code>.loc</code></td>
+<td></td>
+<td></td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td><code>.iloc</code></td>
+<td></td>
+<td></td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td><code>concat</code> <code>merge</code></td>
+<td></td>
+<td></td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td><code>.isna()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>.dropna()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><code>.fillna()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>.sum()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><code>.cut()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>.groupby()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><code>.pivot_table()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td><code>.crosstab()</code></td>
+<td></td>
+<td></td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td><code>.plot()</code></td>
+<td></td>
+<td></td>
+<td>11</td>
+</tr>
+<tr class="even">
+<td>Axes and subplots</td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><code>sns.lineplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><code>sns.countplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><code>sns.barplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><code>sns.heatmap</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><code>sns.histplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><code>sns.jointplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td><code>sns.pairplot</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td><code>sns.FacetGrid</code></td>
+<td></td>
+<td></td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<section id="pandas-recap" class="level3">
+<h3 class="anchored" data-anchor-id="pandas-recap"><code>pandas</code> recap</h3>
+<section id="lecture-8" class="level4">
+<h4 class="anchored" data-anchor-id="lecture-8">Lecture 8</h4>
+<ul>
+<li>Series, their values and indices.</li>
+<li>Dataframe, creation from dictionaries, with indices.</li>
+<li><code>read_csv</code>, <code>head</code>, and <code>info</code>.</li>
+<li>Show datatypes with <code>dtypes</code> for the dataframe and <code>dtype</code> for a series.</li>
+<li><code>describe()</code>.</li>
+<li><code>value_counts()</code>.</li>
+<li><code>astype</code>.</li>
+<li>Sorting with <code>sort_values</code>.</li>
+<li>Using <code>inplace=True</code>.</li>
+<li><code>reset_index</code>.</li>
+</ul>
+</section>
+<section id="lecture-9" class="level4">
+<h4 class="anchored" data-anchor-id="lecture-9">Lecture 9</h4>
+<ul>
+<li>Selection by index with []; selecting multiple indices.</li>
+<li>Filtering by boolean arrays.</li>
+<li>Logical operators in selection.</li>
+<li>Selection with <code>.loc</code>.</li>
+<li>Selection with <code>.iloc</code>.</li>
+<li>Concatenation with <code>concat</code>.</li>
+<li>Merging data frames with <code>merge</code>.</li>
+</ul>
+<p><strong>Attributes</strong> df.index, df.columns,</p>
+</section>
+<section id="lecture-10" class="level4">
+<h4 class="anchored" data-anchor-id="lecture-10">Lecture 10</h4>
+<ul>
+<li><code>.isna()</code>,</li>
+<li><code>.dropna()</code>,</li>
+<li><code>.fillna()</code>,</li>
+<li><code>.sum()</code>,</li>
+<li><code>.cut()</code>,</li>
+<li><code>.groupby()</code>,</li>
+<li><code>.pivot_table()</code>,</li>
+<li><code>.crosstab</code>.</li>
+</ul>
+</section>
+<section id="lecture-11" class="level4">
+<h4 class="anchored" data-anchor-id="lecture-11">Lecture 11</h4>
+<ul>
+<li><code>plt.plot</code>: Line plot, scatter plot, bar plot.</li>
+<li><code>sns.lineplot</code></li>
+<li><code>sns.countplot</code></li>
+<li><code>sns.barplot</code></li>
+<li><code>sns.heatmap</code></li>
+<li><code>sns.histplot</code></li>
+<li><code>sns.pairplot</code></li>
+<li><code>sns.FacetGrid</code></li>
+</ul>
+</section>
+</section>
+<section id="data-cleaning-and-missing-values" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-and-missing-values">Data cleaning and missing values</h3>
+<p>Data cleaning: * Split columns. * https://datascientyst.com/exploratory-data-analysis-pandas-examples/ https://bookdown.org/rdpeng/exdata/exploratory-data-analysis-checklist.html</p>
+</section>
+<section id="outliers" class="level3">
+<h3 class="anchored" data-anchor-id="outliers">Outliers</h3>
+<ul>
+<li>Use visual explanation of box plots in lecture.</li>
+<li>Show how to find the outliers.</li>
+<li>Mention there is a lot of stuff about this.</li>
+<li>Have some exercises where it matters.</li>
+</ul>
+</section>
+<section id="imbalanced-data" class="level3">
+<h3 class="anchored" data-anchor-id="imbalanced-data">Imbalanced data</h3>
+</section>
+<section id="data-leakage" class="level3">
+<h3 class="anchored" data-anchor-id="data-leakage">Data leakage</h3>
+<ul>
+<li><p>Find a good source on this at the correct level.</p></li>
+<li><p>Having the target as a feature.</p></li>
+</ul>
+<section id="invalid-processing" class="level4">
+<h4 class="anchored" data-anchor-id="invalid-processing">Invalid processing</h4>
+<ul>
+<li>The example from Elements of Statistical Learning.</li>
+<li>All data processing must be done using only the training data.</li>
+<li>Exploratory data analysis is usually fine, but no always.</li>
+<li>Separate into train and test in the beginning.</li>
+<li>Do all modelling steps in cross-validation:
+<ul>
+<li>Feature scaling.</li>
+<li>Feature selection.</li>
+<li>And so on.</li>
+</ul></li>
+<li>https://www.cs.umb.edu/~ding/history/470_670_fall_2011/papers/cs670_Tran_PreferredPaper_LeakingInDataMining.pdf
+<ul>
+<li><ol type="i">
+<li>An “account number” feature, for the problem of predicting whether a potential customer would open an account at a bank. Obviously, assignment of such an account number is only done after an account has been opened.</li>
+</ol></li>
+<li><ol start="2" type="i">
+<li>An “interviewer name” feature, in a cellular company churn prediction problem.</li>
+</ol></li>
+<li><strong>Anachronisms.</strong>
+<ul>
+<li>Was feature <span class="math inline">\(x\)</span> registered before or after the event <span class="math inline">\(y\)</span>?
+<ul>
+<li>IBM example.</li>
+</ul></li>
+</ul></li>
+<li>Find some data sets with data leakage.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="embarassing-mistakes" class="level3">
+<h3 class="anchored" data-anchor-id="embarassing-mistakes">Embarassing mistakes</h3>
+<ul>
+<li>Understanding your domain.</li>
+</ul>
+</section>
+<section id="formatting-and-styling" class="level3">
+<h3 class="anchored" data-anchor-id="formatting-and-styling">Formatting and styling</h3>
+<ul>
+<li>style.highlight_between():
+<ul>
+<li>Highlight negative values.</li>
+</ul></li>
+<li>style.highlight_max(), style_highlight_min().</li>
+</ul>
+</section>
+</section>
+<section id="new-functions" class="level2">
+<h2 class="anchored" data-anchor-id="new-functions">New functions</h2>
+<p>We use several functions in <code>pandas</code>, <code>matplotlib</code>, and <code>seaborn</code> that haven’t been covered, in addition to several <code>numpy</code> functions and some <code>statsmodels</code> functions.</p>
+<table class="table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Library</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>.corr()</td>
+<td><code>pandas</code></td>
+<td>Correlation matrix.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.dtype()</td>
+<td><code>pandas</code></td>
+<td>Data type for series.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.min() / .max()</td>
+<td><code>pandas</code> / <code>numpy</code></td>
+<td>Find minimal / maximal value.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.argmin() / .argmax()</td>
+<td><code>pandas</code> / <code>numpy</code></td>
+<td>Find index of the minimal / maximal values.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.nonzero()</td>
+<td><code>pandas</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.all() / .any()</td>
+<td><code>pandas</code> / <code>numpy</code></td>
+<td>Check if every element of an array is <code>True</code>.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.replace()</td>
+<td><code>pandas</code></td>
+<td>Replace values in data frame or series. Often used to replace strings with numbers.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.to_numpy()</td>
+<td><code>pandas</code></td>
+<td>Converts data frame or series to Numpy</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.lmplot</td>
+<td><code>seaborn</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.style.format</td>
+<td><code>pandas</code></td>
+<td>Format data frames for visual inspection.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.std / .var</td>
+<td><code>pandas</code> / <code>numpy</code></td>
+<td>Standard deviation and variance.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.mean / .median</td>
+<td><code>pandas</code></td>
+<td>Mean and median.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>style.background_gradient</td>
+<td><code>pandas</code></td>
+<td>Styling of data frames with colors. Important for correlation matrices.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.query()</td>
+<td><code>pandas</code></td>
+<td>Selecting rows from a dataset using specialized syntax.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.boxplot()</td>
+<td><code>seaborn</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.violinplot()</td>
+<td><code>seaborn</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.sort_index()</td>
+<td><code>seaborn</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.log()</td>
+<td><code>numpy</code></td>
+<td>Natural logarithm.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.log1p()</td>
+<td><code>numpy</code></td>
+<td>Narural logarithm of <span class="math inline">\(1+x\)</span>.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.sample()</td>
+<td><code>pandas</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.shape</td>
+<td></td>
+<td><code>pandas</code> / <code>numpy</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>.describe(include=‘object’)</td>
+<td><code>pandas</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>.nunique() / .unique()</td>
+<td><code>pandas</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>sns.catplot()</td>
+<td><code>pandas</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions-in-sklearn-1" class="level2">
+<h2 class="anchored" data-anchor-id="functions-in-sklearn-1">Functions in <code>sklearn</code></h2>
 <p><a href="https://scikit-learn.org/stable/index.html"><code>sklearn</code></a>, also known as scikit-learn, is the most important Python library for fitting machine learning model. It has strong support for basic functionality such as metrics, cross-validation, fitting algorithms, and feature manipulation. That said, it is a big library, and we only use parts of it.</p>
 <p>The following is a complete list of <code>sklearn</code> functions used in this course, and we expect some familiarity with all of them. No exercise requires you to use any other function than those on this list, and all of them have been covered in the lectures. In the same way, the exercises on the exam will only use functions on this list.</p>
-<section id="model-selection" class="level3">
-<h3 class="anchored" data-anchor-id="model-selection">Model selection</h3>
+<section id="model-selection-and-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="model-selection-and-evaluation">Model selection and evaluation</h3>
 <table class="table">
 <thead>
 <tr class="header">
@@ -94,13 +607,13 @@ window.Quarto = {
 <tr class="odd">
 <td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html#sklearn.model_selection.cross_val_score"><code>cross_val_score</code></a></td>
 <td><code>model_selection</code></td>
-<td>Carry out cross-validation.</td>
+<td>Cross-validation for a specified score.</td>
 <td></td>
 </tr>
 <tr class="even">
 <td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV"><code>GridSearchCV</code></a></td>
 <td><code>model_selection</code></td>
-<td>Search through hyperparameters to find the best ones.</td>
+<td>Cross-validation over a grid of values. Used to find the hyperparameters for a model.</td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -136,7 +649,7 @@ window.Quarto = {
 <tr class="even">
 <td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.auc.html#sklearn.metrics.auc"><code>auc</code></a></td>
 <td><code>metrics</code></td>
-<td>The area under the curve, used in classification.</td>
+<td>The area under the ROC curve, used in classification.</td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -176,6 +689,12 @@ window.Quarto = {
 <td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html#sklearn.metrics.ConfusionMatrixDisplay"><code>ConfusionMatrixDisplay</code></a></td>
 <td><code>ConfusionMatrixDisplay</code></td>
 <td>Display the confusion matrix of a classifier.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html#sklearn.tree.plot_tree"><code>plot_tree</code></a></td>
+<td><code>tree</code></td>
+<td>Display a fitted decision tree.</td>
 <td></td>
 </tr>
 </tbody>
@@ -360,6 +879,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</section>
 </section>
 </section>
 

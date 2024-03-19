@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -48,29 +82,35 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="software-to-install" class="level1">
 <h1>Software to install</h1>
-<p>We use the following software in the course, available for Mac, Windows, and Linux.</p>
+<p>You need to set up some software before the first lecture. From experience many students struggle getting Python to work correctly, but everything should work if you follow the steps below.</p>
+<p>A video detailing the steps required on Windows can be found here; watch it if you run into any trouble.</p>
+<section id="programs-to-download" class="level2">
+<h2 class="anchored" data-anchor-id="programs-to-download">Programs to download</h2>
 <ol type="1">
-<li>The newest stable version of <a href="https://www.python.org/">Python</a>, at least version 3.12. Be sure to update, as we might use features not available on your current installation. I can’t guarantee Anaconda will work.
+<li><a href="https://www.python.org/">Python</a>, at least version 3.12. Be sure to update, as we might use features not available on your current installation. I can’t guarantee Anaconda will work.
 <ul>
-<li>Windows users: You must check add Python to path.</li>
-<li>Upgrade <code>pip</code> using <code>pip install --upgrade pip</code>.</li>
-<li>We also need the following packages, installed using <code>pip install</code>.</li>
-<li><code>scikit-learn</code>, <code>seaborn</code>, <code>matplotlib</code>, <code>numpy</code>, <code>statsmodels</code>, <code>jupyter</code>, <code>scipy</code>, <code>pandas</code>.</li>
+<li>Windows users: You <em>must</em> check <strong>add Python to path</strong> during installation. If you forgot this, go back and install again.</li>
+<li><em>You may need to uinstall other versions of Python.</em> Some of the steps below may fail with multiple versions of Python.</li>
 </ul></li>
-<li>The technical publishing system <a href="https://quarto.org/">Quarto</a>.</li>
-<li>The code editor <a href="https://code.visualstudio.com/">VS Code</a>. You can use other editors, but they need to support Quarto. I only support VS Code.
-<ul>
-<li>Quarto.</li>
-<li>Python.</li>
-<li>Black.</li>
-<li>(Optional.) Python Snippets for Data Science.</li>
-</ul></li>
+<li><a href="https://code.visualstudio.com/">VS Code</a>, the most popular code editor.</li>
+<li><a href="https://quarto.org/">Quarto</a>, a the technical publishing system similar to Jupyter notebooks.</li>
 </ol>
-<section id="windows" class="level2">
-<h2 class="anchored" data-anchor-id="windows">Windows</h2>
 </section>
-<section id="mac" class="level2">
-<h2 class="anchored" data-anchor-id="mac">Mac</h2>
+<section id="python-packages" class="level2">
+<h2 class="anchored" data-anchor-id="python-packages">Python packages</h2>
+<p>We use the packages <code>scikit-learn</code>, <code>seaborn</code>, <code>matplotlib</code>, <code>numpy</code>, <code>statsmodels</code>, <code>jupyter</code>, <code>scipy</code>, <code>pandas</code>. Install them via <code>pip</code> in the terminal. You might also need to upgrade <code>pip</code> first. To upgrade <code>pip</code> and install the required packages, run the following code in the terminal.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode zsh code-with-copy"><code class="sourceCode zsh"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> pip <span class="kw">&amp;&amp;</span> <span class="ex">pip</span> install scikit-learn seaborn matplotlib numpy statsmodels jupyter scipy pandas quarto</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><em>Hint:</em> To access the terminal in Windows, press the Windows button and search for <code>power</code>, then press <code>Windows PowerShell</code>. For Mac users, to find Terminal among your installed applications, open the Launchpad app and search for “Terminal.”</p>
+</section>
+<section id="vs-code-extensions" class="level2">
+<h2 class="anchored" data-anchor-id="vs-code-extensions">VS Code extensions</h2>
+<p>VS Code is built around extensions; you can install these from the extension tab in VS Code (Windows: Ctrl + Shift + X, Mac: Command+Shift+X)</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto</a>, required for efficiently working with Quarto in VS Code.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python</a>, the official coding extension for Python.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter">Black</a>. Black is a helpful tool for programmers because it automatically cleans up their Python code, making it easier to read and understand. All you have to do is press Ctrl+Alt+F (Windows) or Shift + Option + F (Mac), and Black will take care of the formatting, ensuring your code follows the right style rules. This saves time and helps you focus on learning without getting bogged down in formatting details.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter">Custom snippets for EBA350X.</a> Snippets in VS Code make Python coding faster and easier. They let you insert commonly used code with just a few keystrokes, saving time and reducing errors. Whether it’s defining functions or loops, snippets help you work more efficiently, so you can focus on solving problems. Snippets in VS Code are particularly handy when dealing with long imports in Python. This extension contains several snippets useful for machine learning in sklearn and dealing with Quarto.</li>
+</ul>
 </section>
 </section>
 

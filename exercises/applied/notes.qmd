@@ -1,0 +1,230 @@
+
+---
+title: "Solution to exercise 8.7"
+author: Jonas Moss
+date: last-modified
+format:
+  html:
+    code-fold: true
+    code-tools: true
+execute:
+  echo: true
+jupyter: python3
+reference-location: margin
+citation-location: margin
+---
+
+# Useful functions
+
+## Seaborn
+sns.boxplot
+sns.violinplot
+
+## Pandas
+
+# From notebooks
+
+https://www.kaggle.com/code/marcinrutecki/telco-churn-eda-model-voting-boosting
+* Could talk specifically about imbalanced data sets.
+
+https://www.kaggle.com/code/bandiatindra/telecom-churn-prediction
+
+* Correlation for one variable (can use better colors here).
+* df_dummies.corr()['Churn'].sort_values(ascending = False).plot(kind='bar')
+
+```{python}
+# | echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.set_theme(style="whitegrid", palette="Set2")
+```
+
+```{python}
+telco = pd.read_csv("kaggle/telco.csv", index_col = "customerID", na_values=" ")
+```
+
+```{python}
+telco.info()
+
+```
+
+
+
+```{python}
+sns.boxplot(telco, x="MonthlyCharges", hue="Churn")
+```
+
+## Association between nominal variables
+There is no standard way to 
+
+```{python}
+pd.crosstab(telco["Churn"], telco["gender"], normalize = True).style.format(precision=2)
+```
+
+```{python}
+g = sns.catplot(telco, x="Churn", hue="gender", alpha=.8, kind="count")
+g.despine(left=True)
+g.set_axis_labels("Churn", "Count")
+g.legend.set_title("Gender")
+```
+
+```{python}
+import seaborn as sns
+sns.set_theme(style="whitegrid")
+
+penguins = sns.load_dataset("penguins")
+
+# Draw a nested barplot by species and sex
+g = sns.catplot(
+    data=penguins, kind="bar",
+    x="species", y="body_mass_g", hue="sex",
+    errorbar="sd", palette="dark", alpha=.6, height=6
+)
+g.despine(left=True)
+g.set_axis_labels("", "Body mass (g)")
+g.legend.set_title("")
+```
+
+```{python}
+from sklearn.feature_selection import mutual_info_classif
+from scipy.stats import entropy
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+
+# Label encoding for categoricals
+for colname in X.select_dtypes("object"):
+    X[colname], _ = X[colname].factorize()
+
+# All discrete features should now have integer dtypes (double-check this before using MI!)
+discrete_features = X.dtypes == "int64"
+
+def make_mi_scores(X, y, discrete_features):
+    mi_scores = mutual_info_classif(X, y, discrete_features=discrete_features)
+    mi_scores = pd.Series(mi_scores, name="MI Scores", index=X.columns)
+    mi_scores = mi_scores.sort_values(ascending=False)
+    return mi_scores
+
+mi_scores = make_mi_scores(X, y, discrete_features)
+#mi_scores[::3]  # show a few features with their MI scores
+
+```
+
+
+```{python}
+from sklearn.feature_selection import mutual_info_classif
+from scipy.stats import entropy
+(pd.crosstab(telco["Churn"], telco["gender"], normalize = True).style.format(precision=2))
+```
+https://medium.com/swlh/a-deep-conceptual-guide-to-mutual-information-a5021031fad0
+
+```{python}
+pd.crosstab(telco["Churn"], telco["tenure"], normalize = True).style.format(precision=2)
+```
+
+```{python}
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import brier_score_loss
+from sklearn.metrics import log_loss
+
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+y.replace({"Yes": 1, "No": 0}, inplace=True)
+logit = LogisticRegression(penalty=None)
+feature, _ = X["Contract"].factorize()
+feature = feature.reshape(-1, 1)
+logit.fit(feature, y)
+```
+
+```{python}
+def allrsq(X, y):
+    logit = LogisticRegression(penalty=None)
+    y_, _ = y.factorize()
+    bottom = log_loss(y_, y_.mean() * np.ones(y_.size))
+
+    def rsq(x, y, loss=log_loss):
+        top = loss(y, logit.predict_proba(x)[:, 1])
+        return 1 - top / bottom
+
+    def massage(x):
+        if x.dtype == "object":
+            x_, _ = x.factorize()
+        else:
+            x_ = x.to_numpy()
+        x_ = x_.reshape(-1, 1)
+        logit.fit(x_, y_)
+        return rsq(x_, y_)
+
+    return pd.Series({name: massage(X[name]) for name in X})
+
+
+def rsq(x, y, loss=log_loss):
+    top = loss(y, logit.predict_proba(x)[:, 0])
+    bottom = loss(y, y.mean() * np.ones(y.size))
+    return [top, bottom]
+
+
+telco.dropna(inplace=True)
+X = telco.copy()
+y = X.pop("Churn")
+allrsq(X, y).sort_values(ascending=False).to_frame(name="Prsq").style.format(precision=2)
+```
+
+```{python}
+import statsmodels.formula.api as smf
+mod = smf.logit("Churn ~ Contract", data = telco.replace({"Churn": {"Yes":1, "No":0}})).fit()
+```
+
+```{python}
+g = sns.catplot(
+    telco,
+    x="OnlineSecurity",
+    alpha=0.8,
+    col="Contract",
+    hue="Churn",
+    kind="count",
+)
+g.despine(left=True)
+g.set_axis_labels("Online security", "Count")
+g.legend.set_title("Churn")
+```
+
+Churn is highest among customers with a month-to-month contract and no online security. This group accounts for
+
+```{python}
+telco.replace({"Churn": {"Yes":1, "No":0}}).groupby(["OnlineSecurity", "Contract", "TechSupport"]).agg({"Churn": ["sum", "count", "mean"]})
+
+```
+
+```{python}
+g = sns.catplot(
+    telco,
+    x="OnlineSecurity",
+    alpha=0.8,
+    col="Contract",
+    row="TechSupport",
+    hue="Churn",
+    kind="count",
+)
+g.despine(left=True)
+g.set_axis_labels("Online security", "Count")
+g.legend.set_title("Churn")
+```
+
+```{python}
+g = sns.catplot(telco, x="Churn", hue="Contract", alpha=.8, col="OnlineSecurity",kind="count", stat="percent")
+g.despine(left=True)
+g.set_axis_labels("Churn", "Count")
+g.legend.set_title("Contract")
+```
+
+
+## Association between ordinal variables
+The standards are Kendall's tau and Spearman's rho. 
+
+## Nested cross-validation
+https://stats.stackexchange.com/questions/11602/training-on-the-full-dataset-after-cross-validation?noredirect=1&lq=1

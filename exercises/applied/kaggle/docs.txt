@@ -1,0 +1,6 @@
+attrition https://www.kaggle.com/datasets/patelprashant/employee-attrition/data
+telco https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+internet_service_churn https://www.kaggle.com/datasets/mehmetsabrikunt/internet-service-churn
+ca-churn-80 https://www.crowdanalytix.com/contests/why-customer-churn
+ca-churn-20 https://www.crowdanalytix.com/contests/why-customer-churn
+wines https://www.kaggle.com/datasets/fedesoriano/spanish-wine-quality-dataset

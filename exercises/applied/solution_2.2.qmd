@@ -1,0 +1,23 @@
+---
+title: "Solution to exercise 2.2"
+subtitle: Exercises in EBA3500, Fall 2024
+author: Jonas Moss
+date: last-modified
+execute:
+  echo: true
+jupyter: python3
+reference-location: margin
+citation-location: margin
+---
+
+**Exercises: Modified 2.4.8, 2.4.10, and parts of the exam last year.**
+
+**2.4.8: Very similar.**
+
+**Custom: Very similar, but with bikeshare.**
+
+**2.4.10: Similar, but (c) and (d) are harder to solve in an excellent way.**
+
+```{python}
+college = pd.read_csv("data/college.csv", index_col = 0)
+```

@@ -1,0 +1,8 @@
+Anscombe, F. J. (1973). Graphs in Statistical Analysis. The American Statistician, 27(1), 17–21. https://doi.org/10.1080/00031305.1973.10478966
+
+Schutt, R., & O’Neil, C. (2013). Doing Data Science: Straight talk from the frontline. O’Reilly. 
+Excerpts from Chapter 2 (pp. 17 - 37), Chapter 13 (pp. 303 -- 320)
+
+James, G., Witten, D., Hastie, T., Tibshirani, R., & Taylor, J. (2023). An Introduction to Statistical Learning with Applications in Python. Springer.
+
+Müller, A., & Guido, S. (2016). Introduction to machine learning with Python: A guide for data scientists. O’Reilly.

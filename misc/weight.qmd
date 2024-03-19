@@ -1,0 +1,28 @@
+# Weigth loss with serious intermittent fasting
+
+
+```{python}
+KCAL_PER_KILO = 7700
+```
+
+```{python}
+def lost(days, kcal_out_per_day, kcal_in_per_day):
+    total_kcal = (kcal_out_per_day - kcal_in_per_day) * days
+    return total_kcal / KCAL_PER_KILO
+```
+
+A decent way to eat $2000$ calories is to have one kilogram of sirloin steak, which is very lean, with approximately $100$ kcal per 100 grams, have $10$ small eggs for roughly $540$ kcal. Then you still have some leeway. Another option is 1 kilogram of rib eye, which is approximately $200$ kcal.
+
+```{python}
+lost(7, 2600, 2000 / 5)
+```
+
+
+
+Controlling calorie expenditure is hard, but reaching $2600$ on average should be doable for a reasonably active male.
+
+$60$ minutes of vigorous spinning may, optimistically, burn $800$ kcal. Two such sessions a day would burn $1600$. If one can reach $2600$ doing daily activities, then $4200$ is possible. This results in a loss of $\approx 3.5$ kilos per week.
+
+```{python}
+print(f"{lost(7, 4200, 2000 / 5):.2f}")
+```

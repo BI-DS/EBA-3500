@@ -1,0 +1,44 @@
+---
+title: "Solution to exercise 3.2"
+author: Jonas Moss
+date: last-modified
+execute:
+  echo: true
+jupyter: python3
+reference-location: margin
+citation-location: margin
+---
+
+```{python}
+# | echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.formula.api as smf
+```
+
+This is a continuation of exercise (...).
+
+## (a)
+::: {.callout-note icon=false appearance="simple"} 
+## Description
+This question involves the use of multiple linear regression on the Auto data set.
+:::
+
+```{python}
+# | tbl-cap:
+# | label:
+
+auto = pd.read_csv("data/Auto.csv", na_values="?", index_col="name").dropna()
+auto.replace({"origin": {1: "American", 2: "European", 3: "Japanese"}}, inplace=True)
+auto.head()
+```
+
+## (a)
+```{python}
+# | echo: False
+auto.corr(numeric_only=True).style.background_gradient(
+    cmap="coolwarm", axis=None
+).format(precision=2)
+```

@@ -1,0 +1,195 @@
+# Lecture 5 {.unnumbered}
+
+Two parts: One theory and motivation. One about exercises.
+
+
+
+Readings: ISPL pp. 78 - 100
+
+## Linear regression
+
+### Example: Diet and weight loss
+
+```{python}
+# | echo: False
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.formula.api as smf
+import statsmodels.api as sm
+```
+
+```{python}
+# | echo: False
+weights = np.array(
+    [
+        79.3,
+        79,
+        78.1,
+        77.8,
+        75.5,
+        75.5,
+        76.1,
+        75.9,
+        76.6,
+        75.1,
+        74.4,
+        74.8,
+        75.3,
+        74.5,
+        75,
+        75.4,
+        74.7,
+        75.1,
+        74,
+        74.9,
+        75.3,
+        75.7,
+        74.9,
+        75.5,
+        75.5,
+        74.3,
+        75.1,
+        73.7,
+        74.7,
+        74.7,
+        74.1,
+        74,
+        74.1,
+        74.2,
+        74.2,
+        np.nan,
+        74.6,
+        73.7,
+        74,
+        73.6,
+        73.8,
+        np.nan,
+        np.nan,
+        72.8,
+        72.9,
+        72,
+        72.8,
+        71.3,
+        71,
+        72.1,
+        73,
+        np.nan,
+        71.3,
+        70.5,
+        70.8,
+        71,
+        np.nan,
+        72.3,
+        72.4,
+    ]
+)
+
+days = np.arange(weights.size)
+data = pd.DataFrame({"weights":weights, "days":days}).dropna()
+```
+
+Olav is on a diet.
+
+```{python}
+# | echo: False
+# | fig-cap: "Olav's recorded bodyweight in the morning."
+
+ax = sns.lmplot(data=data, x="days", y="weights", fit_reg=False)
+ax.set_xlabels("Days from start of diet")
+ax.set_ylabels("Weight (kg)")
+```
+
+
+```{python}
+# | echo: False
+# | fig-cap: "Olav's recorded bodyweight in the morning, with regression line."
+
+ax = sns.lmplot(data=data, x="days", y="weights")
+ax.set_xlabels("Days from start of diet")
+ax.set_ylabels("Weight (kg)")
+```
+
+# The equation for simple linear regression
+$$Y_i = \alpha + \beta X_i + \epsilon_i,$$
+where, in this case, $Y_i$ is weight and $X_i$ is data. 
+
+* $\alpha$ is the *intercept*,
+* $\beta$ is the *slope*.
+* These are called *regression coefficients*.
+* When we have a single numeric response $X_i$, this is called simple linear regression.
+
+# Estimating simple linear regressions
+
+Simple linear regression models are usually estimated using the method of least squares, discussed in the book.
+
+```{python}
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+model.fit(X=data["days"].to_numpy().reshape(-1,1), y=data["weights"])
+```
+
+We can find the regression coefficients using the methods `intercept_` and `coef_`:
+```{python}
+model.intercept_
+model.coef_
+```
+
+And we can predict the weight after `x` days using the predict method
+
+```{python}
+model.predict([[10]])
+```
+
+# Classroom activity (3 minutes)
+Using `sklearn`, answer the following questions
+
+* What weight can we predict Olav to after 70 days?
+* His goal is 65 kilograms in 50 days from now  (i.e., the last day in the data set). Will he reach that goal?
+
+
+# Solution
+
+> What weight can we predict Olav to after 70 days?
+
+```{python}
+model.predict([[70]])
+```
+
+> His goal is 63 kilograms in 50 days from now. Will he reach that goal?
+
+From the supplied data we see 
+```{python}
+days
+```
+
+
+```{python}
+model.predict([[days.max() + 50]])
+```
+
+# Why does this matter?
+
+Data science and business analytics is about making business decisions. Are we going to meet our targets? Do we need to do something different?
+
+Olav is *far away* from his target of $63$ kilos, so he needs to step us his game. Eat less, exercise more.
+
+# Example: Boston data
+
+```{python}
+boston = pd.read_csv("../data/Boston.csv", index_col=0)
+boston.head()
+```
+
+
+A multiple regression model with $k$ features has the form
+$$Y_i = \beta_0 + \beta_1 X_{1i} + \cdots + \beta_k X_{ki} + \epsilon_i,$$
+
+![]()
+
+# How well does the model perform?
+
+Mean squared error
+$R^2$

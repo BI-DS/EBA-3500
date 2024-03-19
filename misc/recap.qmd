@@ -1,0 +1,115 @@
+# Recap document
+
+- [ ] List comprehensions
+
+
+## Functions
+
+Functions are defined using `def`. Remember the return keyword!
+
+```{python}
+def make_better(string):
+    return f"{string} is AWESOME!"
+```
+
+Functions require indentation but can be arbitrarily complex.
+
+```{python}
+def make_better(string):
+    if string == "Rick": 
+        return "Wubba lubba dub-dub!"
+    elif string == "Bart":
+        return "Eat my shorts!"
+    else:
+        return f"{string} is AWESOME!"
+
+make_better("Elsa")
+make_better("Rick")
+```
+
+One-liners can be written using the `lambda` keyword. You don't need the return keyword with `lambda`.
+
+```{python}
+make_better = lambda string: f"{string} is AWESOME!"
+```
+
+## Loops
+
+```{python}
+x = 0
+while x < 5:
+    print("I can has cheezburger?")
+    x += 1
+```
+
+## List comprehensions
+A list comprehension lets you fill a list with elements without using for loops.
+
+```{python}
+out = []
+for i in range(10):
+    out.append(i**2)
+out
+```
+
+```{python}
+out = list(range(10))
+for i in range(10):
+    out[i] = i**2
+```
+
+```{python}
+[i**2 for i in range(10)]
+```
+
+You can also use `if` and `else` if you want to do different operations to 
+different elements.
+
+```{python}
+[i**2 if i > 5 else i for i in range(10)]
+```
+
+Or you can filter out only the elements you want
+
+```{python}
+[c for c in "She said I am the one, but the kid is not my son" if c in "aeiou"]
+```
+
+There are more possibilities with list comprehensions. See, e.g.,  https://realpython.com/list-comprehension-python/
+
+### Exercise
+
+## Dictionary comprehensions
+
+Dictionary comprehensions are similar to list comprehensions.
+
+```{python}
+{letter: ord(letter) for letter in ascii_lowercase}
+```
+
+You can combine dictionary comprehensions with `pd.Series` to construct a series on the fly.
+
+```{python}
+pd.Series({letter: ord(letter) for letter in ascii_lowercase})
+```
+
+Dictionary comprehensions are useful when you need labels for your computations.
+
+## The zip function
+
+Sometimes you need to do computations with multiple lists at the same time.
+
+```{python}
+first_names = ["Alice", "Bobb", "Carl"]
+last_names = ["Munro", "Oscar", "Ogco"]
+[first + " " + last for first, last in zip(first_names, last_names)]
+```
+
+You can also use `fstrings` for this.
+
+```{python}
+first_names = ["Alice", "Bobb", "Carl"]
+last_names = ["Munro", "Oscar", "Ogco"]
+[f"{first} {last}" for first, last in zip(first_names, last_names)]
+```
+

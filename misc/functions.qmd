@@ -1,0 +1,181 @@
+# Python curriculum {.unnumbered}
+
+This document contains a complete list of Python library functions on the curriculum. All links in the tables below are to the official documentation. Many of the functions, such as `.read_csv`, are quite complex, and support a multitude of arguments not covered in the lectures, lecture notes, or exercises. These arguments are not on the curriculum, and you should be able to solve all exercises, including the exam, without them. That said, we strongly recommend you take a look on the documentation when working with a function, as it aids in:
+
+1. Familiarizing yourself with its functionality,
+2. You get to see examples of how the function is used,
+3. Being able to read documentation is a *key skill* for data analysts.
+
+Keep in mind that knowing how to use these functions is only part of the curriculum. You also need to know when to apply them.
+
+## Functions already covered
+
+These functions were covered in [EBA 3400](https://github.com/elthin/EBA3400). We assume some familiarity with these. If you need a recap, please read through the Jupyter notebooks found above, then do the exercises. Use the lecture column to figure out in which lecture the function was covered We use most of these functions throughout the course, sometimes in a more advanced way than in EBA 3400. Sometimes you need to look at the documentation; recall that you can see the documentation in VS Code by hovering your mouse over the function. Alternatively, write `help(fun)` in the terminal, where `fun` is a function name, use the links below, or find it online.
+
+
+
+| Name                          | Description                                               |  Lecture   | Examples |
+| ----------------------------- | -------------------------------------------------------   |  -------   | -------  | 
+| `.read_csv()`                 | [Read a comma-separated values (csv) file into DataFrame.](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) |  8         |              
+| `.head()`                     | [Display the first few rows of the DataFrame.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.head.html)             |  8         |
+| `.info()`                     | [Display a concise summary of the DataFrame.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html)              |  8         |
+| `.dtypes()`                   | [Display the data types of each column.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dtypes.html)                   |  8         |
+| `.describe()`                 | [Generate descriptive statistics of the DataFrame.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html)         |  8         |
+| `.value_counts()`             | [Count unique values in a column.](https://pandas.pydata.org/docs/reference/api/pandas.Series.value_counts.html)                         |  8         |
+| `.astype()`                   | [Convert the data type of a column.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.astype.html)                             |  8         |
+| `.sort_values()`              | [Sort DataFrame by values.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_values.html)                           |  8         |
+| `.reset_index()`              | [Reset index of DataFrame.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.reset_index.html)                           |  8         |
+| Indexing with []              | [Access elements in DataFrame using indexers.](https://pandas.pydata.org/docs/user_guide/indexing.html)                                |  9         |
+| Filtering with bools          | [Filter DataFrame based on boolean conditions.](https://pandas.pydata.org/docs/user_guide/indexing.html#boolean-indexing)              |  9         |
+| `.loc`                        | [Access a group of rows and columns by labels.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html)                 |  9         |
+| `.iloc`                       | [Access a group of rows and columns by integer position.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.iloc.html)       |  9         |
+| `concat` `merge`              | [Merge or concatenate DataFrames.](https://pandas.pydata.org/docs/reference/api/pandas.concat.html)                                     |  9         |
+| `.isna()`                     | [Detect missing values.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isna.html)                                       |  10        |
+| `.dropna()`                   | [Drop rows with missing values.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dropna.html)                             |  10        |
+| `.fillna()`                   | [Fill missing values.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.fillna.html)                                       |  10        |
+| `.sum()`                      | [Compute sum of values.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sum.html)                                       |  10        |
+| `.cut()`                      | [Bin values into discrete intervals.](https://pandas.pydata.org/docs/reference/api/pandas.cut.html)                                     |  10        |
+| `.groupby()`                  | [Group DataFrame using a mapper or by a Series of columns.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html)  |  10        |
+| `.pivot_table()`              | [Create a spreadsheet-style pivot table.](https://pandas.pydata.org/docs/reference/api/pandas.pivot_table.html)                          |  10        |
+| `.crosstab()`                 | [Compute a simple cross-tabulation of two factors.](https://pandas.pydata.org/docs/reference/api/pandas.crosstab.html)                  |  10        |
+| `.plot()`                     | [Plot data.](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html)                                                   |  11        |
+| Axes and subplots             | [Create and manage multiple plots.](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html)                           |  12        |
+| `sns.lineplot`                | [Draw a line plot.](https://seaborn.pydata.org/generated/seaborn.lineplot.html)                                                         |  12        |
+| `sns.countplot`               | [Show the counts of observations in each categorical bin.](https://seaborn.pydata.org/generated/seaborn.countplot.html)                  |  12        |
+| `sns.barplot`                 | [Show point estimates and confidence intervals as bars.](https://seaborn.pydata.org/generated/seaborn.barplot.html)                      |  12        |
+| `sns.heatmap`                 | [Plot rectangular data as a color-encoded matrix.](https://seaborn.pydata.org/generated/seaborn.heatmap.html)                            |  12        |
+| `sns.histplot`                | [Plot univariate or bivariate histograms.](https://seaborn.pydata.org/generated/seaborn.histplot.html)                                  |  12        |
+| `sns.jointplot`               | [Draw a scatter or hexbin plot with marginal histograms.](https://seaborn.pydata.org/generated/seaborn.jointplot.html)                   |  12        | 
+| `sns.pairplot`                | [Plot pairwise relationships in a dataset.](https://seaborn.pydata.org/generated/seaborn.pairplot.html)                                |  12        |
+| `sns.FacetGrid`               | [Multi-plot grid for plotting conditional relationships.](https://seaborn.pydata.org/generated/seaborn.FacetGrid.html)                 |  12        |
+
+
+## New functions in `pandas`, `matplotlib`, and `seaborn`
+We use several functions in `pandas`, `matplotlib`, and `seaborn` that haven't been covered, in addition to several `numpy` functions and some `statsmodels` functions. Most of these functions are used for exploratory data analysis and data cleaning; the 
+
+| Name                          | Library               | Description         | Lecture  | Examples |  
+| ----------------------------- | --------------------- | ------------------- | -------  | -------  |
+| [.corr()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)                                                                                                    | `pandas`              | Correlation matrix.                                                                       | 
+| [.dtype()](https://pandas.pydata.org/docs/reference/api/pandas.Series.dtype.html)                                                                                                     | `pandas`              | Data type for series.                                                                     |
+| [.min()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.min.html) / [.max()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.max.html)                 | `pandas` / `numpy`    | Find minimal / maximal value.                                                             |
+| [.argmin()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.argmin.html) / [.argmax()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.argmax.html)     | `pandas` / `numpy`    | Find index of the minimal / maximal values.                                               | 
+| [.nonzero()](https://numpy.org/doc/stable/reference/generated/numpy.nonzero.html)                                                                                                     | `numpy`               | Return the indices of non-zero elements of a vector.                                      |
+| [.all()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.all.html) / [.any()](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.any.html)                 | `pandas` / `numpy`    | Check if every element of an array is `True`.                                             |   
+| [.replace()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.replace.html)                                                                                              | `pandas`              | Replace values in data frame or series. Often used to replace strings with numbers.       |
+| [.to_numpy()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_numpy.html)                                                                                 | `pandas`              | Converts data frame or series to Numpy                                                    | 
+| [.lmplot](https://seaborn.pydata.org/generated/seaborn.lmplot.html)                                                                                                                   | `seaborn`             | Plot many regression models.                                                              |
+| [.formats.style](https://pandas.pydata.org/docs/reference/api/pandas.io.formats.style.Styler.html#pandas.io.formats.style.Styler.format)                                              | `pandas`              | Format data frames for visual inspection.                                                 |
+| [.std](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.std.html) / [.var](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.var.html)                     | `pandas` / `numpy`    | Standard deviation and variance.                                                          |
+| [.mean](https://numpy.org/doc/stable/reference/generated/numpy.mean.html) / [.median](https://numpy.org/doc/stable/reference/generated/numpy.median.html)                             | `pandas`              | Mean and median.                                                                          |
+| [.style.background_gradient](https://pandas.pydata.org/docs/reference/api/pandas.io.formats.style.Styler.html#pandas.io.formats.style.Styler.background_gradient)                     | `pandas`              | Styling of data frames with colors. Important for correlation matrices.                   | 
+| [.query()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html)                                                                                                  | `pandas`              | Selecting rows from a dataset using specialized syntax.                                   |
+| [.boxplot()](https://seaborn.pydata.org/generated/seaborn.boxplot.html)                                                                                                               | `seaborn`             | Create boxplots.                                                                          |
+| [.violinplot()](https://seaborn.pydata.org/generated/seaborn.violinplot.html)                                                                                                         | `seaborn`             | Create violinplots.                                                                       |
+| [.sort_index()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sort_index.html)                                                                                        | `pandas`              | Sort data frame or series by index.                                                       |
+| [.log()](https://numpy.org/doc/stable/reference/generated/numpy.log.html)                                                                                                             | `numpy`               | Natural logarithm.                                                                        |
+| [.log1p()](https://numpy.org/doc/stable/reference/generated/numpy.log1p.html)                                                                                                         | `numpy`               | Narural logarithm of $1+x$.                                                               |
+| [.sample()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sample.html)                                                                                                | `pandas`              | Sample from a data frame or groupby object.                                               |
+| [.shape](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.shape.html)                                                                                                   | `pandas` / `numpy`    | Return a tuple representing the dimensionality of a data frame.                           |
+| [.nunique()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html) / [.unique()](https://pandas.pydata.org/docs/reference/api/pandas.Series.unique.html)        | `pandas`              | Count or return the unique values in order of appearance.                                 |
+| [sns.catplot()](https://seaborn.pydata.org/generated/seaborn.catplot.html)                                                                                                            | `seaborn`             | Multiple categorical plots.                                                               |
+
+
+
+
+## Functions in `sklearn`
+[`sklearn`](https://scikit-learn.org/stable/index.html), also known as scikit-learn, is the most important Python library for fitting machine learning model. It has strong support for basic functionality such as metrics, cross-validation, fitting algorithms, and feature manipulation. That said, it is a big library, and we only use parts of it. 
+
+The following is a complete list of `sklearn` functions used in this course, and we expect some familiarity with all of them. No exercise requires you to use any other function than those on this list, and all of them have been covered in the lectures. In the same way, the exercises on the exam will only use functions on this list.
+
+
+### Model selection and evaluation
+
+| Name                                                                                                                                                        | Module            | Usage                                                                                                                  | Lecture  | Examples |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------|----------|----------|
+| [`train_test_split`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html)                                       | `model_selection` | Split arrays or matrices into random train and test subsets.                                                           |  2       |          |
+| [`r2_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html#sklearn.metrics.r2_score)                                      | `metrics`         | The $R^2$ score. Default score for most regression methods. Usually available through `reg.score()`.                   |  5       |          |
+| [`mean_squared_error`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_squared_error.html#sklearn.metrics.mean_squared_error)        | `metrics`         | The mean squared error score in regression,$\text{MSE}=\sum_{i=1}^n(\hat{y_i}-y_i)^2$                                  |  5       |          |
+| [`roc_auc_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html)                                                     | `metrics`         | The area under the ROC curve, used in classification.                                                                  |  7       |          |
+| [`accuracy_score`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)                                                   | `metrics`         | Accuracy classification score. Default score for most classification methods. Usually available through `clf.score()`. |  7       |          |
+| [`confusion_matrix`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html)                                               | `metrics`         | Calculate the confusion matrix of a classifier.                                                                        |  7       |          |
+| [`cross_val_score`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html#sklearn.model_selection.cross_val_score) | `model_selection` | Cross-validation for a specified score.                                                                                |  8       |          |
+| [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV)          | `model_selection` | Cross-validation over a grid of values. Used to find the hyperparameters for a model.                                  |  8       |          |
+| [`log_loss`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.log_loss.html#sklearn.metrics.log_loss)                                      | `metrics`         | The log loss, or cross-entropy loss, for classification.                                                               |  9       |          |
+
+### Visualization
+
+These visualization functions are used for understanding classifiers, not to plot data. For instance, the `DecisionBoundaryDisplay` function displays the decision boundary for a classifier with two features, similar to the plots found in Chapter 4 of ISLP.
+
+Below is an example ([modifed from this](https://scikit-learn.org/stable/modules/generated/sklearn.inspection.DecisionBoundaryDisplay.html)) using the latent discriminant analysis on the Iris data.
+
+```{python}
+# | code-fold: true
+import seaborn as sns
+from sklearn.datasets import load_iris
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.inspection import DecisionBoundaryDisplay
+from matplotlib.colors import ListedColormap
+
+iris = load_iris()
+X = iris.data[:, :2]
+classifier = LinearDiscriminantAnalysis().fit(X, iris.target)
+DecisionBoundaryDisplay.from_estimator(
+    classifier,
+    X,
+    cmap="brg",
+    response_method="predict",
+    xlabel="Sepal length (cm)",
+    ylabel="Sepal width (cm)",
+    alpha=0.3,
+)
+sns.scatterplot(
+    x=X[:, 0],
+    y=X[:, 1],
+    hue=[x.capitalize() for x in iris.target_names[iris.target]],
+    edgecolor="black",
+    palette=["blue", "red", "green"],
+)
+```
+
+You can clearly see the linear decision boundaries between the three classes of the iris data set in this plot.
+
+| Name                                                                                                                                                             | Module                   | Usage                                                                     | Lecture  | Examples |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|---------------------------------------------------------------------------|----------|----------|
+| [`DecisionBoundaryDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.inspection.DecisionBoundaryDisplay.html)                                   | `inspection`             | Plot the decision boundary for a classifier taking two features as input. | 7        |          |
+| [`RocCurveDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.RocCurveDisplay.html#sklearn.metrics.RocCurveDisplay)                      | `metrics`                | Display the ROC curve of a classifier.                                    | 7        |          |
+| [`ConfusionMatrixDisplay`](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.ConfusionMatrixDisplay.html#sklearn.metrics.ConfusionMatrixDisplay) | `ConfusionMatrixDisplay` | Display the confusion matrix of a classifier.                             | 7        |          |
+| [`plot_tree`](https://scikit-learn.org/stable/modules/generated/sklearn.tree.plot_tree.html#sklearn.tree.plot_tree)                                              | `tree`                   | Display a fitted decision tree.                                           | 12       |          |
+
+### Models
+
+| Function                                                                                                                                                                                                                                                                                                                          | Module         | Usage                                                 | Lecture  | Examples |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------------------------|----------| -------- |
+| [KNeighborsClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html#sklearn.neighbors.KNeighborsClassifier) / [KNeighborsRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsRegressor.html)                                                | `neighbors`    | Fit a $k$ nearest neighbors classifier.               | 2        |          |
+| [LinearRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression)                                                                                                                                                                            | `linear_model` | Fit a linear regression model.                        | 5        |          |
+| [LogisticRegression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression) / [LogisticRegressionCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html#sklearn.linear_model.LogisticRegressionCV) | `linear_model` | Fit a logistic regression model.                      | 7        |          |
+| [LinearDiscriminantAnalysis](https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis)                                                                                                                            | `discriminant` | Fit an LDA model.                                     | 9        |          |
+| [QuadraticDiscriminantAnalysis](https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis.html#sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis)                                                                                                                   | `discriminant` | Fit a QDA model.                                      | 9        |          |
+| [GaussianNB](https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.GaussianNB.html#sklearn.naive_bayes.GaussianNB)                                                                                                                                                                                                | `naive_bayes`  | Fit a Gaussian Naive Bayes model.                     | 9        |          |
+| [Lasso](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html#sklearn.linear_model.Lasso) / [LassoCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LassoCV.html#sklearn.linear_model.LassoCV)                                                                               | `linear_model` | Fit a LASSO model with or without CV.                 | 10       |          |
+| [Ridge](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html#sklearn.linear_model.Lasso) / [RidgeCV](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LassoCV.html#sklearn.linear_model.LassoCV)                                                                               | `linear_model` | Fit a Ridge model with or without CV.                 | 10       |          |
+| [DecisionTreeClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier) / [tree.DecisionTreeRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html#sklearn.tree.DecisionTreeRegressor)             | `tree`         | Fit a decision tree.                                  | 12       |          |
+| [GradientBoostingClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn.ensemble.GradientBoostingClassifier) / [GradientBoostingRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html)                     | `ensemble`     | Gradient boosting for regression or clasification.    | 13       |          |
+| [RandomForestClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier) / [RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor)  | `ensemble`     | Random forests for regression or clasification.       | 13       |          |
+
+### Preprocessing and pipelining
+
+Many
+
+| Function                                                                                                                                                                                    | Module              | Usage                                                      | Lecture  | Examples | 
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|------------------------------------------------------------|----------|----------|
+| [`FeatureUnion`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html)                                                                                      | `pipeline`          | Merge two or more sets of features.                        |  6       |          |
+| [ColumnTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html#sklearn.compose.ColumnTransformer)                                             | `compose`           | Transform all feature columns.                             |  6       |          |
+| [TransformedTargetRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.compose.TransformedTargetRegressor.html#sklearn.compose.TransformedTargetRegressor)                  | `compose`           | Transform target.                                          |  6       |          |
+| [FunctionTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer)                           | `preprocessing`     | Transform features using custom function.                  |  6       |          |
+| [OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html#sklearn.preprocessing.OneHotEncoder)                                             | `preprocessing`     | Use categorical variables.                                 |  6       |          |
+| [PolynomialFeatures](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html#sklearn.preprocessing.PolynomialFeatures)                              | `preprocessing`     | Generate polynomial and interaction features.              |  6       |          |
+| [`Pipeline`](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)                                                                                              | `pipeline`          | Chain methods into a pipeline.                             |  8       |          |
+| [SequentialFeatureSelector](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html#sklearn.feature_selection.SequentialFeatureSelector) | `feature_selection` | Forward and backward selection of features.                |  10      |          |
+| [StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler)                                          | `preprocessing`     | Scale features to unit variance and zero mean.             |  10      |          |
+| [SplineTransformer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.SplineTransformer.html#sklearn.preprocessing.SplineTransformer)                                 | `preprocessing`     | Construct B-splines.                                       |  11      |          |
+| [KBinsDiscretizer](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html#sklearn.preprocessing.KBinsDiscretizer)                                    | `preprocessing`     | Construct step functions.                                  |  11      |          |

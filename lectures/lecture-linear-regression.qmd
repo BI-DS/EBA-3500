@@ -1,7 +1,0 @@
-# Lecture 2 {.unnumbered}
-
-Readings: ISPL pp. 78 - 100
-
-## Linear regression
-
-

@@ -1,0 +1,45 @@
+# Lecture 1: Introduction {.unnumbered}
+
+Readings: ISPL, Chapter 1: Introduction.
+
+## Introduction
+
+## Curriculum
+* Most of chapters 1 - 8 is on the curriculum; see the plan for details.
+* The labs are optional reading. We do **not** use the ISLP package mentioned in the lab.
+* There are lecture notes for most weeks as well, in addition to the lectures themselves.
+* Exercises are in the form of small projects. All of them are highly exam relevant.
+* All mandatory exercises are on the curriculum, including the solutions. All exercises have detailed solution proposals, available on Its learning. **Exercises may contain material not covered in the lectures!**
+* In addition, there are several optional exercises. These are recommended to hone your skills, but do not contain any new material.
+* The exams are designed to be solved using only the functionality covered in the course. You are allowed to use other functions, models, and so forth, if you want to, but you need much stronger justification for using them.
+
+## Course structure
+* Read, or at least skim, the readings before lectures.
+* Come prepared with the notebooks open. 
+* Lectures will usually contain one theoretical part and one practical part.
+* The curriculum is **not covered 100% by the lectures.** You *need* the book, lecture notes, and mandatory exercises.
+
+## Data scientist workflow
+![Flowchart of data science. *Source: [Wikipedia](https://en.wikipedia.org/wiki/Exploratory_data_analysis#/media/File:Data_visualization_process_v1.png)*](images/data_visualization_process.png)
+
+We restrict ourselves to simple data cleaning, exploratory data analysis, fitting of models and algorithms, and communication through visual reports. 
+
+## Visual Studio Code and Quarto
+We will use Visual Studio Code (VSCode) and the technical publishing system Quarto in this course. Quarto is similar to Jupyter notebooks, but much better suited to writing finished reports. We will used a limited set of functionality in Quarto; required functionality of Quarto. Detailed installation instructions can be found here. Make sure to install Quarto and VSCode as quickly as possible.
+
+## Exam
+The exam is a take-home group exam containing several exercises exploring the following themes:
+1. Exploratory data analysis,
+2. Fitting of machine learning models,
+3. Understanding of machine learning through experiments.
+
+There are two home mock exams available and a detailed check-list you need to use.
+
+## Python refresher
+
+## Probability refresher
+* Bayes theorem
+* Hypothesis tests
+
+## 
+
