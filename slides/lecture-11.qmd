@@ -335,7 +335,7 @@ $$
 
 -   Suppose $\hat{\beta}_1$ is a regression coefficient from the logistic model. What is the asymptotic variance of $\exp{\hat{\beta}_1}$?
 
-  -   Answer: Recall that the entire parameter vector $\hat{\beta}$ has covariance matrix equal to the inverse of the Fisher information $I^{-1}$, hence the variance of $\hat{\beta}_i$ is the $i$th diagonal element of $I^{-1}$. Now apply the delta method to $g(x)=\exp(x)$, yielding $(g'(x))^2 = \exp(2x)$. Hence the asymptotic variance of $\exp{\hat{\beta}_1}$ is $\exp(2\beta_1)I^{-1}_{ii}$.
+-   Answer: Recall that the entire parameter vector $\hat{\beta}$ has covariance matrix equal to the inverse of the Fisher information $I^{-1}$, hence the variance of $\hat{\beta}_i$ is the $i$th diagonal element of $I^{-1}$. Now apply the delta method to $g(x)=\exp(x)$, yielding $(g'(x))^2 = \exp(2x)$. Hence the asymptotic variance of $\exp{\hat{\beta}_1}$ is $\exp(2\beta_1)I^{-1}_{ii}$.
 
 ## Gradients
 
@@ -434,5 +434,3 @@ CI = [estimate - np.sqrt(tau) * 1.96, estimate + np.sqrt(tau) * 1.96]
 print(CI)
 ```
 :::
-
-

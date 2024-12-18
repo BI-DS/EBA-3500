@@ -1,0 +1,12 @@
+---
+title: "EBA35002 Continuation exam"
+subtitle: Written exam
+author: Jonas Moss
+format:
+  html:
+    embed-resources: true
+    colorlinks: true
+editor: visual
+---
+
+All sub-exercises are equally weighted.

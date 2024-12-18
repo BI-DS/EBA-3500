@@ -117,7 +117,7 @@ plt.show()
 1.  In linear regression, $E(Y) = \beta^T X$.
 2.  In binary regression, $E(Y) = P(Y=1) = F(\beta^T X)$ for some increasing function $F$ bounded by $0$ and $1$.
 3.  The function $g = F^{-1}$ is called a *link function*.
-4.  Because it links the mean to a linear combination of the parameters $g(E(Y)) = \beta^T X$,
+4.  Because it *links* the mean to a linear combination of the parameters $g(E(Y)) = \beta^T X$,
 
 ## The logistic function
 
@@ -133,7 +133,7 @@ plt.show()
 ## Three important $F$s
 
 | Name             | Link function $g$                         | $g^{-1} = F$              | Where?                       |
-|------------------|-------------------------------------------|---------------------------|------------------------------|
+|----------------|------------------------|----------------|-----------------|
 | Logistic / logit | $\log\left(\frac{x}{1-x}\right)$          | $\frac{1}{1+e^{-x}}$      | Machine learning, statistics |
 | Probit           | $\Phi^{-1}$, the normal quantile function | $\Phi$, the normal CDF    | Economics, statistics        |
 | Cauchit          | $\tan(\pi(x-0.5))$                        | $\frac{1}{\pi}\arctan(x)$ | Used for heavy-tailed data   |
@@ -303,7 +303,7 @@ smf.probit("y ~ x", data = {"x": x, "y": y}).fit().params
 ## Three models
 
 | Error ($\epsilon$)                   | Link function        | Model name     |
-|--------------------------------------|----------------------|----------------|
+|-----------------------------------|--------------------|------------------|
 | $N(0, \sigma)$                       | $\Phi^{-1}(x)$       | Probit model   |
 | $\operatorname{Logistic}(0, \sigma)$ | $\log\frac{x}{1-x}$  | Logistic model |
 | $\operatorname{Cauchy}(0, \sigma)$   | $\tan{[\pi(x-0.5)]}$ | Cauchit        |

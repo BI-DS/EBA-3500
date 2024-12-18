@@ -1,0 +1,351 @@
+---
+title: "Agreement coefficients, correlations, inference, and machine learning"
+subtitle: "Advances in motometry"
+institute: "Department of Data Science and Analytics, BI Norwegian Business School"
+author: Jonas Moss
+date: 9-20-2024
+execute:
+  echo: true
+format:
+  revealjs: 
+    theme: [default]
+    width: 1600
+    height: 900
+    embed-resources: True
+    mainfont: "Verdana"
+    min-scale: 0.2
+    max-scale: 2
+    echo: true
+reference-location: margin
+citation-location: margin
+fig-cap-location: top
+lightbox: true
+---
+
+```{r}
+#| echo: False
+library("ISLR")
+Auto = Auto[, 1:8]
+```
+
+## Motometry
+
+```{r}
+head(Auto)
+```
+
+. . .
+
+Let's predict `mpg` (miles per gallon).
+
+```{r}
+mod1 = lm("mpg ~ weight * cylinders + year", data = Auto[1:300,])
+mod2 = lm("mpg ~ weight * cylinders * year", data = Auto[1:300,])
+```
+
+. . .
+
+The adjusted $R^2$ of both models are similar.
+
+```{r}
+summary(mod1)$adj.r.squared
+summary(mod2)$adj.r.squared
+```
+
+## How are the models different?
+
+```{r}
+#| echo: False
+#| fig-align: center
+x = predict(mod1, Auto[301:392,])
+y = predict(mod2, Auto[301:392,])
+plot(predict(mod1, Auto[301:392,]), predict(mod2, Auto[301:392,]), xlab = "Model 1 prediction", ylab = "Model 2 predictions")
+abline(a = 0, b=1)
+abline(lm(y ~ x), col = "blue", lwd=2)
+```
+
+. . .
+
+Seems like `Model 2` predicts smaller `mpg` when `Model 1` predicts small `mpg`, and higher when it predicts high `mpg`s.
+
+**How much do the models agree?** 
+
+## A clever trick?
+
+* Can't use correlations - we want to check deviations from the line $y=x$, not $y = a+bx$!
+* Two models can have correlation $1$ disagree completely (think $b = -1$.)
+
+. . .
+
+
+#### Possible solution
+
+:::: {.columns}
+
+:::{.column}
+
+Plotting `c(x,y)` vs `c(y, x)` when `x`, `y` are the predictions of both models.
+
+```{r}
+#| echo: False
+#| fig-align: "center"
+x = predict(mod1, Auto[301:392,])
+y = predict(mod2, Auto[301:392,])
+plot(x, y, xlab = "x", ylab = "y")
+points(y, x, col = "red")
+abline(a = 0, b=1)
+abline(lm(I(c(x,y)) ~ I(c(y,x))), col = "blue", lwd=2)
+legend("topleft", legend = c("x: Model 1 predictions, y: Model 2 predictions", "x: Model 2 predictions, y: Model 1 predictions"), bty = "n", col = c("black", "red"),, pch= c(1,1))
+```
+
+:::
+
+:::{.column}
+:::{.fragment}
+
+Calculating the correlation.
+```{r}
+x = predict(mod1, Auto[301:392,])
+y = predict(mod2, Auto[301:392,])
+cor(c(x,y), c(y, x))
+```
+
+Looks *ad hoc* and stupid? Sure!
+
+**But it works!**
+
+:::
+:::
+
+:::: 
+
+## The approach is sound
+
+Define the *quadratic kappa* (Fleiss, 1973) as $$\kappa_F(X,Y) = 1- \frac{E[(X-Y)^2]}{E[(X'-Y')^2]},$$ where $X',Y'$ are independent samples from their marginal distribution.
+
+. . .
+
+Then
+$$\textrm{Cor}(X\frown Y, Y\frown X) = \kappa_F(X,Y),$$
+where $X\frown Y$ and $Y\frown X$ are defined so that its sample estimator is `cor(c(x,y), c(y,x))`.
+
+**You can estimate agreement using this bonkers method!**
+
+## Inference
+**Naïve approach.** Use standard OLS theory. This is an OLS, rigth?
+
+. . . 
+
+**[NO!]{style="color:red;"}** The observations are dependent in an insane way. OLS theory won't help us.
+
+. . .
+
+* Instead, we do it the "SEM way", using the $\Gamma$ matrix and so on.
+
+* Exactly the same results can be obtained using the theory of $U$-statistics.
+
+. . .
+
+***But first, let's look at the case of multiple raters (models)!***
+
+
+
+# Multiple raters (or models)
+## Agreement for multiple raters
+
+Say we have $n$ models / raters. How do we measure agreement at **one** prediction? 
+
+. . .
+
+### Sample variance
+
+::: {.incremental}
+* $\textrm{var}(x_1, x_2, x_3, \ldots, x_n) = \frac{\overline{(x_i-\overline{x})^2}}{n}.$
+* Measures the mean squared deviation from the "center".
+* Can be generalized to any loss function, with inferential accompanying theory. (Moss, 2024)
+:::
+
+::: {.fragment}
+
+### Second approach
+
+* Measure $(x_i - x_j)^2$ for all pairs $(i,j)$.
+* These approaches are *equivalent*, but only for the square loss.
+
+:::
+
+## Chance-correct measures of agreement
+
+$$\kappa_F = 1 - \frac{D}{D_C},$$
+
+* $D$ is expected disagreement under the true joint distribution of the ratings
+* $D_C$ is the expected disagreement when all ratings are independently distributed from their marginal distributions.
+
+. . .
+
+:::: {.columns}
+
+::: {.column}
+**Variance form.**
+
+* $D=E_P[\textrm{var}(X_1,X_2,\ldots, X_n),$
+* $D_C = E_{\overline{P}}[\textrm{var}(X_1,X_2,\ldots, X_n),$ where $\overline{P}$ is the product measure of the marginals.
+:::
+
+::: {.column}
+**Sum form.**
+
+* $D = \sum_{i>j} E_P((X_i - X_j)^2)$
+* $D = \sum_{i>j} E_P((X_i - X_j')^2),$ where $X_j$ is independently distributed of $X_i$ according to its marginal distribution.
+:::
+
+::::
+
+## Example
+
+Let's fit four models.
+```{r}
+mod1 = lm("mpg ~ weight * cylinders + year", data = Auto[1:300,])
+mod2 = lm("mpg ~ weight * cylinders * year", data = Auto[1:300,])
+mod3 = lm("mpg ~ weight * cylinders ", data = Auto[1:300,])
+mod4 = lm("mpg ~ weight + year", data = Auto[1:300,])
+```
+
+. . . 
+```{r}
+#| echo: False
+#| fig-align: "center"
+x = predict(mod1, Auto[301:392,])
+y = predict(mod2, Auto[301:392,])
+z = predict(mod3, Auto[301:392,])
+w = predict(mod4, Auto[301:392,])
+plot(x, y, xlab = "Model 1 predictions", ylab = "Model x predictions")
+points(x, z, col = "red")
+points(x, w, col = "blue")
+abline(a = 0, b=1)
+legend("topleft", legend = c("Model 2", "Model 3", "Model 4"), bty = "n", col = c("black", "red", "blue"),, pch= c(1,1))
+```
+
+Pretty poor agreement between, e.g., model 1 and model 3 here!
+
+## Population definition
+Let $X$ be a random vector with mean $\mu$ and covariance $\Sigma$. The quadratic Fleiss' kappa is then
+
+$$\kappa_F = \frac{1^{T}\Sigma1-\textrm{tr}\Sigma-R\left(\overline{\mu^{2}}-\overline{\mu}^{2}\right)}{(R-1)\textrm{tr}\Sigma+(R-1)R\left(\overline{\mu^{2}}-\overline{\mu}^{2}\right)}.$$
+
+::: {.incremental}
+* The standard estimator replace $\mu$ and $\Sigma$ with their (biased) sample counter-parts.
+* **Inference?** A clear-cut example of standard asymptotic theory involving the fourth-order matrix $\Gamma$ in addition to $\mu$ and $\Sigma$.
+:::
+
+## The correlation definition still holds!
+
+Let's construct some predictions for each model.
+
+```{r}
+x = predict(mod1, Auto[301:392,])
+y = predict(mod2, Auto[301:392,])
+z = predict(mod3, Auto[301:392,])
+w = predict(mod4, Auto[301:392,])
+```
+
+. . .
+
+I have dutifully implemented $\kappa_F$ in an `R` package.
+```{r}
+quadagree::fleiss(cbind(x,y,z,w))
+```
+
+. . .
+
+But, behold!
+
+```{r}
+x1 = c(x,x,x,y,y,y,z,z,z,w,w,w)
+x2 = c(y,z,w,x,z,w,x,y,w,x,y,z)
+cor(x1, x2)
+```
+
+. . .
+
+* A precise formulation of the relationship is tedious.
+* We just need to make sure every pair `x`, `y` appears twice when calculating the correlation.
+
+## Missing values
+
+Assume ratings are missing at random. Let $S$ and $\hat{\mu}$ be calculated using pairwise available data.
+
+. . . 
+
+From van Praag et al. (1985) we know that
+$$\sqrt{n}(\textrm{vec}S - \textrm{vec}\Sigma) \stackrel{d}{\to} N(0, \Gamma \odot \Pi),$$ 
+
+. . .
+
+Moreover, we have
+$$\sqrt{n}(\hat{\mu} - \mu) \stackrel{d}{\to}  N(0, \Sigma + (P-I) \textrm{diag}(\Sigma)).$$
+Here $P$ and $\Pi$ encodes the probability of missingness.
+
+Everything else is the delta method. (Tedious!)
+
+
+## Four models with missing values
+
+We are not always able to obtaining all ratings, just a random subset.
+```{r}
+#| echo: False
+noise <- \() sample(c(0,NA), size=92, replace = TRUE, prob = rep(0.5, 2))
+x_ = x + noise()
+y_ = y + noise()
+z_ = z + noise()
+w_ = w + noise()
+```
+
+```{r}
+#| eval: False
+x, y, z, w # original predictions from 4 models
+x_, y_, z_, w_ # predictions with missing data 
+```
+
+. . .
+
+```{r}
+quadagree::fleissci(cbind(x_,y_,z_,w_))
+```
+
+. . . 
+ 
+```{r}
+quadagree::fleissci(cbind(x,y,z,w))
+```
+
+## Existing methods are incorrect
+
+* Existing methods use ad-hoc weighting methods introduced by Gwet (2020). 
+
+* These weighting methods are inconsistent, with asymptotically incorrect level, and do not use all available data.
+
+```{r}
+data <- cbind(x_,y_,z_,w_)
+data <- data[rowSums(is.na(data)) <= 1, ]
+#data <- round(data)
+irrCAC::fleiss.kappa.raw(data, weights = "quadratic")$est
+```
+* Missing data are everywhere when measuring agreement.
+* Consistency shoul be the *bare minimum* requirement for an estimator.
+
+## Summary
+
+1. Quadratic kappa is a correlation coefficient.
+2. We can do inference with quadratic kappa with missing values.
+3. Quadratic kappa with multiple raters can be interpreted in several ways.
+4. `quadagree` implements the estimation and inference methods.
+5. Current methods for handling missing data are **incorrect**. 
+
+. . .
+
+Moreover,
+
+1. These methods show great potential for motometry and other machine learning applications.
+2. Preprint out in 1-3 months I think. 
+3. Will be submitted to Motometrika.
